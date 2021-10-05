@@ -1,4 +1,4 @@
-function PlaceDescriptionScreen(): JSX.Element {
+function PlaceOfferScreen(): JSX.Element {
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -302,4 +302,4 @@ function PlaceDescriptionScreen(): JSX.Element {
   );
 }
 
-export default PlaceDescriptionScreen;
+export default PlaceOfferScreen;
