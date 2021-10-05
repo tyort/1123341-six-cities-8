@@ -4,6 +4,7 @@ import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
+import NotFoundScreen from '../not-found/not-found';
 
 type AppScreenProps = {
   places: string[];
@@ -27,6 +28,9 @@ function App(props: AppScreenProps): JSX.Element {
         </Route>
         <Route exact path={AppRoute.Room}>
           <PlaceOfferScreen/>
+        </Route>
+        <Route>
+          <NotFoundScreen/>
         </Route>
       </Switch>
     </BrowserRouter>
