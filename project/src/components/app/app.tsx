@@ -6,14 +6,16 @@ import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
+import {Offer} from '../../types/offer';
 
 type AppScreenProps = {
   places: string[];
+  offers: Offer[];
 }
 
 
 function App(props: AppScreenProps): JSX.Element {
-  const {places} = props;
+  const {places, offers} = props;
 
   return (
     <BrowserRouter>
