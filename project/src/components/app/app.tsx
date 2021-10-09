@@ -13,9 +13,9 @@ type AppScreenProps = {
   offers: Offer[];
 }
 
-
 function App(props: AppScreenProps): JSX.Element {
   const {places, offers} = props;
+  const [firstOffer] = offers;
 
   return (
     <BrowserRouter>
@@ -34,7 +34,9 @@ function App(props: AppScreenProps): JSX.Element {
           <LoginScreen/>
         </Route>
         <Route exact path={AppRoute.Room}>
-          <PlaceOfferScreen/>
+          <PlaceOfferScreen
+            offer={firstOffer}
+          />
         </Route>
         <Route>
           <NotFoundScreen/>

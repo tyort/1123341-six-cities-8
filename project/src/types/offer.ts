@@ -1,7 +1,8 @@
 export type Owner = {
   name: string;
+  avatar: string;
   status: string;
-  description: string;
+  text: string;
 }
 
 export type Review = {
@@ -9,17 +10,23 @@ export type Review = {
   name: string;
   setRating: string | number;
   text: string;
-  date: Date
+  date: Date;
+}
+
+export type Feature = {
+  title: string;
+  addition: string;
 }
 
 export type Offer = {
-  id: string | number
+  id: string;
   title: string;
-  class: string;
+  images: string[];
+  category: string;
   rating: number;
-  features: string[];
+  features: Feature[];
   price: number;
-  inside: string[];
+  bonuses: string[];
   owner: Owner;
   reviews: Review[]
 }

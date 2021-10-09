@@ -4,15 +4,25 @@ export const offers: Offer[] = [
   {
     id: 'dj4j44',
     title: 'Oh! This is awesome',
-    class: 'Premium',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Premium',
     rating: 9.8,
-    features: ['High ceilings', '4 bedrooms'],
+    features: [
+      {
+        title: 'High ceilings',
+        addition: 'ceilings',
+      }, {
+        title: '4 bedrooms',
+        addition: 'bedrooms',
+      },
+    ],
     price: 333,
-    inside: ['Wi-Fi', 'Kitchen'],
+    bonuses: ['Wi-Fi', 'Kitchen'],
     owner: {
       name: 'Patrick Bateman',
+      avatar: 'avatar-angelina.jpg',
       status: 'Pro',
-      description: 'The building is green and from 18th century.',
+      text: 'The building is green and from 18th century.',
     },
     reviews: [
       {
@@ -27,15 +37,24 @@ export const offers: Offer[] = [
   {
     id: 'fjejf79',
     title: 'This is my home',
-    class: 'Economy',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Economy',
     rating: 5.3,
-    features: ['Only for party', 'No glass'],
-    price: 45,
-    inside: ['Wi-Fi', 'Towels'],
+    features: [
+      {
+        title: 'High ceilings',
+        addition: 'ceilings',
+      }, {
+        title: '4 bedrooms',
+        addition: 'bedrooms',
+      },
+    ],    price: 45,
+    bonuses: ['Wi-Fi', 'Towels'],
     owner: {
       name: 'Rebecca',
+      avatar: 'avatar-max.jpg',
       status: 'Pro',
-      description: 'Small apartment for fun',
+      text: 'Small apartment for fun',
     },
     reviews: [
       {
@@ -57,15 +76,24 @@ export const offers: Offer[] = [
   {
     id: 'gfgrge4g',
     title: 'Good place for sleeping',
-    class: 'Economy',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Economy',
     rating: 6.3,
-    features: ['No people', 'No glass'],
-    price: 45,
-    inside: ['Wi-Fi', 'Towels'],
+    features: [
+      {
+        title: 'High ceilings',
+        addition: 'ceilings',
+      }, {
+        title: '4 bedrooms',
+        addition: 'bedrooms',
+      },
+    ],    price: 45,
+    bonuses: ['Wi-Fi', 'Towels'],
     owner: {
       name: 'Joseph',
+      avatar: 'avatar-angelina.jpg',
       status: 'Pro',
-      description: 'Small apartment for fun',
+      text: 'Small apartment for fun',
     },
     reviews: [
       {
@@ -94,15 +122,24 @@ export const offers: Offer[] = [
   {
     id: 'kjrmnge4g',
     title: 'Just like the others apartment',
-    class: 'Premium',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Premium',
     rating: 2.3,
-    features: ['Silent'],
-    price: 222,
-    inside: ['Wi-Fi', 'Towels', 'Heating', 'Kitchen'],
+    features: [
+      {
+        title: 'High ceilings',
+        addition: 'ceilings',
+      }, {
+        title: '4 bedrooms',
+        addition: 'bedrooms',
+      },
+    ],    price: 222,
+    bonuses: ['Wi-Fi', 'Towels', 'Heating', 'Kitchen'],
     owner: {
       name: 'Indica',
+      avatar: 'avatar-max.jpg',
       status: 'New',
-      description: 'Only for working in silence',
+      text: 'Only for working in silence',
     },
     reviews: [
       {
