@@ -10,7 +10,7 @@ export type Review = {
   name: string;
   setRating: string | number;
   text: string;
-  date: Date;
+  date: string;
 }
 
 export type Feature = {
