@@ -9,19 +9,20 @@ import PrivateRoute from '../private-route/private-route';
 import {Offer} from '../../types/offer';
 
 type AppScreenProps = {
-  places: string[];
   offers: Offer[];
 }
 
 function App(props: AppScreenProps): JSX.Element {
-  const {places, offers} = props;
+  const {offers} = props;
   const [firstOffer] = offers;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen places={places} />
+          <MainScreen
+            offers={offers}
+          />
         </Route>
         <PrivateRoute
           exact
