@@ -20,6 +20,7 @@ export type Feature = {
 
 export type Offer = {
   id: string;
+  city: string,
   title: string;
   type: string;
   images: string[];
