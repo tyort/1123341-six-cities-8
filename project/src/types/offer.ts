@@ -21,6 +21,7 @@ export type Feature = {
 export type Offer = {
   id: string;
   title: string;
+  type: string;
   images: string[];
   category: string;
   rating: number;

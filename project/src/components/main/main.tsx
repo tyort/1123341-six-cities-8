@@ -94,7 +94,12 @@ function Main(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((place) => <PlaceCard key={place.id}/>)}
+                {offers.map((place) => (
+                  <PlaceCard
+                    key={place.id}
+                    offer={place}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">

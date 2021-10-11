@@ -4,6 +4,7 @@ export const offers: Offer[] = [
   {
     id: 'dj4j44',
     title: 'Oh! This is awesome',
+    type: 'Apartment',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
     rating: 9.8,
@@ -37,6 +38,7 @@ export const offers: Offer[] = [
   {
     id: 'fjejf79',
     title: 'This is my home',
+    type: 'House',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Economy',
     rating: 5.3,
@@ -76,6 +78,7 @@ export const offers: Offer[] = [
   {
     id: 'gfgrge4g',
     title: 'Good place for sleeping',
+    type: 'Room',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Economy',
     rating: 6.3,
@@ -122,6 +125,7 @@ export const offers: Offer[] = [
   {
     id: 'kjrmnge4g',
     title: 'Just like the others apartment',
+    type: 'Bungalo',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
     rating: 2.3,

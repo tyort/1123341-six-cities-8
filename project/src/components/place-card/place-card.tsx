@@ -1,6 +1,25 @@
-function PlaceCard(): JSX.Element {
+import {useState, MouseEvent} from 'react';
+import {Offer} from '../../types/offer';
+
+type CardScreenProps = {
+  offer: Offer;
+}
+
+function PlaceCard(props: CardScreenProps): JSX.Element {
+  const {offer} = props;
+  const {price, rating, title, type} = offer;
+  const [, setActualHover] = useState('Fly away');
+
   return (
-    <article className="cities__place-card place-card">
+    <article
+      className="cities__place-card place-card"
+      onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
+        setActualHover('Hover');
+      }}
+      onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
+        setActualHover('Fly away');
+      }}
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Interior view"/>
@@ -9,7 +28,7 @@ function PlaceCard(): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;80</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
@@ -21,14 +40,14 @@ function PlaceCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${rating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">Wood and stone place</a>
+          <a href="/">{title}</a>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
