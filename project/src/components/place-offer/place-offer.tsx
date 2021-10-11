@@ -8,7 +8,7 @@ type OfferScreenProps = {
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   const {offer} = props;
-  const {reviews, owner, title, images, category, rating, features, price, bonuses} = offer;
+  const {owner, title, images, category, rating, features, price, bonuses} = offer;
 
   return (
     <main className="page__main page__main--property">
@@ -97,7 +97,15 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <PlaceReviewsScreen reviews={reviews}/>
+            <PlaceReviewsScreen
+              offer={offer}
+              onCommentLoad={(proposal, comment) => {
+                // eslint-disable-next-line no-console
+                console.log(proposal);
+                // eslint-disable-next-line no-console
+                console.log(comment);
+              }}
+            />
           </div>
         </div>
         <section className="property__map map"></section>
