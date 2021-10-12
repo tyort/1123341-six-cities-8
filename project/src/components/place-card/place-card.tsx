@@ -1,5 +1,7 @@
 import {useState, MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
+import {useHistory, Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 type CardScreenProps = {
   offer: Offer;
@@ -9,6 +11,7 @@ function PlaceCard(props: CardScreenProps): JSX.Element {
   const {offer} = props;
   const {price, rating, title, type} = offer;
   const [, setActualHover] = useState('Fly away');
+  const history = useHistory();
 
   return (
     <article
@@ -45,7 +48,11 @@ function PlaceCard(props: CardScreenProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link
+            to="/offer/:id"
+            onClick={() => history.push(AppRoute.Room)}
+          >{title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
