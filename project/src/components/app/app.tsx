@@ -34,6 +34,13 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <LoginScreen/>
         </Route>
+        {offers.map((offer) => (
+          <Route key={offer.id} exact path={`/offer/${offer.id}`}>
+            <PlaceOfferScreen
+              offer={offer}
+            />
+          </Route>
+        ))}
         <Route exact path={AppRoute.Room}>
           <PlaceOfferScreen
             offer={firstOffer}
