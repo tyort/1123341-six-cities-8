@@ -6,14 +6,15 @@ import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {Offer} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 
 type AppScreenProps = {
   offers: Offer[];
+  city: City;
 }
 
 function App(props: AppScreenProps): JSX.Element {
-  const {offers} = props;
+  const {offers, city} = props;
   const [firstOffer] = offers;
 
   return (
@@ -22,6 +23,7 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreen
             offers={offers}
+            city={city}
           />
         </Route>
         <PrivateRoute

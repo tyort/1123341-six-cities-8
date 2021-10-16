@@ -23,6 +23,13 @@ export type Coordinate = {
   longitude: number;
 }
 
+export type City = {
+  lat: number;
+  lng: number;
+  title: string;
+  zoom: number;
+}
+
 export type Offer = {
   id: string;
   city: string,

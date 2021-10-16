@@ -1,13 +1,15 @@
 import PlaceCard from '../place-card/place-card';
+import Map from '../map/map';
 import Logo from '../logo/logo';
-import {Offer} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 
 type MainScreenProps = {
   offers: Offer[];
+  city: City;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers} = props;
+  const {offers, city} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -102,9 +104,10 @@ function Main(props: MainScreenProps): JSX.Element {
                 ))}
               </div>
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+            <Map
+              offers={offers}
+              city={city}
+            />
           </div>
         </div>
       </main>

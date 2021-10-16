@@ -1,4 +1,11 @@
-import {Offer} from '../types/offer';
+import {Offer, City} from '../types/offer';
+
+export const city: City = {
+  lat: 52.37,
+  lng: 4.88,
+  title: 'Amsterdam',
+  zoom: 12,
+};
 
 export const offers: Offer[] = [
   {
