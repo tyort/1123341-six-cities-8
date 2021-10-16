@@ -4,6 +4,10 @@ export const offers: Offer[] = [
   {
     id: 'dj4j44',
     city: 'Amsterdam',
+    coordinate: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+    },
     title: 'Oh! This is awesome',
     type: 'Apartment',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
@@ -39,6 +43,10 @@ export const offers: Offer[] = [
   {
     id: 'fjejf79',
     city: 'Amsterdam',
+    coordinate: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+    },
     title: 'This is my home',
     type: 'House',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
@@ -80,6 +88,10 @@ export const offers: Offer[] = [
   {
     id: 'gfgrge4g',
     city: 'Moscow',
+    coordinate: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+    },
     title: 'Good place for sleeping',
     type: 'Room',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
@@ -128,6 +140,10 @@ export const offers: Offer[] = [
   {
     id: 'kjrmnge4g',
     city: 'Paris',
+    coordinate: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+    },
     title: 'Just like the others apartment',
     type: 'Bungalo',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
