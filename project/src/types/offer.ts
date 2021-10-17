@@ -8,6 +8,7 @@ export type Owner = {
 export type Review = {
   avatar: string;
   name: string;
+  id: string;
   setRating: string | number;
   text: string;
   date: string;
