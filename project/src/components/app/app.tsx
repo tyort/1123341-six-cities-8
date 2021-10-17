@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../main/main';
@@ -16,6 +17,17 @@ type AppScreenProps = {
 function App(props: AppScreenProps): JSX.Element {
   const {offers, city} = props;
   const [firstOffer] = offers;
+  const [hoveredCard, setHoveredCard] = useState<Offer | undefined>(undefined);
+
+  const onCardMainHover = (card: Offer | undefined): void => {
+    let currentCard: Offer | undefined = undefined;
+    if (card !== undefined) {
+      currentCard = offers.find((offer) =>
+        offer.id === card.id,
+      );
+    }
+    setHoveredCard(currentCard);
+  };
 
   return (
     <BrowserRouter>
@@ -24,6 +36,8 @@ function App(props: AppScreenProps): JSX.Element {
           <MainScreen
             offers={offers}
             city={city}
+            hoveredCard={hoveredCard}
+            onCardMainHover={onCardMainHover}
           />
         </Route>
         <PrivateRoute
