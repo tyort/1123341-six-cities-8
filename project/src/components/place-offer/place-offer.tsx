@@ -1,18 +1,16 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import Map from '../map-two/map-two';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
 
 type OfferScreenProps = {
-  offer: Offer;
-  otherOffers: Offer[];
-  city: City;
-  hoveredCard: Offer | undefined;
+  currentOffer: Offer;
+  offers: Offer[];
 }
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {offer, otherOffers, city, hoveredCard} = props;
-  const {owner, title, images, category, rating, features, price, bonuses} = offer;
+  const {currentOffer, offers} = props;
+  const {owner, title, images, category, rating, features, price, bonuses} = currentOffer;
 
   return (
     <main className="page__main page__main--property">
@@ -102,7 +100,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               </div>
             </div>
             <PlaceReviewsScreen
-              offer={offer}
+              offer={currentOffer}
               onCommentLoad={(proposal, comment) => {
                 // eslint-disable-next-line no-console
                 console.log(proposal);
@@ -113,12 +111,14 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
           </div>
         </div>
         <Map
-          offers={otherOffers}
-          city={city}
-          hoveredCard={hoveredCard}
+          offers={offers}
+          currentOffer={currentOffer}
         />
       </section>
-      <PlaceNearbyScreen/>
+      <PlaceNearbyScreen
+        offers={offers}
+        currentOffer={currentOffer}
+      />
     </main>
   );
 }
