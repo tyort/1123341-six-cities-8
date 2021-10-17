@@ -16,7 +16,6 @@ type AppScreenProps = {
 
 function App(props: AppScreenProps): JSX.Element {
   const {offers, city} = props;
-  const [firstOffer] = offers;
   const [hoveredCard, setHoveredCard] = useState<Offer | undefined>(undefined);
 
   const onCardMainHover = (card: Offer | undefined): void => {
@@ -54,14 +53,17 @@ function App(props: AppScreenProps): JSX.Element {
           <Route key={offer.id} exact path={`/offer/${offer.id}`}>
             <PlaceOfferScreen
               offer={offer}
+              city={city}
+              hoveredCard={hoveredCard}
+              otherOffers={offers.filter((item) => item.id !== offer.id)}
             />
           </Route>
         ))}
-        <Route exact path={AppRoute.Room}>
+        {/* <Route exact path={AppRoute.Room}>
           <PlaceOfferScreen
             offer={firstOffer}
           />
-        </Route>
+        </Route> */}
         <Route>
           <NotFoundScreen/>
         </Route>
