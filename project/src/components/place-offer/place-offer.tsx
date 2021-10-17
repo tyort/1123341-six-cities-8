@@ -1,13 +1,17 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
-import {Offer} from '../../types/offer';
+import Map from '../map-two/map-two';
+import {Offer, City} from '../../types/offer';
 
 type OfferScreenProps = {
   offer: Offer;
+  otherOffers: Offer[];
+  city: City;
+  hoveredCard: Offer | undefined;
 }
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {offer} = props;
+  const {offer, otherOffers, city, hoveredCard} = props;
   const {owner, title, images, category, rating, features, price, bonuses} = offer;
 
   return (
@@ -108,7 +112,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             />
           </div>
         </div>
-        <section className="property__map map"></section>
+        <Map
+          offers={otherOffers}
+          city={city}
+          hoveredCard={hoveredCard}
+        />
       </section>
       <PlaceNearbyScreen/>
     </main>
