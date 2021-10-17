@@ -6,22 +6,23 @@ import {Offer, City} from '../../types/offer';
 type MapScreenProps = {
   offers: Offer[];
   city: City;
+  hoveredCard: Offer | undefined;
 }
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [27, 39],
-  iconAnchor: [13, 39],
+  iconAnchor: [13.5, 39],
 });
 
-// const currentCustomIcon = leaflet.icon({
-//   iconUrl: 'img/pin-active.svg',
-//   iconSize: [27, 39],
-//   iconAnchor: [13, 39],
-// });
+const currentCustomIcon = leaflet.icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
+});
 
 function MapScreen(props: MapScreenProps): JSX.Element {
-  const {offers, city} = props;
+  const {offers, city, hoveredCard} = props;
   const [currentMap, setMap] = useState<leaflet.Map | null>(null);
 
   // связываем React c DOM-элементом(куда отрендерить карту)
@@ -41,7 +42,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
           lat: city.lat,
           lng: city.lng,
         },
-        zoom: city.lng,
+        zoom: city.zoom,
       });
 
       // Подключаем определенный слой карты
@@ -66,20 +67,23 @@ function MapScreen(props: MapScreenProps): JSX.Element {
           .marker({
             lat: coordinate.latitude,
             lng: coordinate.longitude,
-          }, {
-            icon: defaultCustomIcon,
           })
+          .setIcon(
+            hoveredCard !== undefined && offer.id === hoveredCard.id
+              ? currentCustomIcon
+              : defaultCustomIcon,
+          )
           .addTo(currentMap);
       });
     }
-  }, [currentMap, offers]);
+  }, [currentMap, offers, hoveredCard]);
 
 
   return (
     <div className="cities__right-section">
       <section
         className="cities__map map"
-        style={{height: '500px'}}
+        style={{height: '700px'}}
         ref={mapRef}
       >
       </section>

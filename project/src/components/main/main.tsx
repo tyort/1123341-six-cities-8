@@ -6,10 +6,12 @@ import {Offer, City} from '../../types/offer';
 type MainScreenProps = {
   offers: Offer[];
   city: City;
+  onCardMainHover: (card: Offer | undefined) => void;
+  hoveredCard: Offer | undefined;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city} = props;
+  const {offers, city, hoveredCard, onCardMainHover} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -100,6 +102,7 @@ function Main(props: MainScreenProps): JSX.Element {
                   <PlaceCard
                     key={place.id}
                     offer={place}
+                    onCardMainHover={onCardMainHover}
                   />
                 ))}
               </div>
@@ -107,6 +110,7 @@ function Main(props: MainScreenProps): JSX.Element {
             <Map
               offers={offers}
               city={city}
+              hoveredCard={hoveredCard}
             />
           </div>
         </div>
