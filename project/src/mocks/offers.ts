@@ -1,8 +1,8 @@
 import {Offer, City} from '../types/offer';
 
 export const city: City = {
-  lat: 52.37,
-  lng: 4.88,
+  latitude: 52.37,
+  longitude: 4.88,
   title: 'Amsterdam',
   zoom: 12,
 };
