@@ -52,10 +52,8 @@ function App(props: AppScreenProps): JSX.Element {
         {offers.map((offer) => (
           <Route key={offer.id} exact path={`/offer/${offer.id}`}>
             <PlaceOfferScreen
-              offer={offer}
-              city={city}
-              hoveredCard={hoveredCard}
-              otherOffers={offers.filter((item) => item.id !== offer.id)}
+              currentOffer={offer}
+              offers={offers}
             />
           </Route>
         ))}

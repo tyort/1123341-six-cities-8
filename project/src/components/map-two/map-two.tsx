@@ -1,12 +1,11 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useState, useRef, useEffect} from 'react';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
 
 type MapScreenProps = {
   offers: Offer[];
-  city: City;
-  hoveredCard: Offer | undefined;
+  currentOffer: Offer;
 }
 
 const defaultCustomIcon = leaflet.icon({
@@ -22,7 +21,7 @@ const currentCustomIcon = leaflet.icon({
 });
 
 function MapScreen(props: MapScreenProps): JSX.Element {
-  const {offers, city, hoveredCard} = props;
+  const {offers, currentOffer} = props;
   const [currentMap, setMap] = useState<leaflet.Map | null>(null);
   const mapRef = useRef<HTMLElement | null>(null);
 
@@ -30,10 +29,10 @@ function MapScreen(props: MapScreenProps): JSX.Element {
     if (mapRef.current !== null && currentMap === null) {
       const mapInstance = leaflet.map(mapRef.current, {
         center: {
-          lat: city.lat,
-          lng: city.lng,
+          lat: currentOffer.coordinate.latitude,
+          lng: currentOffer.coordinate.longitude,
         },
-        zoom: city.zoom,
+        zoom: 12,
       });
 
       leaflet
@@ -47,7 +46,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
 
       setMap(mapInstance);
     }
-  }, [mapRef, currentMap, city]);
+  }, [mapRef, currentMap, currentOffer]);
 
   useEffect(() => {
     if (currentMap) {
@@ -59,14 +58,14 @@ function MapScreen(props: MapScreenProps): JSX.Element {
             lng: coordinate.longitude,
           })
           .setIcon(
-            hoveredCard !== undefined && offer.id === hoveredCard.id
+            offer.id === currentOffer.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
           .addTo(currentMap);
       });
     }
-  }, [currentMap, offers, hoveredCard]);
+  }, [currentMap, currentOffer, offers]);
 
 
   return (
