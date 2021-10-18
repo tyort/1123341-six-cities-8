@@ -1,32 +1,57 @@
-function PlaceReviewsScreen(): JSX.Element {
+import {useState, FormEvent, ChangeEvent} from 'react';
+import {Offer} from '../../types/offer';
+
+type ReviewScreenProps = {
+  offer: Offer;
+  onCommentLoad: (offer: Offer, comment: string) => void;
+}
+
+function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
+  const {offer, onCommentLoad} = props;
+  const {reviews} = offer;
+  const [userComment, setUserComment] = useState('');
+
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
       <ul className="reviews__list">
-        <li className="reviews__item">
-          <div className="reviews__user user">
-            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-              <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-            </div>
-            <span className="reviews__user-name">
-              Max
-            </span>
-          </div>
-          <div className="reviews__info">
-            <div className="reviews__rating rating">
-              <div className="reviews__stars rating__stars">
-                <span style={{width: '80%'}}></span>
-                <span className="visually-hidden">Rating</span>
+        {reviews.map((review, index) => {
+          const keyValue = `${index}-${review.avatar}`;
+          return (
+            <li key={keyValue} className="reviews__item">
+              <div className="reviews__user user">
+                <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                  <img className="reviews__avatar user__avatar" src={`img/${review.avatar}`} width="54" height="54" alt="Reviews avatar"/>
+                </div>
+                <span className="reviews__user-name">
+                  {review.name}
+                </span>
               </div>
-            </div>
-            <p className="reviews__text">
-              A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-            </p>
-            <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-          </div>
-        </li>
+              <div className="reviews__info">
+                <div className="reviews__rating rating">
+                  <div className="reviews__stars rating__stars">
+                    <span style={{width: `${review.setRating}%`}}></span>
+                    <span className="visually-hidden">Rating</span>
+                  </div>
+                </div>
+                <p className="reviews__text">
+                  {review.text}
+                </p>
+                <time className="reviews__time" dateTime={`${review.date}`}>{review.date}</time>
+              </div>
+            </li>
+          );
+        })}
       </ul>
-      <form className="reviews__form form" action="#" method="post">
+      <form
+        className="reviews__form form"
+        action="#"
+        method="post"
+        onSubmit={(evt: FormEvent<HTMLFormElement>) => {
+          evt.preventDefault();
+          onCommentLoad(offer, userComment);
+        }}
+      >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
@@ -64,12 +89,21 @@ function PlaceReviewsScreen(): JSX.Element {
             </svg>
           </label>
         </div>
-        <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+        <textarea
+          className="reviews__textarea form__textarea"
+          id="review"
+          name="review"
+          placeholder="Tell how was your stay, what you like and what can be improved"
+          onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => {
+            setUserComment(evt.target.value);
+          }}
+        >
+        </textarea>
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+          <button className="reviews__submit form__submit button" type="submit">Submit</button>
         </div>
       </form>
     </section>

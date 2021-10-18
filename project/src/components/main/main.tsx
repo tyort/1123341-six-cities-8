@@ -1,12 +1,13 @@
 import PlaceCard from '../place-card/place-card';
 import Logo from '../logo/logo';
+import {Offer} from '../../types/offer';
 
 type MainScreenProps = {
-  places: string[];
+  offers: Offer[];
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {places} = props;
+  const {offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -93,7 +94,12 @@ function Main(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {places.map((place) => <PlaceCard key={place}/>)}
+                {offers.map((place) => (
+                  <PlaceCard
+                    key={place.id}
+                    offer={place}
+                  />
+                ))}
               </div>
             </section>
             <div className="cities__right-section">
