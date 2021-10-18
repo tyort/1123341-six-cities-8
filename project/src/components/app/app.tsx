@@ -8,6 +8,10 @@ import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {Offer, City} from '../../types/offer';
+import withMap from '../../hocs/with-map/with-map';
+
+const MainScreenWrapped = withMap(MainScreen);
+const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 type AppScreenProps = {
   offers: Offer[];
@@ -32,7 +36,7 @@ function App(props: AppScreenProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen
+          <MainScreenWrapped
             isMainScreen
             offers={offers}
             city={city}
@@ -52,18 +56,13 @@ function App(props: AppScreenProps): JSX.Element {
         </Route>
         {offers.map((offer) => (
           <Route key={offer.id} exact path={`/offer/${offer.id}`}>
-            <PlaceOfferScreen
+            <PlaceOfferScreenWrapped
               currentOffer={offer}
               offers={offers}
               isMainScreen={false}
             />
           </Route>
         ))}
-        {/* <Route exact path={AppRoute.Room}>
-          <PlaceOfferScreen
-            offer={firstOffer}
-          />
-        </Route> */}
         <Route>
           <NotFoundScreen/>
         </Route>

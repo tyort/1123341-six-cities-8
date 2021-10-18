@@ -1,5 +1,4 @@
 import PlaceCard from '../place-card/place-card';
-import Map from '../map/map';
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
 
@@ -9,10 +8,16 @@ type MainScreenProps = {
   onCardMainHover: (card: Offer | undefined) => void;
   hoveredCard: Offer | undefined;
   isMainScreen: boolean;
+  renderMap: (
+    currentOffer: Offer | undefined,
+    isMainScreen: boolean,
+    offers: Offer[],
+    center: City,
+  ) => JSX.Element;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city, hoveredCard, onCardMainHover, isMainScreen} = props;
+  const {offers, city, hoveredCard, onCardMainHover, isMainScreen, renderMap} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -109,12 +114,7 @@ function Main(props: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <Map
-                currentOffer={hoveredCard}
-                isMainScreen={isMainScreen}
-                offers={offers}
-                center={city}
-              />
+              {renderMap(hoveredCard, isMainScreen, offers, city)}
             </div>
           </div>
         </div>
