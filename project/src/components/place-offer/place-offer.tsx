@@ -1,6 +1,7 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer, Coordinate} from '../../types/offer';
+import withHoveredCard from '../../hocs/with-hovered-card/with-hovered-card';
 
 type OfferScreenProps = {
   currentOffer: Offer;
@@ -13,6 +14,8 @@ type OfferScreenProps = {
     center: Coordinate,
   ) => JSX.Element;
 }
+
+const PlaceNearbyScreenWrapped = withHoveredCard(PlaceNearbyScreen);
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   const {currentOffer, offers, isMainScreen, renderMap} = props;
@@ -118,9 +121,10 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
         </div>
         {renderMap(currentOffer, isMainScreen, offers, currentOffer.coordinate)}
       </section>
-      <PlaceNearbyScreen
+      <PlaceNearbyScreenWrapped
         offers={offers}
         currentOffer={currentOffer}
+        isMainScreen={isMainScreen}
       />
     </main>
   );
