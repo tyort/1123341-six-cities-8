@@ -1,28 +1,19 @@
-import {MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
 import {useHistory, Link} from 'react-router-dom';
-// import {AppRoute} from '../../const';
 
 type CardScreenProps = {
   offer: Offer;
-  onCardMainHover: (card: Offer | undefined) => void;
   isMainScreen: boolean
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
-  const {offer, onCardMainHover, isMainScreen} = props;
+  const {offer, isMainScreen} = props;
   const {price, rating, title, type} = offer;
   const history = useHistory();
 
   return (
     <article
       className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
-      onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
-        onCardMainHover(offer);
-      }}
-      onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
-        onCardMainHover(undefined);
-      }}
     >
       <div className={`${isMainScreen
         ? 'cities__image-wrapper'
