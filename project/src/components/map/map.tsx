@@ -1,20 +1,22 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import {Offer, City} from '../../types/offer';
+import {Offer, City, Coordinate} from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import {currentCustomIcon, defaultCustomIcon} from '../../const';
 
 type MapScreenProps = {
   offers: Offer[];
-  city: City;
-  hoveredCard: Offer | undefined;
+  center: City | Coordinate;
+  isMainScreen: boolean;
+  currentOffer: Offer | undefined;
 }
 
 function MapScreen(props: MapScreenProps): JSX.Element {
-  const {offers, city, hoveredCard} = props;
+  // currentOffer - выбранная карточка на главной странице и представленная в place-offer
+  const {offers, center, isMainScreen, currentOffer} = props;
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
-  const currentMap = useMap(mapRef, city);
+  const currentMap = useMap(mapRef, center);
 
   useEffect(() => {
     if (currentMap) {
@@ -26,25 +28,23 @@ function MapScreen(props: MapScreenProps): JSX.Element {
             lng: coordinate.longitude,
           })
           .setIcon(
-            hoveredCard !== undefined && offer.id === hoveredCard.id
+            currentOffer !== undefined && offer.id === currentOffer.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
           .addTo(currentMap);
       });
     }
-  }, [currentMap, offers, hoveredCard]);
 
+  }, [currentMap, offers, currentOffer]);
 
   return (
-    <div className="cities__right-section">
-      <section
-        className="cities__map map"
-        style={{height: '700px'}}
-        ref={mapRef}
-      >
-      </section>
-    </div>
+    <section
+      className={`${isMainScreen ? 'cities__map' : 'property__map'} map`}
+      style={{height: '700px'}}
+      ref={mapRef}
+    >
+    </section>
   );
 }
 
