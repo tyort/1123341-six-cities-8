@@ -1,13 +1,14 @@
 import {Offer} from '../../types/offer';
-import NextDoorScreen from '../next-door/next-door';
 
 type NearbyScreenProps = {
   offers: Offer[];
   currentOffer: Offer;
+  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  isMainScreen: boolean;
 }
 
 function PlaceNearbyScreen(props: NearbyScreenProps): JSX.Element {
-  const {offers, currentOffer} = props;
+  const {offers, currentOffer, renderCard, isMainScreen} = props;
 
   return (
     <div className="container">
@@ -17,10 +18,7 @@ function PlaceNearbyScreen(props: NearbyScreenProps): JSX.Element {
           {offers
             .filter((offer) => offer.id !== currentOffer.id)
             .map((offer) => (
-              <NextDoorScreen
-                key={offer.id}
-                offer={offer}
-              />
+              renderCard(offer, isMainScreen)
             ))
             .slice(0, 3)}
         </div>
