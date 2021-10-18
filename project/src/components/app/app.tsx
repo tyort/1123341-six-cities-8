@@ -33,6 +33,7 @@ function App(props: AppScreenProps): JSX.Element {
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreen
+            isMainScreen
             offers={offers}
             city={city}
             hoveredCard={hoveredCard}
@@ -54,6 +55,7 @@ function App(props: AppScreenProps): JSX.Element {
             <PlaceOfferScreen
               currentOffer={offer}
               offers={offers}
+              isMainScreen={false}
             />
           </Route>
         ))}
