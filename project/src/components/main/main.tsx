@@ -8,10 +8,11 @@ type MainScreenProps = {
   city: City;
   onCardMainHover: (card: Offer | undefined) => void;
   hoveredCard: Offer | undefined;
+  isMainScreen: boolean;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city, hoveredCard, onCardMainHover} = props;
+  const {offers, city, hoveredCard, onCardMainHover, isMainScreen} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -107,11 +108,14 @@ function Main(props: MainScreenProps): JSX.Element {
                 ))}
               </div>
             </section>
-            <Map
-              offers={offers}
-              city={city}
-              hoveredCard={hoveredCard}
-            />
+            <div className="cities__right-section">
+              <Map
+                currentOffer={hoveredCard}
+                isMainScreen={isMainScreen}
+                offers={offers}
+                center={city}
+              />
+            </div>
           </div>
         </div>
       </main>

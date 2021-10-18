@@ -1,15 +1,16 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
-import Map from '../map-two/map-two';
+import Map from '../map/map';
 import {Offer} from '../../types/offer';
 
 type OfferScreenProps = {
   currentOffer: Offer;
   offers: Offer[];
+  isMainScreen: boolean
 }
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {currentOffer, offers} = props;
+  const {currentOffer, offers, isMainScreen} = props;
   const {owner, title, images, category, rating, features, price, bonuses} = currentOffer;
 
   return (
@@ -111,6 +112,8 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
           </div>
         </div>
         <Map
+          center={currentOffer.coordinate}
+          isMainScreen={isMainScreen}
           offers={offers}
           currentOffer={currentOffer}
         />
