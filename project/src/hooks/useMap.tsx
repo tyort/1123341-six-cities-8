@@ -3,10 +3,7 @@ import {Map, TileLayer} from 'leaflet';
 import {City, Coordinate} from '../types/offer';
 import {MAP_ZOOM} from '../const';
 
-function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  center: City | Coordinate,
-): Map | null {
+function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City | Coordinate): Map | null {
   const [currentMap, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
