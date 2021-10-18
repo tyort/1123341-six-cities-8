@@ -22,6 +22,9 @@ function App(props: AppScreenProps): JSX.Element {
   const {offers, city} = props;
   const [hoveredCard, setHoveredCard] = useState<Offer | undefined>(undefined);
 
+  // в компоненте карточки запускается onCardMainHover
+  // Это карточка попадает в стейт
+  // Этот стейт надо как-то передать Main
   const onCardMainHover = (card: Offer | undefined): void => {
     let currentCard: Offer | undefined = undefined;
     if (card !== undefined) {
