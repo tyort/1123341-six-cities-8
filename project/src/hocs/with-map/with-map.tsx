@@ -25,15 +25,14 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
         {...props as T}
 
         renderMap={(
-          currentOffer: Offer | undefined,
+          currentOffer: Offer | undefined, // при прорисовке main, передаем сначала undefined
           isMainScreen: boolean,
           offers: Offer[],
           center: City | Coordinate,
         ) => (
           <Map
             // на карте главной страницы будем перекрашивать актуальный маркер
-            // ????? Проблема в main. Там нужен и currentOffer и hoveredCard
-            currentOffer={isMainScreen ? currentOffer : currentOffer}
+            currentOffer={isMainScreen ? hoveredCard : currentOffer}
             isMainScreen={isMainScreen}
             offers={offers}
             center={center}

@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../main/main';
@@ -20,16 +19,6 @@ type AppScreenProps = {
 
 function App(props: AppScreenProps): JSX.Element {
   const {offers, city} = props;
-  const [hoveredCard, setHoveredCard] = useState<Offer | undefined>(undefined);
-
-  // в компоненте карточки запускается onCardMainHover
-  // Это карточка попадает в стейт
-  // Этот стейт надо как-то передать Main
-  const onCardMainHover = (card: Offer | undefined): void => {
-    if (JSON.stringify(card) !== JSON.stringify(hoveredCard)) {
-      setHoveredCard(card);
-    }
-  };
 
   return (
     <BrowserRouter>
@@ -39,8 +28,6 @@ function App(props: AppScreenProps): JSX.Element {
             isMainScreen
             offers={offers}
             city={city}
-            hoveredCard={hoveredCard}
-            onCardMainHover={onCardMainHover}
           />
         </Route>
         <PrivateRoute
