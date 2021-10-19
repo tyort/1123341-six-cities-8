@@ -1,12 +1,12 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer, Coordinate} from '../../types/offer';
-import withMap from '../../hocs/with-map/with-map';
 
 type OfferScreenProps = {
   currentOffer: Offer;
   offers: Offer[];
   isMainScreen: boolean;
+  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer,
     isMainScreen: boolean,
@@ -15,10 +15,8 @@ type OfferScreenProps = {
   ) => JSX.Element;
 }
 
-const PlaceNearbyScreenWrapped = withMap(PlaceNearbyScreen);
-
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {currentOffer, offers, isMainScreen, renderMap} = props;
+  const {currentOffer, offers, isMainScreen, renderMap, renderCard} = props;
   const {owner, title, images, category, rating, features, price, bonuses} = currentOffer;
 
   return (
@@ -121,10 +119,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
         </div>
         {renderMap(currentOffer, isMainScreen, offers, currentOffer.coordinate)}
       </section>
-      <PlaceNearbyScreenWrapped
+      <PlaceNearbyScreen
         offers={offers}
         currentOffer={currentOffer}
         isMainScreen={isMainScreen}
+        renderCard={renderCard}
       />
     </main>
   );
