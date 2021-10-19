@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {ComponentType} from 'react';
 import Map from '../../components/map/map';
-import OfferCard from '../../components/place-card/place-card';
+import OfferCard from '../../components/offer-card/offer-card';
 import {Offer, City, Coordinate} from '../../types/offer';
 
 type HOCProps = {
@@ -44,7 +44,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
             offer={offer}
             isMainScreen={isMainScreen}
             onCardMainHover={(card: Offer | undefined): void => {
-              if (JSON.stringify(card) !== JSON.stringify(hoveredCard)) {
+              if (JSON.stringify(card) !== JSON.stringify(hoveredCard) && isMainScreen) {
                 setHoveredCard(card);
               }
             }}
