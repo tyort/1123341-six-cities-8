@@ -26,13 +26,9 @@ function App(props: AppScreenProps): JSX.Element {
   // Это карточка попадает в стейт
   // Этот стейт надо как-то передать Main
   const onCardMainHover = (card: Offer | undefined): void => {
-    let currentCard: Offer | undefined = undefined;
-    if (card !== undefined) {
-      currentCard = offers.find((offer) =>
-        offer.id === card.id,
-      );
+    if (JSON.stringify(card) !== JSON.stringify(hoveredCard)) {
+      setHoveredCard(card);
     }
-    setHoveredCard(currentCard);
   };
 
   return (
