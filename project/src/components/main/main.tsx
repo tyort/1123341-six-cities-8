@@ -106,6 +106,7 @@ function Main(props: MainScreenProps): JSX.Element {
               <div className="cities__places-list places__list tabs__content">
                 {offers.map((place) => (
                   <PlaceCard
+                    isMainScreen={isMainScreen}
                     key={place.id}
                     offer={place}
                     onCardMainHover={onCardMainHover}
