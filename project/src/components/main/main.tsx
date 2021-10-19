@@ -104,11 +104,11 @@ function Main(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((place) => (
+                {offers.map((offer) => (
                   <PlaceCard
                     isMainScreen={isMainScreen}
-                    key={place.id}
-                    offer={place}
+                    key={offer.id}
+                    offer={offer}
                     onCardMainHover={onCardMainHover}
                   />
                 ))}
