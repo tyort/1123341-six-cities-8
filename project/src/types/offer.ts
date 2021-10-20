@@ -18,9 +18,22 @@ export type Feature = {
   addition: string;
 }
 
+export type Coordinate = {
+  latitude: number;
+  longitude: number;
+}
+
+export type City = {
+  lat: number;
+  lng: number;
+  title: string;
+  zoom: number;
+}
+
 export type Offer = {
   id: string;
   city: string,
+  coordinate: Coordinate,
   title: string;
   type: string;
   images: string[];

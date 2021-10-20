@@ -1,26 +1,26 @@
-import {useState, MouseEvent} from 'react';
+import {MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
 import {useHistory, Link} from 'react-router-dom';
 // import {AppRoute} from '../../const';
 
 type CardScreenProps = {
   offer: Offer;
+  onCardMainHover: (card: Offer | undefined) => void;
 }
 
 function PlaceCard(props: CardScreenProps): JSX.Element {
-  const {offer} = props;
+  const {offer, onCardMainHover} = props;
   const {price, rating, title, type} = offer;
-  const [, setActualHover] = useState('Fly away');
   const history = useHistory();
 
   return (
     <article
       className="cities__place-card place-card"
       onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
-        setActualHover('Hover');
+        onCardMainHover(offer);
       }}
       onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
-        setActualHover('Fly away');
+        onCardMainHover(undefined);
       }}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">

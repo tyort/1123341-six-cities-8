@@ -1,13 +1,17 @@
 import PlaceCard from '../place-card/place-card';
+import Map from '../map/map';
 import Logo from '../logo/logo';
-import {Offer} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 
 type MainScreenProps = {
   offers: Offer[];
+  city: City;
+  onCardMainHover: (card: Offer | undefined) => void;
+  hoveredCard: Offer | undefined;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers} = props;
+  const {offers, city, hoveredCard, onCardMainHover} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -98,13 +102,16 @@ function Main(props: MainScreenProps): JSX.Element {
                   <PlaceCard
                     key={place.id}
                     offer={place}
+                    onCardMainHover={onCardMainHover}
                   />
                 ))}
               </div>
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+            <Map
+              offers={offers}
+              city={city}
+              hoveredCard={hoveredCard}
+            />
           </div>
         </div>
       </main>
