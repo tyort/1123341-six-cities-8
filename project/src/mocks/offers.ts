@@ -1,5 +1,19 @@
 import {Offer, City} from '../types/offer';
 
+export const cities: City[] = [
+  {
+    latitude: 52.38,
+    longitude: 4.9,
+    title: 'Amsterdam',
+    zoom: 12,
+  }, {
+    latitude: 48.86,
+    longitude: 2.35,
+    title: 'Paris',
+    zoom: 12,
+  },
+];
+
 export const city: City = {
   latitude: 52.37,
   longitude: 4.88,
