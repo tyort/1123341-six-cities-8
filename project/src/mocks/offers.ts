@@ -14,13 +14,6 @@ export const cities: City[] = [
   },
 ];
 
-export const city: City = {
-  latitude: 52.37,
-  longitude: 4.88,
-  title: 'Amsterdam',
-  zoom: 12,
-};
-
 export const offers: Offer[] = [
   {
     id: 'dj4j44',

@@ -1,12 +1,11 @@
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
-import {cities} from '../../const';
 import CityScreen from '../city/city';
 import {nanoid} from 'nanoid';
 
 type MainScreenProps = {
   offers: Offer[];
-  city: City;
+  cities: City[];
   isMainScreen: boolean;
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
@@ -18,7 +17,13 @@ type MainScreenProps = {
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city, isMainScreen, renderMap, renderCard} = props;
+  const {offers, cities, isMainScreen, renderMap, renderCard} = props;
+  const cityAmsterdam = {
+    latitude: 52.38,
+    longitude: 4.9,
+    title: 'Amsterdam',
+    zoom: 12,
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -54,7 +59,7 @@ function Main(props: MainScreenProps): JSX.Element {
               {cities.map((town) => (
                 <CityScreen
                   key={nanoid(10)}
-                  city={town}
+                  city={town.title}
                 />
               ))}
             </ul>
@@ -87,7 +92,7 @@ function Main(props: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              {renderMap(undefined, isMainScreen, offers, city)}
+              {renderMap(undefined, isMainScreen, offers, cityAmsterdam)}
             </div>
           </div>
         </div>

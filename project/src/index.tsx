@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
-import {offers, city} from './mocks/offers';
+import {offers, cities} from './mocks/offers';
 import {reducer} from './store/reducer';
 
 const store = createStore(
@@ -17,7 +17,7 @@ ReactDOM.render(
     <Provider store = {store}>
       <App
         offers={offers}
-        city={city}
+        cities={cities}
       />
     </Provider>
   </React.StrictMode>,

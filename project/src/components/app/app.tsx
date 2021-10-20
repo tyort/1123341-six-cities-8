@@ -14,11 +14,11 @@ const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 type AppScreenProps = {
   offers: Offer[];
-  city: City;
+  cities: City[];
 }
 
 function App(props: AppScreenProps): JSX.Element {
-  const {offers, city} = props;
+  const {offers, cities} = props;
 
   return (
     <BrowserRouter>
@@ -27,7 +27,7 @@ function App(props: AppScreenProps): JSX.Element {
           <MainScreenWrapped
             isMainScreen
             offers={offers}
-            city={city}
+            cities={cities}
           />
         </Route>
         <PrivateRoute
