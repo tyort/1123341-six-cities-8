@@ -1,5 +1,6 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
+import {nanoid} from 'nanoid';
 import {Offer} from '../../types/offer';
 
 type OfferScreenProps = {
@@ -15,14 +16,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {images.map((image, index) => {
-              const keyValue = `${index}-${image}`;
-              return (
-                <div key={keyValue} className="property__image-wrapper">
-                  <img className="property__image" src={`img/${image}`} alt="View studio"/>
-                </div>
-              );
-            })}
+            {images.map((image) => (
+              <div key={nanoid(10)} className="property__image-wrapper">
+                <img className="property__image" src={`img/${image}`} alt="View studio"/>
+              </div>
+            ))}
           </div>
         </div>
         <div className="property__container container">
@@ -49,14 +47,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               <span className="property__rating-value rating__value">{rating}</span>
             </div>
             <ul className="property__features">
-              {features.map((feature, index) => {
-                const keyValue = `${index}-${feature.addition}`;
-                return (
-                  <li key={keyValue} className={`property__feature property__feature--${feature.addition}`}>
-                    {feature.title}
-                  </li>
-                );
-              })}
+              {features.map((feature) => (
+                <li key={nanoid(10)} className={`property__feature property__feature--${feature.addition}`}>
+                  {feature.title}
+                </li>
+              ))}
             </ul>
             <div className="property__price">
               <b className="property__price-value">&euro;{price}</b>
@@ -65,14 +60,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                {bonuses.map((bonus, index) => {
-                  const keyValue = `${index}-${bonus}`;
-                  return (
-                    <li key={keyValue} className="property__inside-item">
-                      {bonus}
-                    </li>
-                  );
-                })}
+                {bonuses.map((bonus) => (
+                  <li key={nanoid(10)} className="property__inside-item">
+                    {bonus}
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="property__host">
