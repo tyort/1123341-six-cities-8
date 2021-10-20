@@ -1,5 +1,8 @@
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
+import {cities} from '../../const';
+import CityScreen from '../city/city';
+import {nanoid} from 'nanoid';
 
 type MainScreenProps = {
   offers: Offer[];
@@ -48,36 +51,12 @@ function Main(props: MainScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {cities.map((town) => (
+                <CityScreen
+                  key={nanoid(10)}
+                  city={town}
+                />
+              ))}
             </ul>
           </section>
         </div>
