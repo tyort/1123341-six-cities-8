@@ -16,6 +16,46 @@ export const cities: City[] = [
 
 export const offers: Offer[] = [
   {
+    id: 'dj4jehd73444',
+    city: 'Paris',
+    coordinate: {
+      latitude: 48.86421901300297,
+      longitude: 2.3223515250101356,
+    },
+    title: 'Oh! This is awesome',
+    type: 'Apartment',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Premium',
+    rating: 9.8,
+    features: [
+      {
+        title: 'High ceilings',
+        addition: 'ceilings',
+      }, {
+        title: '4 bedrooms',
+        addition: 'bedrooms',
+      },
+    ],
+    price: 333,
+    bonuses: ['Wi-Fi', 'Kitchen'],
+    owner: {
+      name: 'Patrick Bateman',
+      avatar: 'avatar-angelina.jpg',
+      status: 'Pro',
+      text: 'The building is green and from 18th century.',
+    },
+    reviews: [
+      {
+        avatar: 'avatar-angelina.jpg',
+        name: 'Jordan',
+        id: 'fvkrkf8442',
+        setRating: 80,
+        text: 'I can`t sleep, man',
+        date: '2019-04-24',
+      },
+    ],
+  },
+  {
     id: 'dj4j44',
     city: 'Amsterdam',
     coordinate: {
