@@ -8,15 +8,20 @@ const CITY_DEFAULT = {
   title: 'Paris',
   zoom: 12,
 };
-const initialState = {city: CITY_DEFAULT, offersList: offers}; // Начальное значение {объект города, массив списка предложений}
 
-// Возвращает и принимает в качестве стейта === {объект города, массив списка предложений}
+// Начальное значение {объект города, массив списка предложений}
+const initialState = {city: CITY_DEFAULT, offersList: offers};
+
+// Возвращает и принимает в качестве
+//               state: {объект города, массив списка предложений}
+//               action: {тип возвращаемого объекта от store/action}
+// ..............return: {объект города, массив списка предложений}
 const reducer = (state: State = initialState, action: ActionsType): State => {
+  const offersList = offers.filter((item) => item.city === state.city.title);
+
   switch (action.type) {
     case ActionName.ChangeCity:
-      return {...state};
-    case ActionName.UpdateOffers:
-      return {...state};
+      return {...state, city: state.city, offersList};
     default:
       return state;
   }

@@ -1,14 +1,10 @@
 export enum ActionName {
   ChangeCity = 'offers/changeCity',
-  UpdateOffers = 'game/updateOffers',
 }
 
 export type ChangeCityActionType = {
   type: ActionName.ChangeCity;
+  payload: string;
 };
 
-export type UpdateOffersActionType = {
-  type: ActionName.UpdateOffers;
-};
-
-export type ActionsType = ChangeCityActionType | UpdateOffersActionType;
+export type ActionsType = ChangeCityActionType;
