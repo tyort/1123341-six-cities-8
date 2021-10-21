@@ -26,7 +26,6 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
             isMainScreen
-            offers={offers}
             cities={cities}
           />
         </Route>

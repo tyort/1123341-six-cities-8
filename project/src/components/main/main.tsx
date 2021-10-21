@@ -1,10 +1,14 @@
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {ActionsType} from '../../types/action';
+import {ChangeCityAction} from '../../store/action';
+import {State} from '../../types/state';
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
 import CityScreen from '../city/city';
 import {nanoid} from 'nanoid';
 
 type MainScreenProps = {
-  offers: Offer[];
   cities: City[];
   isMainScreen: boolean;
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
@@ -16,14 +20,40 @@ type MainScreenProps = {
   ) => JSX.Element;
 }
 
-function Main(props: MainScreenProps): JSX.Element {
-  const {offers, cities, isMainScreen, renderMap, renderCard} = props;
-  const cityAmsterdam = {
-    latitude: 52.38,
-    longitude: 4.9,
-    title: 'Amsterdam',
-    zoom: 12,
-  };
+// актуальные состояния данных из хранилища в одноименные пропсы компонента
+const mapStateToProps = (state: State) => ({
+  // новый пропс в компоненте
+  offers: state.offersList,
+  city: state.city,
+});
+
+// Эта функция добавит нашему компоненту пропс onCityChoose;
+const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
+  // должны передать потомку этот колбэк
+  onCityChoose(cityName: string) {
+    // ChangeCityAction - это Action из store/action;
+    dispatch(ChangeCityAction(cityName));
+  },
+});
+
+// Настраиваем "мостик" между Redux и React;
+// 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
+const connector = connect(mapStateToProps, mapDispatchToProps);
+// Выделим новые пропсы, сформированные в redux;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+// Соединим все пропсы, необходимые для кмопонента;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function Main(props: ConnectedComponentProps): JSX.Element {
+  const {
+    city,
+    offers,
+    cities,
+    isMainScreen,
+    renderMap,
+    renderCard,
+    onCityChoose,
+  } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -59,7 +89,8 @@ function Main(props: MainScreenProps): JSX.Element {
               {cities.map((town) => (
                 <CityScreen
                   key={nanoid(10)}
-                  city={town.title}
+                  cityTitle={town.title}
+                  onCityChoose={onCityChoose}
                 />
               ))}
             </ul>
@@ -92,7 +123,7 @@ function Main(props: MainScreenProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              {renderMap(undefined, isMainScreen, offers, cityAmsterdam)}
+              {renderMap(undefined, isMainScreen, offers, city)}
             </div>
           </div>
         </div>

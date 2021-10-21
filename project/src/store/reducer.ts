@@ -1,5 +1,5 @@
 import {ActionsType, ActionName} from '../types/action';
-import {offers} from '../mocks/offers';
+import {offers, cities} from '../mocks/offers';
 import {State} from '../types/state';
 
 const CITY_DEFAULT = {
@@ -17,11 +17,12 @@ const initialState = {city: CITY_DEFAULT, offersList: offers};
 //               action: {тип возвращаемого объекта от store/action}
 // ..............return: {объект города, массив списка предложений}
 const reducer = (state: State = initialState, action: ActionsType): State => {
-  const offersList = offers.filter((item) => item.city === state.city.title);
+  const offersList = offers.filter((item) => item.city === action.payload);
+  const city = cities.find((town) => town.title === action.payload) || CITY_DEFAULT;
 
   switch (action.type) {
     case ActionName.ChangeCity:
-      return {...state, city: state.city, offersList};
+      return {...state, city, offersList};
     default:
       return state;
   }
