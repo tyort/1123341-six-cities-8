@@ -3,7 +3,7 @@ import {
   ChangeCityActionType
 } from '../types/action';
 
-export const incrementMistake = (cityName: string): ChangeCityActionType => ({
+export const ChangeCityAction = (cityName: string): ChangeCityActionType => ({
   type: ActionName.ChangeCity,
   payload: cityName,
 });
