@@ -2,6 +2,7 @@ import {ActionsType, ActionName} from '../types/action';
 import {offers, cities} from '../mocks/offers';
 import {State} from '../types/state';
 
+const SORT_NAME_DEFAULT = 'Popular';
 const CITY_DEFAULT = {
   latitude: 48.86,
   longitude: 2.35,
@@ -9,18 +10,15 @@ const CITY_DEFAULT = {
   zoom: 12,
 };
 
-// Начальное значение {объект города, массив списка предложений}
+// Начальное значение {объект города, массив списка предложений, название сортировки}
 const initialOffers = offers.filter((item) => item.city === CITY_DEFAULT.title);
-const initialState = {city: CITY_DEFAULT, offersList: initialOffers};
+const initialState = {city: CITY_DEFAULT, offersList: initialOffers, sortName: SORT_NAME_DEFAULT};
 
-// Возвращает и принимает в качестве
 //               state: {объект города, массив списка предложений}
-//               action: {тип возвращаемого объекта от store/action}
-// ..............return: {объект города, массив списка предложений}
+//               action: {type: 'название', payload: переменная с компонента}
 const reducer = (state: State = initialState, action: ActionsType): State => {
-  const currentCityName = action.payload || CITY_DEFAULT.title;
-  const offersList = offers.filter((item) => item.city === currentCityName);
   const city = cities.find((town) => town.title === action.payload) || CITY_DEFAULT;
+  const offersList = offers.filter((item) => item.city === city.title);
 
   switch (action.type) {
     case ActionName.ChangeCity:
@@ -28,6 +26,7 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
     default:
       return state;
   }
+  //return: {объект города, массив списка предложений}
 };
 
 export {reducer};
