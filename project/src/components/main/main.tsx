@@ -56,8 +56,6 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     onCityChoose,
   } = props;
 
-  // eslint-disable-next-line no-console
-  console.log(offers);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -103,7 +101,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.title}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
