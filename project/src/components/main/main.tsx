@@ -1,17 +1,21 @@
-import PlaceCard from '../place-card/place-card';
-import Map from '../map/map';
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
 
 type MainScreenProps = {
   offers: Offer[];
   city: City;
-  onCardMainHover: (card: Offer | undefined) => void;
-  hoveredCard: Offer | undefined;
+  isMainScreen: boolean;
+  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  renderMap: (
+    currentOffer: Offer | undefined,
+    isMainScreen: boolean,
+    offers: Offer[],
+    center: City,
+  ) => JSX.Element;
 }
 
 function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city, hoveredCard, onCardMainHover} = props;
+  const {offers, city, isMainScreen, renderMap, renderCard} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -98,20 +102,14 @@ function Main(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((place) => (
-                  <PlaceCard
-                    key={place.id}
-                    offer={place}
-                    onCardMainHover={onCardMainHover}
-                  />
+                {offers.map((offer) => (
+                  renderCard(offer, isMainScreen)
                 ))}
               </div>
             </section>
-            <Map
-              offers={offers}
-              city={city}
-              hoveredCard={hoveredCard}
-            />
+            <div className="cities__right-section">
+              {renderMap(undefined, isMainScreen, offers, city)}
+            </div>
           </div>
         </div>
       </main>

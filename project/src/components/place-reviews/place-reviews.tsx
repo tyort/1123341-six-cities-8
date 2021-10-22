@@ -1,47 +1,27 @@
 import {useState, FormEvent, ChangeEvent} from 'react';
+import ReviewScreen from '../review/review';
 import {Offer} from '../../types/offer';
 
-type ReviewScreenProps = {
+type ReviewsScreenProps = {
   offer: Offer;
   onCommentLoad: (offer: Offer, comment: string) => void;
 }
 
-function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
+function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   const {offer, onCommentLoad} = props;
   const {reviews} = offer;
   const [userComment, setUserComment] = useState('');
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review, index) => {
-          const keyValue = `${index}-${review.avatar}`;
-          return (
-            <li key={keyValue} className="reviews__item">
-              <div className="reviews__user user">
-                <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                  <img className="reviews__avatar user__avatar" src={`img/${review.avatar}`} width="54" height="54" alt="Reviews avatar"/>
-                </div>
-                <span className="reviews__user-name">
-                  {review.name}
-                </span>
-              </div>
-              <div className="reviews__info">
-                <div className="reviews__rating rating">
-                  <div className="reviews__stars rating__stars">
-                    <span style={{width: `${review.setRating}%`}}></span>
-                    <span className="visually-hidden">Rating</span>
-                  </div>
-                </div>
-                <p className="reviews__text">
-                  {review.text}
-                </p>
-                <time className="reviews__time" dateTime={`${review.date}`}>{review.date}</time>
-              </div>
-            </li>
-          );
-        })}
+        {reviews.map((review) => (
+          <ReviewScreen
+            key={review.id}
+            review={review}
+          />
+        ))}
       </ul>
       <form
         className="reviews__form form"

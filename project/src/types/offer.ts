@@ -8,6 +8,7 @@ export type Owner = {
 export type Review = {
   avatar: string;
   name: string;
+  id: string;
   setRating: string | number;
   text: string;
   date: string;
@@ -24,8 +25,8 @@ export type Coordinate = {
 }
 
 export type City = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   title: string;
   zoom: number;
 }

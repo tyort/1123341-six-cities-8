@@ -1,21 +1,21 @@
 import {MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
 import {useHistory, Link} from 'react-router-dom';
-// import {AppRoute} from '../../const';
 
 type CardScreenProps = {
   offer: Offer;
   onCardMainHover: (card: Offer | undefined) => void;
+  isMainScreen: boolean;
 }
 
-function PlaceCard(props: CardScreenProps): JSX.Element {
-  const {offer, onCardMainHover} = props;
+function OfferCard(props: CardScreenProps): JSX.Element {
+  const {offer, onCardMainHover, isMainScreen} = props;
   const {price, rating, title, type} = offer;
   const history = useHistory();
 
   return (
     <article
-      className="cities__place-card place-card"
+      className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
       onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
         onCardMainHover(offer);
       }}
@@ -23,7 +23,10 @@ function PlaceCard(props: CardScreenProps): JSX.Element {
         onCardMainHover(undefined);
       }}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${isMainScreen
+        ? 'cities__image-wrapper'
+        : 'near-places__image-wrapper'} place-card__image-wrapper`}
+      >
         <a href="/">
           <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Interior view"/>
         </a>
@@ -60,6 +63,6 @@ function PlaceCard(props: CardScreenProps): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default OfferCard;
 
 

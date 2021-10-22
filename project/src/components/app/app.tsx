@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../main/main';
@@ -8,6 +7,10 @@ import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {Offer, City} from '../../types/offer';
+import withMap from '../../hocs/with-map/with-map';
+
+const MainScreenWrapped = withMap(MainScreen);
+const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 type AppScreenProps = {
   offers: Offer[];
@@ -16,28 +19,15 @@ type AppScreenProps = {
 
 function App(props: AppScreenProps): JSX.Element {
   const {offers, city} = props;
-  const [firstOffer] = offers;
-  const [hoveredCard, setHoveredCard] = useState<Offer | undefined>(undefined);
-
-  const onCardMainHover = (card: Offer | undefined): void => {
-    let currentCard: Offer | undefined = undefined;
-    if (card !== undefined) {
-      currentCard = offers.find((offer) =>
-        offer.id === card.id,
-      );
-    }
-    setHoveredCard(currentCard);
-  };
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen
+          <MainScreenWrapped
+            isMainScreen
             offers={offers}
             city={city}
-            hoveredCard={hoveredCard}
-            onCardMainHover={onCardMainHover}
           />
         </Route>
         <PrivateRoute
@@ -52,16 +42,13 @@ function App(props: AppScreenProps): JSX.Element {
         </Route>
         {offers.map((offer) => (
           <Route key={offer.id} exact path={`/offer/${offer.id}`}>
-            <PlaceOfferScreen
-              offer={offer}
+            <PlaceOfferScreenWrapped
+              currentOffer={offer}
+              offers={offers}
+              isMainScreen={false}
             />
           </Route>
         ))}
-        <Route exact path={AppRoute.Room}>
-          <PlaceOfferScreen
-            offer={firstOffer}
-          />
-        </Route>
         <Route>
           <NotFoundScreen/>
         </Route>

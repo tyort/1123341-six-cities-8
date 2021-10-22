@@ -1,15 +1,24 @@
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
+import {Offer, Coordinate} from '../../types/offer';
 import {nanoid} from 'nanoid';
-import {Offer} from '../../types/offer';
 
 type OfferScreenProps = {
-  offer: Offer;
+  currentOffer: Offer;
+  offers: Offer[];
+  isMainScreen: boolean;
+  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  renderMap: (
+    currentOffer: Offer,
+    isMainScreen: boolean,
+    offers: Offer[],
+    center: Coordinate,
+  ) => JSX.Element;
 }
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {offer} = props;
-  const {owner, title, images, category, rating, features, price, bonuses} = offer;
+  const {currentOffer, offers, isMainScreen, renderMap, renderCard} = props;
+  const {owner, title, images, category, rating, features, price, bonuses} = currentOffer;
 
   return (
     <main className="page__main page__main--property">
@@ -90,7 +99,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               </div>
             </div>
             <PlaceReviewsScreen
-              offer={offer}
+              offer={currentOffer}
               onCommentLoad={(proposal, comment) => {
                 // eslint-disable-next-line no-console
                 console.log(proposal);
@@ -100,9 +109,14 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             />
           </div>
         </div>
-        <section className="property__map map"></section>
+        {renderMap(currentOffer, isMainScreen, offers, currentOffer.coordinate)}
       </section>
-      <PlaceNearbyScreen/>
+      <PlaceNearbyScreen
+        offers={offers}
+        currentOffer={currentOffer}
+        isMainScreen={isMainScreen}
+        renderCard={renderCard}
+      />
     </main>
   );
 }

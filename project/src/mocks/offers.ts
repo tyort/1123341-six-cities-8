@@ -1,8 +1,8 @@
 import {Offer, City} from '../types/offer';
 
 export const city: City = {
-  lat: 52.37,
-  lng: 4.88,
+  latitude: 52.37,
+  longitude: 4.88,
   title: 'Amsterdam',
   zoom: 12,
 };
@@ -41,6 +41,7 @@ export const offers: Offer[] = [
       {
         avatar: 'avatar-angelina.jpg',
         name: 'Jordan',
+        id: 'fvkrkf8442',
         setRating: 80,
         text: 'I can`t sleep, man',
         date: '2019-04-24',
@@ -79,6 +80,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic13422.jpg',
         name: 'Mimi',
+        id: 'rkgkr442',
         setRating: 40,
         text: 'I`d been there and i like it',
         date: '2021-04-24',
@@ -86,6 +88,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic77422.jpg',
         name: 'Kori',
+        id: 'jnfb74jt9',
         setRating: 60,
         text: 'So much dust!',
         date: '2020-04-24',
@@ -124,6 +127,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic13422.jpg',
         name: 'Mimi',
+        id: 'jmfrjkgvkrkgk',
         setRating: 40,
         text: 'I`d been there and i like it',
         date: '2019-04-22',
@@ -131,6 +135,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic77422.jpg',
         name: 'Kori',
+        id: '98785jghit5',
         setRating: 60,
         text: 'So much dust!',
         date: '2019-10-24',
@@ -138,6 +143,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic77422.jpg',
         name: 'Kori',
+        id: 'j47gj4jg2kfh',
         setRating: 60,
         text: 'So much dust!',
         date: '2019-05-24',
@@ -176,6 +182,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic11122.jpg',
         name: 'Petr',
+        id: 'mn8h3g9j98g',
         setRating: 20,
         text: 'I was like in nightmare',
         date: '2021-06-14',
@@ -183,6 +190,7 @@ export const offers: Offer[] = [
       {
         avatar: 'pic47422.jpg',
         name: 'Jane',
+        id: 'hcfjfjfrivjr',
         setRating: 60,
         text: 'Give me my money back!',
         date: '2019-09-10',
