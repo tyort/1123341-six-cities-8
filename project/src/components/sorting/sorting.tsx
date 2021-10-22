@@ -1,12 +1,15 @@
 import {nanoid} from 'nanoid';
 import {sortName} from '../../const';
 
+const SORT_NAME_DEFAULT = 'Popular';
+
 type SortingProps = {
   currentSortName: string;
+  onSortChoose: (sortName: string) => void;
 };
 
 function Sorting(props: SortingProps): JSX.Element {
-  const {currentSortName} = props;
+  const {currentSortName, onSortChoose} = props;
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -20,11 +23,16 @@ function Sorting(props: SortingProps): JSX.Element {
         {sortName.map((name) => (
           <li
             key={nanoid(10)}
+            data-sort-name={name}
             className={`places__option ${name === currentSortName
               ? 'places__option--active'
               : ''
             }`}
             tabIndex={0}
+            onClick={(evt) => {
+              evt.preventDefault();
+              onSortChoose(evt.currentTarget.dataset.sortName || SORT_NAME_DEFAULT);
+            }}
           >{name}
           </li>
         ))}
