@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
   // должны передать потомку этот колбэк
   onCityChoose(cityName: string) {
     // ChangeCityAction - это Action из store/action;
+    // Сообщаем хранилищу, что пора обновить поля, выполнив action
     dispatch(ChangeCityAction(cityName));
   },
 });
@@ -55,6 +56,8 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     onCityChoose,
   } = props;
 
+  // eslint-disable-next-line no-console
+  console.log(offers);
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -132,4 +135,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export default Main;
+export {Main};
+// Если не обернуть в коннект, то будет требовать от родителя передать пропсы,
+// которые мы сформировали через редакс
+export default connector(Main);
