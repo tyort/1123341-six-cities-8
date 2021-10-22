@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {ActionsType} from '../../types/action';
-import {ChangeCityAction} from '../../store/action';
+import {ChangeCityAction, ChangeSortNameAction} from '../../store/action';
 import {State} from '../../types/state';
 import Logo from '../logo/logo';
 import SortingScreen from '../sorting/sorting';
@@ -26,6 +26,7 @@ const mapStateToProps = (state: State) => ({
   // новый пропс в компоненте
   offers: state.offersList,
   city: state.city,
+  currentSortName: state.sortName,
 });
 
 // Эта функция добавит нашему компоненту пропс onCityChoose;
@@ -35,6 +36,10 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
     // ChangeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
     dispatch(ChangeCityAction(cityName));
+  },
+
+  onSortChoose(sortName: string) {
+    dispatch(ChangeSortNameAction(sortName));
   },
 });
 
@@ -55,6 +60,8 @@ function Main(props: ConnectedComponentProps): JSX.Element {
     renderMap,
     renderCard,
     onCityChoose,
+    currentSortName,
+    onSortChoose,
   } = props;
 
   return (
@@ -104,7 +111,8 @@ function Main(props: ConnectedComponentProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.title}</b>
               <SortingScreen
-                currentSortName={'Popular'}
+                currentSortName={currentSortName}
+                onSortChoose={onSortChoose}
               />
               <div className="cities__places-list places__list tabs__content">
                 {offers.map((offer) => (
