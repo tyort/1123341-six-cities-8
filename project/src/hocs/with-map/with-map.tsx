@@ -2,14 +2,14 @@ import {useState} from 'react';
 import {ComponentType} from 'react';
 import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
-import {Offer, City, Coordinate} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 
 type HOCProps = {
   renderMap: (
     currentOffer: Offer | undefined,
     isMainScreen: boolean,
     offers: Offer[],
-    center: City | Coordinate,
+    center: City,
   ) => void
   renderCard: (offer: Offer, isMainScreen: boolean) => void
 };
@@ -28,7 +28,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           currentOffer: Offer | undefined, // при прорисовке main, передаем сначала undefined
           isMainScreen: boolean,
           offers: Offer[],
-          center: City | Coordinate,
+          center: City,
         ) => (
           <Map
             // на карте главной страницы будем перекрашивать актуальный маркер

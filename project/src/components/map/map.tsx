@@ -1,13 +1,13 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import {Offer, City, Coordinate} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import {currentCustomIcon, defaultCustomIcon} from '../../const';
 
 type MapScreenProps = {
   offers: Offer[];
-  center: City | Coordinate;
+  center: City;
   isMainScreen: boolean;
   currentOffer: Offer | undefined;
 }
