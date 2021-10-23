@@ -1,7 +1,8 @@
-const DEFAULT_CITY_NAME = 'Paris';
+import {ChangeCityPayload} from '../../types/action';
+
 type CityScreenProps = {
-  cityTitle: string;
-  onCityChoose: (cityTitle: string) => void
+  cityTitle: ChangeCityPayload;
+  onCityChoose: (cityTitle: ChangeCityPayload) => void
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
@@ -13,7 +14,7 @@ function CityScreen(props: CityScreenProps): JSX.Element {
       data-city={cityTitle}
       onClick={(evt) => {
         evt.preventDefault();
-        onCityChoose(evt.currentTarget.dataset.city || DEFAULT_CITY_NAME);
+        onCityChoose(evt.currentTarget.dataset.city as ChangeCityPayload);
       }}
     >
       <a className="locations__item-link tabs__item" href="/">

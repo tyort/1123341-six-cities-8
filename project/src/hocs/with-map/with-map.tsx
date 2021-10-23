@@ -2,7 +2,8 @@ import {useState} from 'react';
 import {ComponentType} from 'react';
 import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 
 type HOCProps = {
   renderMap: (

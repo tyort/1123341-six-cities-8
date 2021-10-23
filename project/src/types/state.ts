@@ -1,7 +1,9 @@
-import {Offer, City} from '../types/offer';
+import {Offer} from '../types/offer';
+import {City} from '../types/city';
+import {ChangeSortPayload} from '../types/action';
 
 export type State = {
   city: City,
   offersList: Offer[],
-  sortName: string
+  sortName: ChangeSortPayload
 };

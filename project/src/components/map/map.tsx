@@ -1,7 +1,8 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useRef, useEffect} from 'react';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 import useMap from '../../hooks/useMap';
 import {currentCustomIcon, defaultCustomIcon} from '../../const';
 

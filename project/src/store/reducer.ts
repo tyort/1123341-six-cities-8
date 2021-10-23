@@ -1,7 +1,8 @@
-import {ActionsType, ActionName} from '../types/action';
+import {ActionsType, ActionName, ChangeSortPayload} from '../types/action';
 import {offers, cities} from '../mocks/offers';
 import {State} from '../types/state';
-import {Offer, City} from '../types/offer';
+import {Offer} from '../types/offer';
+import {City} from '../types/city';
 
 const SORT_NAME_DEFAULT = 'Popular';
 const CITY_DEFAULT = {
@@ -11,7 +12,7 @@ const CITY_DEFAULT = {
   zoom: 12,
 };
 
-const sortOffers = (proffer: Offer[], sortName: string, city: City): Offer[] => {
+const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
   switch (sortName) {
     case 'Price: low to high':
       return proffer.slice().sort((a, b) => a.price - b.price);
@@ -27,24 +28,31 @@ const sortOffers = (proffer: Offer[], sortName: string, city: City): Offer[] => 
 
 // Начальное значение {объект города, массив списка предложений, название сортировки}
 const initialOffers = offers.filter((item) => item.city === CITY_DEFAULT.title);
-const initialState = {city: CITY_DEFAULT, offersList: initialOffers, sortName: SORT_NAME_DEFAULT};
+const initialState = {city: CITY_DEFAULT, offersList: initialOffers, sortName: SORT_NAME_DEFAULT as ChangeSortPayload};
 
 //               state: {объект города, массив списка предложений}
 //               action: {type: 'название', payload: переменная с компонента}
 const reducer = (state: State = initialState, action: ActionsType): State => {
   switch (action.type) {
-    case ActionName.ChangeCity:
+    case ActionName.ChangeCity: {
+      const city = cities.find((town) => town.title === action.payload) as City;
+      const offersList = offers.filter((item) => item.city === city.title);
+
       return {
         ...state,
-        city: cities.find((town) => town.title === action.payload) || CITY_DEFAULT,
-        offersList: offers.filter((item) => item.city === action.payload),
+        city,
+        offersList,
       };
-    case ActionName.ChangeSortName:
+    }
+    case ActionName.ChangeSortName: {
+      const offersList = sortOffers(state.offersList, action.payload, state.city);
+
       return {
         ...state,
         sortName: action.payload,
-        offersList: sortOffers(state.offersList, action.payload, state.city),
+        offersList,
       };
+    }
     default:
       return state;
   }

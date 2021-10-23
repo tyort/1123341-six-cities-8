@@ -6,7 +6,8 @@ import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
 

@@ -1,16 +1,18 @@
 import {
   ActionName,
   ChangeCityActionType,
-  ChangeSortNameActionType
+  ChangeSortNameActionType,
+  ChangeCityPayload,
+  ChangeSortPayload
 } from '../types/action';
 
 // аргументы попадают из диспатча
-export const ChangeCityAction = (cityName: string): ChangeCityActionType => ({
+export const ChangeCityAction = (cityName: ChangeCityPayload): ChangeCityActionType => ({
   type: ActionName.ChangeCity,
   payload: cityName,
 });
 
-export const ChangeSortNameAction = (sortName: string): ChangeSortNameActionType => ({
+export const ChangeSortNameAction = (sortName: ChangeSortPayload): ChangeSortNameActionType => ({
   type: ActionName.ChangeSortName,
   payload: sortName,
 });

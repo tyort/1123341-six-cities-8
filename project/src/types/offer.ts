@@ -24,13 +24,6 @@ export type Coordinate = {
   longitude: number;
 }
 
-export type City = {
-  latitude: number;
-  longitude: number;
-  title: string;
-  zoom: number;
-}
-
 export type Offer = {
   id: string;
   city: string,

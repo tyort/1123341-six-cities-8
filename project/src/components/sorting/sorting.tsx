@@ -1,11 +1,10 @@
 import {nanoid} from 'nanoid';
 import {sortName} from '../../const';
-
-const SORT_NAME_DEFAULT = 'Popular';
+import {ChangeSortPayload} from '../../types/action';
 
 type SortingProps = {
-  currentSortName: string;
-  onSortChoose: (sortName: string) => void;
+  currentSortName: ChangeSortPayload;
+  onSortChoose: (sortName: ChangeSortPayload) => void;
 };
 
 function Sorting(props: SortingProps): JSX.Element {
@@ -31,7 +30,7 @@ function Sorting(props: SortingProps): JSX.Element {
             tabIndex={0}
             onClick={(evt) => {
               evt.preventDefault();
-              onSortChoose(evt.currentTarget.dataset.sortName || SORT_NAME_DEFAULT);
+              onSortChoose(evt.currentTarget.dataset.sortName as ChangeSortPayload);
             }}
           >{name}
           </li>

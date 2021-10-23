@@ -1,11 +1,12 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {ActionsType} from '../../types/action';
+import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
 import {ChangeCityAction, ChangeSortNameAction} from '../../store/action';
 import {State} from '../../types/state';
 import Logo from '../logo/logo';
 import SortingScreen from '../sorting/sorting';
-import {Offer, City} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 import CityScreen from '../city/city';
 import {nanoid} from 'nanoid';
 
@@ -32,13 +33,13 @@ const mapStateToProps = (state: State) => ({
 // Эта функция добавит нашему компоненту пропс onCityChoose;
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
   // должны передать потомку этот колбэк
-  onCityChoose(cityName: string) {
+  onCityChoose(cityName: ChangeCityPayload) {
     // ChangeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
     dispatch(ChangeCityAction(cityName));
   },
 
-  onSortChoose(sortName: string) {
+  onSortChoose(sortName: ChangeSortPayload) {
     dispatch(ChangeSortNameAction(sortName));
   },
 });
@@ -98,7 +99,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
               {cities.map((town) => (
                 <CityScreen
                   key={nanoid(10)}
-                  cityTitle={town.title}
+                  cityTitle={town.title as ChangeCityPayload}
                   onCityChoose={onCityChoose}
                 />
               ))}

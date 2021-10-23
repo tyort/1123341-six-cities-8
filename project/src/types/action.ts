@@ -3,16 +3,30 @@ export enum ActionName {
   ChangeSortName = 'offers/changeSortName',
 }
 
+export type ChangeCityPayload =
+| 'Paris'
+| 'Cologne'
+| 'Brussels'
+| 'Amsterdam'
+| 'Hamburg'
+| 'Dusseldorf'
+
+export type ChangeSortPayload =
+| 'Popular'
+| 'Price: low to high'
+| 'Price: high to low'
+| 'Top rated first'
+
 //--------------------------------------------------------------------
 // Ниже представлены типы значений, полученных при выполнении Action
 export type ChangeCityActionType = {
   type: ActionName.ChangeCity;
-  payload: string;
+  payload: ChangeCityPayload;
 };
 
 export type ChangeSortNameActionType= {
   type: ActionName.ChangeSortName;
-  payload: string;
+  payload: ChangeSortPayload;
 };
 
 export type ActionsType =
