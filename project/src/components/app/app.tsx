@@ -8,17 +8,18 @@ import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import {Offer, City} from '../../types/offer';
 import withMap from '../../hocs/with-map/with-map';
+import {nanoid} from 'nanoid';
 
 const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 type AppScreenProps = {
   offers: Offer[];
-  city: City;
+  cities: City[];
 }
 
 function App(props: AppScreenProps): JSX.Element {
-  const {offers, city} = props;
+  const {offers, cities} = props;
 
   return (
     <BrowserRouter>
@@ -26,8 +27,7 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
             isMainScreen
-            offers={offers}
-            city={city}
+            cities={cities}
           />
         </Route>
         <PrivateRoute
@@ -41,7 +41,7 @@ function App(props: AppScreenProps): JSX.Element {
           <LoginScreen/>
         </Route>
         {offers.map((offer) => (
-          <Route key={offer.id} exact path={`/offer/${offer.id}`}>
+          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
               offers={offers}

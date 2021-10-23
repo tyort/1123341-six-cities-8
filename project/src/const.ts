@@ -27,3 +27,12 @@ export const currentCustomIcon = leaflet.icon({
 
 export const MAP_ZOOM = 12;
 
+export const cities = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+

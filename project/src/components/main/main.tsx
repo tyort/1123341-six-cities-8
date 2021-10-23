@@ -1,9 +1,15 @@
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {ActionsType} from '../../types/action';
+import {ChangeCityAction} from '../../store/action';
+import {State} from '../../types/state';
 import Logo from '../logo/logo';
 import {Offer, City} from '../../types/offer';
+import CityScreen from '../city/city';
+import {nanoid} from 'nanoid';
 
 type MainScreenProps = {
-  offers: Offer[];
-  city: City;
+  cities: City[];
   isMainScreen: boolean;
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
@@ -14,8 +20,41 @@ type MainScreenProps = {
   ) => JSX.Element;
 }
 
-function Main(props: MainScreenProps): JSX.Element {
-  const {offers, city, isMainScreen, renderMap, renderCard} = props;
+// актуальные состояния данных из хранилища в одноименные пропсы компонента
+const mapStateToProps = (state: State) => ({
+  // новый пропс в компоненте
+  offers: state.offersList,
+  city: state.city,
+});
+
+// Эта функция добавит нашему компоненту пропс onCityChoose;
+const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
+  // должны передать потомку этот колбэк
+  onCityChoose(cityName: string) {
+    // ChangeCityAction - это Action из store/action;
+    // Сообщаем хранилищу, что пора обновить поля, выполнив action
+    dispatch(ChangeCityAction(cityName));
+  },
+});
+
+// Настраиваем "мостик" между Redux и React;
+// 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
+const connector = connect(mapStateToProps, mapDispatchToProps);
+// Выделим новые пропсы, сформированные в redux;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+// Соединим все пропсы, необходимые для кмопонента;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function Main(props: ConnectedComponentProps): JSX.Element {
+  const {
+    city,
+    offers,
+    cities,
+    isMainScreen,
+    renderMap,
+    renderCard,
+    onCityChoose,
+  } = props;
 
   return (
     <div className="page page--gray page--main">
@@ -48,36 +87,13 @@ function Main(props: MainScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {cities.map((town) => (
+                <CityScreen
+                  key={nanoid(10)}
+                  cityTitle={town.title}
+                  onCityChoose={onCityChoose}
+                />
+              ))}
             </ul>
           </section>
         </div>
@@ -85,7 +101,7 @@ function Main(props: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.title}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -117,4 +133,7 @@ function Main(props: MainScreenProps): JSX.Element {
   );
 }
 
-export default Main;
+export {Main};
+// Если не обернуть в коннект, то будет требовать от родителя передать пропсы,
+// которые мы сформировали через редакс
+export default connector(Main);
