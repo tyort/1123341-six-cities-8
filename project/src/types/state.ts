@@ -5,5 +5,6 @@ import {ChangeSortPayload} from '../types/action';
 export type State = {
   city: City,
   offersList: Offer[],
-  sortName: ChangeSortPayload
+  sortName: ChangeSortPayload,
+  cities: City[]
 };

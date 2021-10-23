@@ -28,7 +28,12 @@ const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): 
 
 // Начальное значение {объект города, массив списка предложений, название сортировки}
 const initialOffers = offers.filter((item) => item.city === CITY_DEFAULT.title);
-const initialState = {city: CITY_DEFAULT, offersList: initialOffers, sortName: SORT_NAME_DEFAULT as ChangeSortPayload};
+const initialState = {
+  city: CITY_DEFAULT,
+  offersList: initialOffers,
+  sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
+  cities,
+};
 
 //               state: {объект города, массив списка предложений}
 //               action: {type: 'название', payload: переменная с компонента}
