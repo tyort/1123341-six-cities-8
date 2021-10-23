@@ -1,17 +1,12 @@
-import {PropsWithChildren} from 'react';
+import {PropsWithChildren, Children} from 'react';
 import Logo from '../logo/logo';
-import SortingScreen from '../sorting/sorting';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {ChangeSortPayload} from '../../types/action';
-
 
 type MainScreenProps = PropsWithChildren<{
   offers: Offer[];
   city: City;
-  currentSortName: ChangeSortPayload;
   isMainScreen: boolean;
-  onSortChoose: (sortName: ChangeSortPayload) => void
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer | undefined,
@@ -28,10 +23,11 @@ function Main(props: MainScreenProps): JSX.Element {
     isMainScreen,
     renderMap,
     renderCard,
-    currentSortName,
-    onSortChoose,
     children,
   } = props;
+
+  // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
+  const mainChildren = Children.toArray(children);
 
   return (
     <div className="page page--gray page--main">
@@ -63,7 +59,7 @@ function Main(props: MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            {children}
+            {mainChildren[0]}
           </section>
         </div>
         <div className="cities">
@@ -71,10 +67,7 @@ function Main(props: MainScreenProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.title}</b>
-              <SortingScreen
-                currentSortName={currentSortName}
-                onSortChoose={onSortChoose}
-              />
+              {mainChildren[1]}
               <div className="cities__places-list places__list tabs__content">
                 {offers.map((offer) => (
                   renderCard(offer, isMainScreen)

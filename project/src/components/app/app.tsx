@@ -9,6 +9,7 @@ import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
+import SortingScreen from '../sorting/sorting';
 import {State} from '../../types/state';
 import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
 import {ChangeCityAction, ChangeSortNameAction} from '../../store/action';
@@ -60,12 +61,14 @@ function App(props: ConnectedComponentProps): JSX.Element {
             offers={offers}
             city={city}
             isMainScreen
-            currentSortName={currentSortName}
-            onSortChoose={onSortChoose}
           >
             <CityScreen
               cities={cities}
               onCityChoose={onCityChoose}
+            />
+            <SortingScreen
+              currentSortName={currentSortName}
+              onSortChoose={onSortChoose}
             />
           </MainScreenWrapped>
         </Route>
