@@ -47,6 +47,7 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
         ...state,
         city,
         offersList,
+        sortName: SORT_NAME_DEFAULT,
       };
     }
     case ActionName.ChangeSortName: {
