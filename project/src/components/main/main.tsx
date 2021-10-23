@@ -1,18 +1,17 @@
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
-import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
-import {ChangeCityAction, ChangeSortNameAction} from '../../store/action';
-import {State} from '../../types/state';
+import {PropsWithChildren} from 'react';
 import Logo from '../logo/logo';
 import SortingScreen from '../sorting/sorting';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import CityScreen from '../city/city';
-import {nanoid} from 'nanoid';
+import {ChangeSortPayload} from '../../types/action';
 
-type MainScreenProps = {
-  cities: City[];
+
+type MainScreenProps = PropsWithChildren<{
+  offers: Offer[];
+  city: City;
+  currentSortName: ChangeSortPayload;
   isMainScreen: boolean;
+  onSortChoose: (sortName: ChangeSortPayload) => void
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer | undefined,
@@ -20,49 +19,18 @@ type MainScreenProps = {
     offers: Offer[],
     center: City,
   ) => JSX.Element;
-}
+}>
 
-// актуальные состояния данных из хранилища в одноименные пропсы компонента
-const mapStateToProps = (state: State) => ({
-  // новый пропс в компоненте
-  offers: state.offersList,
-  city: state.city,
-  currentSortName: state.sortName,
-});
-
-// Эта функция добавит нашему компоненту пропс onCityChoose;
-const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
-  // должны передать потомку этот колбэк
-  onCityChoose(cityName: ChangeCityPayload) {
-    // ChangeCityAction - это Action из store/action;
-    // Сообщаем хранилищу, что пора обновить поля, выполнив action
-    dispatch(ChangeCityAction(cityName));
-  },
-
-  onSortChoose(sortName: ChangeSortPayload) {
-    dispatch(ChangeSortNameAction(sortName));
-  },
-});
-
-// Настраиваем "мостик" между Redux и React;
-// 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
-const connector = connect(mapStateToProps, mapDispatchToProps);
-// Выделим новые пропсы, сформированные в redux;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-// Соединим все пропсы, необходимые для кмопонента;
-type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
-
-function Main(props: ConnectedComponentProps): JSX.Element {
+function Main(props: MainScreenProps): JSX.Element {
   const {
     city,
     offers,
-    cities,
     isMainScreen,
     renderMap,
     renderCard,
-    onCityChoose,
     currentSortName,
     onSortChoose,
+    children,
   } = props;
 
   return (
@@ -95,15 +63,7 @@ function Main(props: ConnectedComponentProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {cities.map((town) => (
-                <CityScreen
-                  key={nanoid(10)}
-                  cityTitle={town.title as ChangeCityPayload}
-                  onCityChoose={onCityChoose}
-                />
-              ))}
-            </ul>
+            {children}
           </section>
         </div>
         <div className="cities">
@@ -131,7 +91,4 @@ function Main(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {Main};
-// Если не обернуть в коннект, то будет требовать от родителя передать пропсы,
-// которые мы сформировали через редакс
-export default connector(Main);
+export default Main;
