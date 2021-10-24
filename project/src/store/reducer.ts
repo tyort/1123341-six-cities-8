@@ -21,7 +21,7 @@ const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): 
     case 'Top rated first':
       return proffer.slice().sort((a, b) => b.rating - a.rating);
     default:
-      // Чтобы выдать порядок какой был на сервере
+      // ??????Чтобы выдать порядок какой был на сервере
       return offers.filter((item) => item.city === city.title);
   }
 };
@@ -59,6 +59,11 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
         offersList,
       };
     }
+
+    case ActionName.LoadOffers: {
+      return {...state, offersList: offers}; //?????? offers
+    }
+
     default:
       return state;
   }

@@ -1,11 +1,13 @@
 import {
-  ChangeCityAction,
-  ChangeSortNameAction
+  changeCityAction,
+  changeSortNameAction,
+  loadOffersAction
 } from '../store/action';
 
 export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
+  LoadOffers = 'offers/loadOffers'
 }
 
 export type ChangeCityPayload =
@@ -35,6 +37,7 @@ export type ChangeSortNameActionType= {
 };
 
 export type ActionsType =
-| ReturnType<typeof ChangeCityAction>
-| ReturnType<typeof ChangeSortNameAction>
+| ReturnType<typeof changeCityAction>
+| ReturnType<typeof changeSortNameAction>
+| ReturnType<typeof loadOffersAction>
 
