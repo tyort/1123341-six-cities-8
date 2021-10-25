@@ -1,5 +1,5 @@
 import {ActionsType, ActionName, ChangeSortPayload} from '../types/action';
-import {offers, cities} from '../mocks/offers';
+import {offers} from '../mocks/offers';
 import {State} from '../types/state';
 import {Offer} from '../types/offer';
 import {City} from '../types/city';
@@ -7,10 +7,12 @@ import {AuthorizationStatus} from '../const';
 
 const SORT_NAME_DEFAULT = 'Popular';
 const CITY_DEFAULT = {
-  latitude: 48.86,
-  longitude: 2.35,
-  title: 'Paris',
-  zoom: 12,
+  location: {
+    latitude: 48.86,
+    longitude: 2.35,
+    zoom: 12,
+  },
+  name: 'Paris',
 };
 
 const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
@@ -23,12 +25,15 @@ const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): 
       return proffer.slice().sort((a, b) => b.rating - a.rating);
     default:
       // ??????Чтобы выдать порядок какой был на сервере
-      return offers.filter((item) => item.city === city.title);
+      return offers.filter((item) => item.city.name === city.name);
   }
 };
 
 // Начальное значение {объект города, массив списка предложений, название сортировки}
-const initialOffers = offers.filter((item) => item.city === CITY_DEFAULT.title);
+const initialOffers = offers.filter((item) => item.city.name === CITY_DEFAULT.name);
+const citiesJSON = offers.map((item) => JSON.stringify(item.city));
+const cities: City[] = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
+
 const initialState = {
   city: CITY_DEFAULT,
   offersList: initialOffers,
@@ -42,8 +47,8 @@ const initialState = {
 const reducer = (state: State = initialState, action: ActionsType): State => {
   switch (action.type) {
     case ActionName.ChangeCity: {
-      const city = cities.find((town) => town.title === action.payload) as City;
-      const offersList = offers.filter((item) => item.city === city.title);
+      const city = state.cities.find((town) => town.name === action.payload) as City;
+      const offersList = offers.filter((item) => item.city.name === city.name);
 
       return {
         ...state,

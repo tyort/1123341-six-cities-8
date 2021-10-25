@@ -66,7 +66,7 @@ function Main(props: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.title}</b>
+              <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.name}</b>
               {mainChildren[1]}
               <div className="cities__places-list places__list tabs__content">
                 {offers.map((offer) => (

@@ -32,8 +32,6 @@ export const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-export const MAP_ZOOM = 12;
-
 export const cities = [
   'Paris',
   'Cologne',

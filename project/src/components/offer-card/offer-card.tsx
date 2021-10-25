@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import {MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
 import {useHistory, Link} from 'react-router-dom';
@@ -10,7 +11,7 @@ type CardScreenProps = {
 
 function OfferCard(props: CardScreenProps): JSX.Element {
   const {offer, onCardMainHover, isMainScreen} = props;
-  const {price, rating, title, type} = offer;
+  const {price, rating, title, type, preview_image} = offer;
   const history = useHistory();
 
   return (
@@ -28,7 +29,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         : 'near-places__image-wrapper'} place-card__image-wrapper`}
       >
         <a href="/">
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Interior view"/>
+          <img className="place-card__image" src={`img/${preview_image}`} width="260" height="200" alt="Interior view"/>
         </a>
       </div>
       <div className="place-card__info">

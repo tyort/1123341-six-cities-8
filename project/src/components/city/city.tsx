@@ -16,14 +16,14 @@ function CityScreen(props: CityScreenProps): JSX.Element {
         <li
           key={nanoid(10)}
           className="locations__item"
-          data-city={city.title}
+          data-city={city.name}
           onClick={(evt) => {
             evt.preventDefault();
             onCityChoose(evt.currentTarget.dataset.city as ChangeCityPayload);
           }}
         >
           <a className="locations__item-link tabs__item" href="/">
-            <span>{city.title}</span>
+            <span>{city.name}</span>
           </a>
         </li>
       ))}

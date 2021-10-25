@@ -1,50 +1,40 @@
 import {Offer} from '../types/offer';
-import {City} from '../types/city';
-
-export const cities: City[] = [
-  {
-    latitude: 52.38,
-    longitude: 4.9,
-    title: 'Amsterdam',
-    zoom: 12,
-  }, {
-    latitude: 48.86,
-    longitude: 2.35,
-    title: 'Paris',
-    zoom: 12,
-  },
-];
 
 export const offers: Offer[] = [
   {
     id: 'dj4jehd73444',
-    city: 'Paris',
-    coordinate: {
+    city: {
+      location: {
+        latitude: 48.86,
+        longitude: 2.35,
+        zoom: 12,
+      },
+      name: 'Paris',
+    },
+    location: {
       latitude: 48.86421901300297,
       longitude: 2.3223515250101356,
+      zoom: 8,
     },
     title: 'Oh! This is awesome',
     type: 'Apartment',
+    'preview_image': 'apartment-01.jpg',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
     rating: 3.8,
-    features: [
-      {
-        title: 'High ceilings',
-        addition: 'ceilings',
-      }, {
-        title: '4 bedrooms',
-        addition: 'bedrooms',
-      },
-    ],
+    bedrooms: 3,
+    'max_adults': 4,
     price: 133,
-    bonuses: ['Wi-Fi', 'Kitchen'],
-    owner: {
+    'is_favorite': true,
+    'is_premium': true,
+    goods: ['Wi-Fi', 'Kitchen', 'Heating', 'Cable TV'],
+    host: {
+      id: 'sdfweofoew34dd3',
       name: 'Patrick Bateman',
-      avatar: 'avatar-angelina.jpg',
-      status: 'Pro',
-      text: 'The building is green and from 18th century.',
+      'avatar_url': 'avatar-angelina.jpg',
+      'is_pro': true,
     },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     reviews: [
       {
         avatar: 'avatar-angelina.jpg',
@@ -55,36 +45,40 @@ export const offers: Offer[] = [
         date: '2019-04-24',
       },
     ],
-  },
-  {
-    id: 'dj4j44',
-    city: 'Amsterdam',
-    coordinate: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
+  }, {
+    id: 'djef73444',
+    city: {
+      location: {
+        latitude: 48.86,
+        longitude: 2.35,
+        zoom: 12,
+      },
+      name: 'Paris',
+    },
+    location: {
+      latitude: 48.86721901300297,
+      longitude: 2.3353515250101356,
+      zoom: 8,
     },
     title: 'Oh! This is awesome',
     type: 'Apartment',
+    'preview_image': 'apartment-02.jpg',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
-    rating: 9.8,
-    features: [
-      {
-        title: 'High ceilings',
-        addition: 'ceilings',
-      }, {
-        title: '4 bedrooms',
-        addition: 'bedrooms',
-      },
-    ],
-    price: 333,
-    bonuses: ['Wi-Fi', 'Kitchen'],
-    owner: {
+    rating: 6.8,
+    bedrooms: 3,
+    'max_adults': 4,
+    price: 33,
+    'is_favorite': true,
+    'is_premium': true,
+    goods: ['Wi-Fi', 'Kitchen', 'Heating', 'Cable TV'],
+    host: {
+      id: 'sdfweofoew34dd3',
       name: 'Patrick Bateman',
-      avatar: 'avatar-angelina.jpg',
-      status: 'Pro',
-      text: 'The building is green and from 18th century.',
+      'avatar_url': 'avatar-angelina.jpg',
+      'is_pro': true,
     },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     reviews: [
       {
         avatar: 'avatar-angelina.jpg',
@@ -95,153 +89,92 @@ export const offers: Offer[] = [
         date: '2019-04-24',
       },
     ],
-  },
-  {
-    id: 'fjejf79',
-    city: 'Amsterdam',
-    coordinate: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+  }, {
+    id: 'sdfdsf444',
+    city: {
+      location: {
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
+      },
+      name: 'Amsterdam',
     },
-    title: 'This is my home',
-    type: 'House',
-    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
-    category: 'Economy',
-    rating: 5.3,
-    features: [
-      {
-        title: 'High ceilings',
-        addition: 'ceilings',
-      }, {
-        title: '4 bedrooms',
-        addition: 'bedrooms',
-      },
-    ],    price: 45,
-    bonuses: ['Wi-Fi', 'Towels'],
-    owner: {
-      name: 'Rebecca',
-      avatar: 'avatar-max.jpg',
-      status: 'Pro',
-      text: 'Small apartment for fun',
+    location: {
+      latitude: 52.56421901300297,
+      longitude: 4.8023515250101356,
+      zoom: 8,
     },
-    reviews: [
-      {
-        avatar: 'pic13422.jpg',
-        name: 'Mimi',
-        id: 'rkgkr442',
-        setRating: 40,
-        text: 'I`d been there and i like it',
-        date: '2021-04-24',
-      },
-      {
-        avatar: 'pic77422.jpg',
-        name: 'Kori',
-        id: 'jnfb74jt9',
-        setRating: 60,
-        text: 'So much dust!',
-        date: '2020-04-24',
-      },
-    ],
-  },
-  {
-    id: 'gfgrge4g',
-    city: 'Amsterdam',
-    coordinate: {
-      latitude: 52.3909553943508,
-      longitude: 4.929309666406198,
-    },
-    title: 'Good place for sleeping',
-    type: 'Room',
-    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
-    category: 'Economy',
-    rating: 6.3,
-    features: [
-      {
-        title: 'High ceilings',
-        addition: 'ceilings',
-      }, {
-        title: '4 bedrooms',
-        addition: 'bedrooms',
-      },
-    ],    price: 45,
-    bonuses: ['Wi-Fi', 'Towels'],
-    owner: {
-      name: 'Joseph',
-      avatar: 'avatar-angelina.jpg',
-      status: 'Pro',
-      text: 'Small apartment for fun',
-    },
-    reviews: [
-      {
-        avatar: 'pic13422.jpg',
-        name: 'Mimi',
-        id: 'jmfrjkgvkrkgk',
-        setRating: 40,
-        text: 'I`d been there and i like it',
-        date: '2019-04-22',
-      },
-      {
-        avatar: 'pic77422.jpg',
-        name: 'Kori',
-        id: '98785jghit5',
-        setRating: 60,
-        text: 'So much dust!',
-        date: '2019-10-24',
-      },
-      {
-        avatar: 'pic77422.jpg',
-        name: 'Kori',
-        id: 'j47gj4jg2kfh',
-        setRating: 60,
-        text: 'So much dust!',
-        date: '2019-05-24',
-      },
-    ],
-  },
-  {
-    id: 'kjrmnge4g',
-    city: 'Amsterdam',
-    coordinate: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
-    },
-    title: 'Just like the others apartment',
-    type: 'Bungalo',
+    title: 'Oh! This is awesome',
+    type: 'Apartment',
+    'preview_image': 'apartment-01.jpg',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
-    rating: 2.3,
-    features: [
-      {
-        title: 'High ceilings',
-        addition: 'ceilings',
-      }, {
-        title: '4 bedrooms',
-        addition: 'bedrooms',
-      },
-    ],    price: 222,
-    bonuses: ['Wi-Fi', 'Towels', 'Heating', 'Kitchen'],
-    owner: {
-      name: 'Indica',
-      avatar: 'avatar-max.jpg',
-      status: 'New',
-      text: 'Only for working in silence',
+    rating: 3.8,
+    bedrooms: 3,
+    'max_adults': 4,
+    price: 133,
+    'is_favorite': true,
+    'is_premium': true,
+    goods: ['Wi-Fi', 'Kitchen', 'Heating', 'Cable TV'],
+    host: {
+      id: 'sdfweofoew34dd3',
+      name: 'Patrick Bateman',
+      'avatar_url': 'avatar-angelina.jpg',
+      'is_pro': true,
     },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     reviews: [
       {
-        avatar: 'pic11122.jpg',
-        name: 'Petr',
-        id: 'mn8h3g9j98g',
-        setRating: 20,
-        text: 'I was like in nightmare',
-        date: '2021-06-14',
+        avatar: 'avatar-angelina.jpg',
+        name: 'Jordan',
+        id: 'fvkrkf8442',
+        setRating: 80,
+        text: 'I can`t sleep, man',
+        date: '2019-04-24',
       },
+    ],
+  }, {
+    id: 'ddfs324df444',
+    city: {
+      location: {
+        latitude: 52.377956,
+        longitude: 4.897070,
+        zoom: 12,
+      },
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.55721901300297,
+      longitude: 4.4443515250101356,
+      zoom: 8,
+    },
+    title: 'Oh! This is awesome',
+    type: 'Apartment',
+    'preview_image': 'apartment-02.jpg',
+    images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
+    category: 'Premium',
+    rating: 6.8,
+    bedrooms: 3,
+    'max_adults': 4,
+    price: 33,
+    'is_favorite': true,
+    'is_premium': true,
+    goods: ['Wi-Fi', 'Kitchen', 'Heating', 'Cable TV'],
+    host: {
+      id: 'sdfweofoew34dd3',
+      name: 'Patrick Bateman',
+      'avatar_url': 'avatar-angelina.jpg',
+      'is_pro': true,
+    },
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    reviews: [
       {
-        avatar: 'pic47422.jpg',
-        name: 'Jane',
-        id: 'hcfjfjfrivjr',
-        setRating: 60,
-        text: 'Give me my money back!',
-        date: '2019-09-10',
+        avatar: 'avatar-angelina.jpg',
+        name: 'Jordan',
+        id: 'fvkrkf8442',
+        setRating: 80,
+        text: 'I can`t sleep, man',
+        date: '2019-04-24',
       },
     ],
   },

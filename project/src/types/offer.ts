@@ -1,8 +1,10 @@
-export type Owner = {
+import {City} from './city';
+
+export type Host = {
+  id: string | number;
   name: string;
-  avatar: string;
-  status: string;
-  text: string;
+  'avatar_url': string;
+  'is_pro': boolean;
 }
 
 export type Review = {
@@ -14,28 +16,29 @@ export type Review = {
   date: string;
 }
 
-export type Feature = {
-  title: string;
-  addition: string;
-}
-
-export type Coordinate = {
+export type Location = {
   latitude: number;
   longitude: number;
+  zoom: number;
 }
 
 export type Offer = {
-  id: string;
-  city: string,
-  coordinate: Coordinate,
+  id: string | number;
+  city: City,
+  location: Location,
   title: string;
   type: string;
   images: string[];
+  description: string;
   category: string;
   rating: number;
-  features: Feature[];
   price: number;
-  bonuses: string[];
-  owner: Owner;
-  reviews: Review[]
+  goods: string[];
+  host: Host;
+  reviews: Review[];
+  'is_favorite': boolean;
+  'is_premium': boolean;
+  bedrooms: number;
+  'max_adults': number;
+  'preview_image': string;
 }

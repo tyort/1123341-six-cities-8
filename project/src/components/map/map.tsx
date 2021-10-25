@@ -22,11 +22,11 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   useEffect(() => {
     if (currentMap) {
       offers.forEach((offer) => {
-        const {coordinate} = offer;
+        const {location} = offer;
         leaflet
           .marker({
-            lat: coordinate.latitude,
-            lng: coordinate.longitude,
+            lat: location.latitude,
+            lng: location.longitude,
           })
           .setIcon(
             currentOffer !== undefined && offer.id === currentOffer.id

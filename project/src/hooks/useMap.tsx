@@ -1,7 +1,6 @@
 import {useEffect, useState, MutableRefObject} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import {City} from '../types/city';
-import {MAP_ZOOM} from '../const';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map | null {
   const [currentMap, setMap] = useState<Map | null>(null);
@@ -17,10 +16,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
       // Создаем объект карты
       const mapInstance = new Map(mapRef.current, {
         center: {
-          lat: center.latitude,
-          lng: center.longitude,
+          lat: center.location.latitude,
+          lng: center.location.longitude,
         },
-        zoom: MAP_ZOOM,
+        zoom: center.location.zoom,
       });
 
       // Подключаем определенный слой карты
