@@ -12,7 +12,7 @@ import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import {State} from '../../types/state';
 import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
-import {ChangeCityAction, ChangeSortNameAction} from '../../store/action';
+import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
 
@@ -29,13 +29,13 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
   // должны передать потомку этот колбэк
   onCityChoose(cityName: ChangeCityPayload) {
-    // ChangeCityAction - это Action из store/action;
+    // changeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
-    dispatch(ChangeCityAction(cityName));
+    dispatch(changeCityAction(cityName));
   },
 
   onSortChoose(sortName: ChangeSortPayload) {
-    dispatch(ChangeSortNameAction(sortName));
+    dispatch(changeSortNameAction(sortName));
   },
 });
 
