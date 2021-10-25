@@ -1,13 +1,17 @@
 import {
   changeCityAction,
   changeSortNameAction,
-  loadOffersAction
+  loadOffersAction,
+  requireAuthorization,
+  requireLogout
 } from '../store/action';
 
 export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
-  LoadOffers = 'offers/loadOffers'
+  LoadOffers = 'offers/loadOffers',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout'
 }
 
 export type ChangeCityPayload =
@@ -24,20 +28,15 @@ export type ChangeSortPayload =
 | 'Price: high to low'
 | 'Top rated first'
 
-//--------------------------------------------------------------------
-// Ниже представлены типы значений, полученных при выполнении Action
-export type ChangeCityActionType = {
-  type: ActionName.ChangeCity;
-  payload: ChangeCityPayload;
-};
-
-export type ChangeSortNameActionType= {
-  type: ActionName.ChangeSortName;
-  payload: ChangeSortPayload;
-};
+export type CurrentAuthStatus =
+| 'AUTH'
+| 'NO_AUTH'
+| 'UNKNOWN'
 
 export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>
 | ReturnType<typeof loadOffersAction>
+| ReturnType<typeof requireAuthorization>
+| ReturnType<typeof requireLogout>
 

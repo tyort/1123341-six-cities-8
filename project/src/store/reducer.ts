@@ -3,6 +3,7 @@ import {offers, cities} from '../mocks/offers';
 import {State} from '../types/state';
 import {Offer} from '../types/offer';
 import {City} from '../types/city';
+import {AuthorizationStatus} from '../const';
 
 const SORT_NAME_DEFAULT = 'Popular';
 const CITY_DEFAULT = {
@@ -33,6 +34,7 @@ const initialState = {
   offersList: initialOffers,
   sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
   cities,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 //               state: {объект города, массив списка предложений}
@@ -63,6 +65,12 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
     case ActionName.LoadOffers: {
       return {...state, offersList: offers}; //?????? offers
     }
+
+    case ActionName.RequireAuthorization:
+      return {...state, authorizationStatus: action.payload};
+
+    case ActionName.RequireLogout:
+      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
 
     default:
       return state;

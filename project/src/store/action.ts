@@ -1,4 +1,5 @@
 import {Offer} from '../types/offer';
+import {AuthorizationStatus} from '../const';
 
 import {
   ActionName,
@@ -22,5 +23,14 @@ export const loadOffersAction = (offers: Offer[]) => ({
   payload: {
     offers,
   },
+} as const);
+
+export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
+  type: ActionName.RequireAuthorization,
+  payload: authStatus,
+} as const);
+
+export const requireLogout = () => ({
+  type: ActionName.RequireLogout,
 } as const);
 
