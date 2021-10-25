@@ -1,5 +1,4 @@
 import {ActionsType, ActionName, ChangeSortPayload} from '../types/action';
-import {offers} from '../mocks/offers';
 import {State} from '../types/state';
 import {Offer} from '../types/offer';
 import {City} from '../types/city';
@@ -14,6 +13,8 @@ const CITY_DEFAULT = {
   },
   name: 'Paris',
 };
+
+const offers: Offer[] = [];
 
 const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
   switch (sortName) {
@@ -68,7 +69,8 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
     }
 
     case ActionName.LoadOffers: {
-      return {...state, offersList: offers}; //?????? offers
+      const {offers: offersList} = action.payload;
+      return {...state, offersList};
     }
 
     case ActionName.RequireAuthorization:
