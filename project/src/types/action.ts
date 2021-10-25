@@ -28,11 +28,6 @@ export type ChangeSortPayload =
 | 'Price: high to low'
 | 'Top rated first'
 
-export type CurrentAuthStatus =
-| 'AUTH'
-| 'NO_AUTH'
-| 'UNKNOWN'
-
 export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>
