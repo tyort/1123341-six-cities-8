@@ -8,6 +8,7 @@ import {AuthUserData} from '../types/auth-user-data';
 // ThunkActionResult - расширенный нами тип ThunkAction от redux-thunk
 export const fetchOffersAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    // к основному адресу BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(loadOffersAction(data));
   };

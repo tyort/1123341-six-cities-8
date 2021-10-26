@@ -41,8 +41,9 @@ export const cities = [
   'Dusseldorf',
 ];
 
+// Запросы на "бэкэнд"
 export enum APIRoute {
-  Offers = '/offers',
+  Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
 }
