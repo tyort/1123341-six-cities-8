@@ -32,13 +32,13 @@ export type ChangeSortPayload =
 | 'Price: high to low'
 | 'Top rated first'
 
-export type ActionsTypes =
+export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>
 | ReturnType<typeof loadOffersAction>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
 
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsTypes>;
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, ActionsTypes>;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsType>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, ActionsType>;
 

@@ -10,11 +10,15 @@ import NotFoundScreen from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
+import LoadingScreen from '../loading-screen/loading-screen';
 import {State} from '../../types/state';
 import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
+
+export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
 
 // актуальные состояния данных из хранилища в одноименные пропсы компонента
 const mapStateToProps = (state: State) => ({
@@ -23,6 +27,8 @@ const mapStateToProps = (state: State) => ({
   city: state.city,
   currentSortName: state.sortName,
   cities: state.cities,
+  isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 // Эта функция добавит нашему компоненту пропс onCityChoose;
@@ -44,14 +50,18 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 // Выделим новые пропсы, сформированные в redux;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-// Соединим все пропсы, необходимые для кмопонента;
-type ConnectedComponentProps = PropsFromRedux;
 
 const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
-function App(props: ConnectedComponentProps): JSX.Element {
-  const {city, offers, cities, onCityChoose, currentSortName, onSortChoose} = props;
+function App(props: PropsFromRedux): JSX.Element {
+  const {city, offers, cities, onCityChoose, currentSortName, onSortChoose, isDataLoaded, authorizationStatus} = props;
+
+  if (authIsUnknown(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>

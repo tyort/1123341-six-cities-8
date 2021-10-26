@@ -41,6 +41,7 @@ const initialState = {
   sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
   cities,
   authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
 };
 
 //               state: {объект города, массив списка предложений}
@@ -74,7 +75,7 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
     }
 
     case ActionName.RequireAuthorization:
-      return {...state, authorizationStatus: action.payload};
+      return {...state, authorizationStatus: action.payload, isDataLoaded: true}; //isDataLoaded: true ???????
 
     case ActionName.RequireLogout:
       return {...state, authorizationStatus: AuthorizationStatus.NoAuth};

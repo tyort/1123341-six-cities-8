@@ -9,4 +9,5 @@ export type State = {
   sortName: ChangeSortPayload,
   cities: City[],
   authorizationStatus: AuthorizationStatus,
+  isDataLoaded: boolean
 };
