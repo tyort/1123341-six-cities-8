@@ -6,6 +6,10 @@ import {
   requireLogout
 } from '../store/action';
 
+import {ThunkAction} from 'redux-thunk';
+import {AxiosInstance} from 'axios';
+import {State} from '../types/state';
+
 export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
@@ -28,10 +32,13 @@ export type ChangeSortPayload =
 | 'Price: high to low'
 | 'Top rated first'
 
-export type ActionsType =
+export type ActionsTypes =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>
 | ReturnType<typeof loadOffersAction>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
+
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsTypes>;
+
 
