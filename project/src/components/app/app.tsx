@@ -63,6 +63,7 @@ function App(props: ConnectedComponentProps): JSX.Element {
             isMainScreen
           >
             <CityScreen
+              currentCity={city}
               cities={cities}
               onCityChoose={onCityChoose}
             />

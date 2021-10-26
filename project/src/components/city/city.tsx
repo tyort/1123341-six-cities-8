@@ -4,11 +4,12 @@ import {nanoid} from 'nanoid';
 
 type CityScreenProps = {
   cities: City[];
-  onCityChoose: (cityTitle: ChangeCityPayload) => void
+  onCityChoose: (cityTitle: ChangeCityPayload) => void;
+  currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
-  const {cities, onCityChoose} = props;
+  const {cities, currentCity, onCityChoose} = props;
 
   return (
     <ul className="locations__list tabs__list">
@@ -22,7 +23,10 @@ function CityScreen(props: CityScreenProps): JSX.Element {
             onCityChoose(evt.currentTarget.dataset.city as ChangeCityPayload);
           }}
         >
-          <a className="locations__item-link tabs__item" href="/">
+          <a
+            className={`locations__item-link tabs__item ${currentCity.title === city.title && 'tabs__item--active'}`}
+            href="/"
+          >
             <span>{city.title}</span>
           </a>
         </li>
