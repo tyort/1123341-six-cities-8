@@ -4,6 +4,7 @@ import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
+import {nanoid} from 'nanoid';
 
 type HOCProps = {
   renderMap: (
@@ -42,6 +43,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
 
         renderCard={(offer: Offer, isMainScreen: boolean) => (
           <OfferCard
+            key={nanoid(10)}
             offer={offer}
             isMainScreen={isMainScreen}
             onCardMainHover={(card: Offer | undefined): void => {
