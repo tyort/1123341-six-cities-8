@@ -1,25 +1,37 @@
-const DEFAULT_CITY_NAME = 'Paris';
+import {ChangeCityPayload} from '../../types/action';
+import {City} from '../../types/city';
+import {nanoid} from 'nanoid';
+
 type CityScreenProps = {
-  cityTitle: string;
-  onCityChoose: (cityTitle: string) => void
+  cities: City[];
+  onCityChoose: (cityTitle: ChangeCityPayload) => void;
+  currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
-  const {cityTitle, onCityChoose} = props;
+  const {cities, currentCity, onCityChoose} = props;
 
   return (
-    <li
-      className="locations__item"
-      data-city={cityTitle}
-      onClick={(evt) => {
-        evt.preventDefault();
-        onCityChoose(evt.currentTarget.dataset.city || DEFAULT_CITY_NAME);
-      }}
-    >
-      <a className="locations__item-link tabs__item" href="/">
-        <span>{cityTitle}</span>
-      </a>
-    </li>
+    <ul className="locations__list tabs__list">
+      {cities.map((city) => (
+        <li
+          key={nanoid(10)}
+          className="locations__item"
+          data-city={city.title}
+          onClick={(evt) => {
+            evt.preventDefault();
+            onCityChoose(evt.currentTarget.dataset.city as ChangeCityPayload);
+          }}
+        >
+          <a
+            className={`locations__item-link tabs__item ${currentCity.title === city.title && 'tabs__item--active'}`}
+            href="/"
+          >
+            <span>{city.title}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 }
 

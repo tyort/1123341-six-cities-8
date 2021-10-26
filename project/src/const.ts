@@ -7,6 +7,13 @@ export enum AppRoute {
   Room = '/offer/:id'
 }
 
+export const sortNames = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',

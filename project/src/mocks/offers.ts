@@ -1,4 +1,5 @@
-import {Offer, City} from '../types/offer';
+import {Offer} from '../types/offer';
+import {City} from '../types/city';
 
 export const cities: City[] = [
   {
@@ -26,7 +27,7 @@ export const offers: Offer[] = [
     type: 'Apartment',
     images: ['apartment-01.jpg', 'apartment-02.jpg', 'apartment-03.jpg'],
     category: 'Premium',
-    rating: 9.8,
+    rating: 3.8,
     features: [
       {
         title: 'High ceilings',
@@ -36,7 +37,7 @@ export const offers: Offer[] = [
         addition: 'bedrooms',
       },
     ],
-    price: 333,
+    price: 133,
     bonuses: ['Wi-Fi', 'Kitchen'],
     owner: {
       name: 'Patrick Bateman',
