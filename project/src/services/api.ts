@@ -13,7 +13,6 @@ enum HttpCode {
 type UnauthorizedCallback = () => void;
 
 // AxiosInstance - тип сконфигурированного экземпляра axios
-// onUnauthorized - взаимодействие с redux store, для диспатча определенного????? действия
 export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL, // относительно адреса будут выполняться все запросы

@@ -6,7 +6,7 @@ import {
   requireLogout
 } from '../store/action';
 
-import {ThunkAction} from 'redux-thunk';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
 import {State} from '../types/state';
 
@@ -40,5 +40,5 @@ export type ActionsTypes =
 | ReturnType<typeof requireLogout>
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsTypes>;
-
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, ActionsTypes>;
 
