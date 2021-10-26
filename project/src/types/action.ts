@@ -8,6 +8,13 @@ export enum ActionName {
   ChangeSortName = 'offers/changeSortName',
 }
 
+export enum SortName {
+  Popular = 'Popular',
+  PriceAscending = 'Price: low to high',
+  PriceDescending = 'Price: high to low',
+  RateDescending = 'Top rated first'
+}
+
 export type ChangeCityPayload =
 | 'Paris'
 | 'Cologne'
