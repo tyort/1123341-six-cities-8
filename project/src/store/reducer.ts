@@ -1,4 +1,4 @@
-import {ActionsType, ActionName, ChangeSortPayload} from '../types/action';
+import {ActionsType, ActionName, SortName, ChangeSortPayload} from '../types/action';
 import {State} from '../types/state';
 import {Offer} from '../types/offer';
 import {City} from '../types/city';
@@ -18,11 +18,11 @@ const offers: Offer[] = [];
 
 const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
   switch (sortName) {
-    case 'Price: low to high':
+    case SortName.PriceAscending:
       return proffer.slice().sort((a, b) => a.price - b.price);
-    case 'Price: high to low':
+    case SortName.PriceDescending:
       return proffer.slice().sort((a, b) => b.price - a.price);
-    case 'Top rated first':
+    case SortName.RateDescending:
       return proffer.slice().sort((a, b) => b.rating - a.rating);
     default:
       // ??????Чтобы выдать порядок какой был на сервере

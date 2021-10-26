@@ -73,6 +73,7 @@ function App(props: PropsFromRedux): JSX.Element {
             isMainScreen
           >
             <CityScreen
+              currentCity={city}
               cities={cities}
               onCityChoose={onCityChoose}
             />

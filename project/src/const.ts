@@ -7,7 +7,7 @@ export enum AppRoute {
   Room = '/offer/:id'
 }
 
-export const sortName = [
+export const sortNames = [
   'Popular',
   'Price: low to high',
   'Price: high to low',

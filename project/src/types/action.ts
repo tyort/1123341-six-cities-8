@@ -18,6 +18,13 @@ export enum ActionName {
   RequireLogout = 'user/requireLogout'
 }
 
+export enum SortName {
+  Popular = 'Popular',
+  PriceAscending = 'Price: low to high',
+  PriceDescending = 'Price: high to low',
+  RateDescending = 'Top rated first'
+}
+
 export type ChangeCityPayload =
 | 'Paris'
 | 'Cologne'
