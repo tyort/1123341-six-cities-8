@@ -87,7 +87,6 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.Favorites}
           render={() => <FavoritesScreen offers={offers}/>}
-          authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.SignIn}>
