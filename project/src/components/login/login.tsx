@@ -1,11 +1,11 @@
 import {useRef, FormEvent} from 'react';
-import {useHistory} from 'react-router-dom';
+// import {useHistory} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Logo from '../logo/logo';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import {AuthUserData} from '../../types/auth-user-data';
-import {AppRoute} from '../../const';
+// import {AppRoute} from '../../const';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthUserData) {
@@ -23,7 +23,7 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -52,8 +52,7 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <form
               className="login__form form"
-              action="#"
-              method="post"
+              action=""
               onSubmit={onSubmitHandle}
             >
               <div className="login__input-wrapper form__input-wrapper">
@@ -78,7 +77,6 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
                 />
               </div>
               <button
-                onClick={() => history.push(AppRoute.Main)}
                 className="login__submit form__submit button"
                 type="submit"
               >
