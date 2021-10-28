@@ -1,13 +1,14 @@
 /* eslint-disable camelcase */
+import {connect, ConnectedProps} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
+import {State} from '../../types/state';
 
 type OfferScreenProps = {
   currentOffer: Offer;
-  offers: Offer[];
   isMainScreen: boolean;
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
@@ -18,8 +19,17 @@ type OfferScreenProps = {
   ) => JSX.Element;
 }
 
-function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {currentOffer, offers, isMainScreen, renderMap, renderCard} = props;
+const mapStateToProps = (state: State) => ({
+  nearbyOffers: state.nearbyOffers,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & OfferScreenProps;
+
+function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
+  const {currentOffer, isMainScreen, renderMap, renderCard, nearbyOffers} = props;
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
 
@@ -113,11 +123,10 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             />
           </div>
         </div>
-        {renderMap(currentOffer, isMainScreen, offers, currentOffer.city)}
+        {renderMap(currentOffer, isMainScreen, [...nearbyOffers, currentOffer], currentOffer.city)}
       </section>
       <PlaceNearbyScreen
-        offers={offers}
-        currentOffer={currentOffer}
+        offers={nearbyOffers}
         isMainScreen={isMainScreen}
         renderCard={renderCard}
       />
@@ -125,4 +134,5 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   );
 }
 
-export default PlaceOfferScreen;
+export {PlaceOfferScreen};
+export default connector(PlaceOfferScreen);

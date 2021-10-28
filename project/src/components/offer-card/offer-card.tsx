@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import {ThunkAppDispatch} from '../../types/action';
-import {fetchCommentsAction} from '../../store/api-actions';
+import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
 
 type CardScreenProps = {
   offer: Offer;
@@ -16,6 +16,10 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onCommentsLoad(offerId: number) {
     dispatch(fetchCommentsAction(offerId));
   },
+
+  onNearbyLoad(offerId: number) {
+    dispatch(fetchNearbyAction(offerId));
+  },
 });
 
 const connector = connect(null, mapDispatchToProps);
@@ -24,7 +28,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & CardScreenProps;
 
 function OfferCard(props: ConnectedComponentProps): JSX.Element {
-  const {offer, onCardMainHover, isMainScreen, onCommentsLoad} = props;
+  const {offer, onCardMainHover, isMainScreen, onCommentsLoad, onNearbyLoad} = props;
   const {price, rating, title, type, preview_image} = offer;
 
   return (
@@ -71,6 +75,7 @@ function OfferCard(props: ConnectedComponentProps): JSX.Element {
             to={`/hotels/${offer.id}`}
             onClick={() => {
               onCommentsLoad(offer.id as number);
+              onNearbyLoad(offer.id as number);
             }}
           >{title}
           </Link>

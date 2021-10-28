@@ -102,7 +102,6 @@ function App(props: PropsFromRedux): JSX.Element {
           <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
-              offers={offers}
               isMainScreen={false}
             />
           </Route>

@@ -1,7 +1,7 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment} from '../types/comment';
-import {loadOffersAction, loadCommentsAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
+import {loadOffersAction, loadNearbyAction, loadCommentsAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
@@ -18,6 +18,12 @@ export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${offerId}`);
     dispatch(loadCommentsAction(data));
+  };
+
+export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+    dispatch(loadNearbyAction(data));
   };
 
 // Обращение к определенного API в целях проверки статуса авторизации пользователя

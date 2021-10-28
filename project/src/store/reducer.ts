@@ -43,6 +43,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   comments: [],
+  nearbyOffers: [],
 };
 
 //               state: {объект города, массив списка предложений}
@@ -78,6 +79,11 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
     case ActionName.LoadComments: {
       const {comments} = action.payload;
       return {...state, comments};
+    }
+
+    case ActionName.LoadNearby: {
+      const {nearbyOffers} = action.payload;
+      return {...state, nearbyOffers};
     }
 
     case ActionName.RequireAuthorization:

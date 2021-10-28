@@ -11,5 +11,6 @@ export type State = {
   cities: City[],
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
-  comments: Comment[]
+  comments: Comment[],
+  nearbyOffers: Offer[]
 };

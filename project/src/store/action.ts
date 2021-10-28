@@ -33,6 +33,13 @@ export const loadCommentsAction = (comments: Comment[]) => ({
   },
 } as const);
 
+export const loadNearbyAction = (nearbyOffers: Offer[]) => ({
+  type: ActionName.LoadNearby,
+  payload: {
+    nearbyOffers,
+  },
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionName.RequireAuthorization,
   payload: authStatus,

@@ -5,7 +5,8 @@ import {
   requireAuthorization,
   requireLogout,
   redirectToRoute,
-  loadCommentsAction
+  loadCommentsAction,
+  loadNearbyAction
 } from '../store/action';
 
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
@@ -17,6 +18,7 @@ export enum ActionName {
   ChangeSortName = 'offers/changeSortName',
   LoadOffers = 'offers/loadOffers',
   LoadComments = 'offers/loadComments',
+  LoadNearby = 'offers/loadNearbyOffers',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   RedirectToRoute = 'app/redirectToRoute'
@@ -47,6 +49,7 @@ export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>
 | ReturnType<typeof loadOffersAction>
+| ReturnType<typeof loadNearbyAction>
 | ReturnType<typeof loadCommentsAction>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
