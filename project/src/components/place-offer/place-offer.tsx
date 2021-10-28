@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
-import {Offer, Location} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 
 type OfferScreenProps = {
@@ -13,7 +14,7 @@ type OfferScreenProps = {
     currentOffer: Offer,
     isMainScreen: boolean,
     offers: Offer[],
-    center: Location,
+    center: City,
   ) => JSX.Element;
 }
 
@@ -29,7 +30,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
           <div className="property__gallery">
             {images.map((image) => (
               <div key={nanoid(10)} className="property__image-wrapper">
-                <img className="property__image" src={`img/${image}`} alt="View studio"/>
+                <img className="property__image" src={`${image}`} alt="View studio"/>
               </div>
             ))}
           </div>
@@ -112,7 +113,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             />
           </div>
         </div>
-        {renderMap(currentOffer, isMainScreen, offers, currentOffer.location)}
+        {renderMap(currentOffer, isMainScreen, offers, currentOffer.city)}
       </section>
       <PlaceNearbyScreen
         offers={offers}
