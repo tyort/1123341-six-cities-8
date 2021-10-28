@@ -1,24 +1,35 @@
+import {connect, ConnectedProps} from 'react-redux';
 import {useState, FormEvent, ChangeEvent} from 'react';
 import ReviewScreen from '../review/review';
 import {Offer} from '../../types/offer';
+import {State} from '../../types/state';
+import {nanoid} from 'nanoid';
 
 type ReviewsScreenProps = {
   offer: Offer;
   onCommentLoad: (offer: Offer, comment: string) => void;
 }
 
-function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
-  const {offer, onCommentLoad} = props;
-  const {reviews} = offer;
+const mapStateToProps = (state: State) => ({
+  comments: state.comments,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & ReviewsScreenProps;
+
+function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
+  const {offer, onCommentLoad, comments} = props;
   const [userComment, setUserComment] = useState('');
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review) => (
+        {comments.map((review) => (
           <ReviewScreen
-            key={review.id}
+            key={nanoid(10)}
             review={review}
           />
         ))}
@@ -90,4 +101,5 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   );
 }
 
-export default PlaceReviewsScreen;
+export {PlaceReviewsScreen};
+export default connector(PlaceReviewsScreen);
