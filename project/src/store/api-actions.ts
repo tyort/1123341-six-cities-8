@@ -37,6 +37,6 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     api.delete(APIRoute.Logout); // закрыть сессию на сервере
-    dropToken();
+    dropToken(); // удалит токен из браузера
     dispatch(requireLogout());
   };

@@ -32,9 +32,7 @@ const mapStateToProps = (state: State) => ({
   authorizationStatus: state.authorizationStatus,
 });
 
-// Эта функция добавит нашему компоненту пропс onCityChoose;
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
-  // должны передать потомку этот колбэк
   onCityChoose(cityName: ChangeCityPayload) {
     // changeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
@@ -49,6 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
 // Настраиваем "мостик" между Redux и React;
 // 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
 const connector = connect(mapStateToProps, mapDispatchToProps);
+
 // Выделим новые пропсы, сформированные в redux;
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -117,6 +116,4 @@ function App(props: PropsFromRedux): JSX.Element {
 }
 
 export {App};
-// Если не обернуть в коннект, то будет требовать от родителя передать пропсы,
-// которые мы сформировали через редакс
 export default connector(App);

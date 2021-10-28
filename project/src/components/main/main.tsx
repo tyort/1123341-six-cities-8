@@ -1,7 +1,11 @@
+import {Link} from 'react-router-dom';
 import {PropsWithChildren, Children} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
+import {ThunkAppDispatch} from '../../types/action';
+import {logoutAction} from '../../store/api-actions';
 
 type MainScreenProps = PropsWithChildren<{
   offers: Offer[];
@@ -16,7 +20,19 @@ type MainScreenProps = PropsWithChildren<{
   ) => JSX.Element;
 }>
 
-function Main(props: MainScreenProps): JSX.Element {
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  logoutApp() {
+    dispatch(logoutAction());
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
+
+function MainScreen(props: ConnectedComponentProps): JSX.Element {
   const {
     city,
     offers,
@@ -24,6 +40,7 @@ function Main(props: MainScreenProps): JSX.Element {
     renderMap,
     renderCard,
     children,
+    logoutApp,
   } = props;
 
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
@@ -45,9 +62,16 @@ function Main(props: MainScreenProps): JSX.Element {
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
+                  <Link
+                    className="header__nav-link"
+                    to="/"
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      logoutApp();
+                    }}
+                  >
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -84,4 +108,5 @@ function Main(props: MainScreenProps): JSX.Element {
   );
 }
 
-export default Main;
+export {MainScreen};
+export default connector(MainScreen);
