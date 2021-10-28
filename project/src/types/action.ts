@@ -1,11 +1,21 @@
 import {
-  ChangeCityAction,
-  ChangeSortNameAction
+  changeCityAction,
+  changeSortNameAction,
+  loadOffersAction,
+  requireAuthorization,
+  requireLogout
 } from '../store/action';
+
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AxiosInstance} from 'axios';
+import {State} from '../types/state';
 
 export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
+  LoadOffers = 'offers/loadOffers',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout'
 }
 
 export enum SortName {
@@ -29,19 +39,13 @@ export type ChangeSortPayload =
 | 'Price: high to low'
 | 'Top rated first'
 
-//--------------------------------------------------------------------
-// Ниже представлены типы значений, полученных при выполнении Action
-export type ChangeCityActionType = {
-  type: ActionName.ChangeCity;
-  payload: ChangeCityPayload;
-};
-
-export type ChangeSortNameActionType= {
-  type: ActionName.ChangeSortName;
-  payload: ChangeSortPayload;
-};
-
 export type ActionsType =
-| ReturnType<typeof ChangeCityAction>
-| ReturnType<typeof ChangeSortNameAction>
+| ReturnType<typeof changeCityAction>
+| ReturnType<typeof changeSortNameAction>
+| ReturnType<typeof loadOffersAction>
+| ReturnType<typeof requireAuthorization>
+| ReturnType<typeof requireLogout>
+
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsType>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, ActionsType>;
 

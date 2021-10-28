@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
-import {Offer, Coordinate} from '../../types/offer';
+import {Offer, Location} from '../../types/offer';
 import {nanoid} from 'nanoid';
 
 type OfferScreenProps = {
@@ -12,13 +13,14 @@ type OfferScreenProps = {
     currentOffer: Offer,
     isMainScreen: boolean,
     offers: Offer[],
-    center: Coordinate,
+    center: Location,
   ) => JSX.Element;
 }
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   const {currentOffer, offers, isMainScreen, renderMap, renderCard} = props;
-  const {owner, title, images, category, rating, features, price, bonuses} = currentOffer;
+  const {bedrooms, type, host, title, images, category,
+    rating, price, goods, description, max_adults} = currentOffer;
 
   return (
     <main className="page__main page__main--property">
@@ -56,11 +58,15 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               <span className="property__rating-value rating__value">{rating}</span>
             </div>
             <ul className="property__features">
-              {features.map((feature) => (
-                <li key={nanoid(10)} className={`property__feature property__feature--${feature.addition}`}>
-                  {feature.title}
-                </li>
-              ))}
+              <li className="property__feature property__feature--entire">
+                {type}
+              </li>
+              <li className="property__feature property__feature--bedrooms">
+                {bedrooms} Bedrooms
+              </li>
+              <li className="property__feature property__feature--adults">
+                Max {max_adults} adults
+              </li>
             </ul>
             <div className="property__price">
               <b className="property__price-value">&euro;{price}</b>
@@ -69,7 +75,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                {bonuses.map((bonus) => (
+                {goods.map((bonus) => (
                   <li key={nanoid(10)} className="property__inside-item">
                     {bonus}
                   </li>
@@ -80,21 +86,18 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={`img/${owner.avatar}`} width="74" height="74" alt="Host avatar"/>
+                  <img className="property__avatar user__avatar" src={`img/${host.avatar_url}`} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="property__user-name">
-                  {owner.name}
+                  {host.name}
                 </span>
                 <span className="property__user-status">
-                  {owner.status}
+                  {host.is_pro && 'Pro'}
                 </span>
               </div>
               <div className="property__description">
                 <p className="property__text">
-                  {owner.text}
-                </p>
-                <p className="property__text">
-                  {owner.text}
+                  {description}
                 </p>
               </div>
             </div>
@@ -109,7 +112,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
             />
           </div>
         </div>
-        {renderMap(currentOffer, isMainScreen, offers, currentOffer.coordinate)}
+        {renderMap(currentOffer, isMainScreen, offers, currentOffer.location)}
       </section>
       <PlaceNearbyScreen
         offers={offers}

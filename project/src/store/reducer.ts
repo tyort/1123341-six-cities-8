@@ -1,16 +1,20 @@
 import {ActionsType, ActionName, SortName, ChangeSortPayload} from '../types/action';
-import {offers, cities} from '../mocks/offers';
 import {State} from '../types/state';
 import {Offer} from '../types/offer';
 import {City} from '../types/city';
+import {AuthorizationStatus} from '../const';
 
 const SORT_NAME_DEFAULT = 'Popular';
 const CITY_DEFAULT = {
-  latitude: 48.86,
-  longitude: 2.35,
-  title: 'Paris',
-  zoom: 12,
+  location: {
+    latitude: 48.86,
+    longitude: 2.35,
+    zoom: 12,
+  },
+  name: 'Paris',
 };
+
+const offers: Offer[] = [];
 
 const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
   switch (sortName) {
@@ -21,18 +25,23 @@ const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): 
     case SortName.RateDescending:
       return proffer.slice().sort((a, b) => b.rating - a.rating);
     default:
-      // Чтобы выдать порядок какой был на сервере
-      return offers.filter((item) => item.city === city.title);
+      // ??????Чтобы выдать порядок какой был на сервере
+      return offers.filter((item) => item.city.name === city.name);
   }
 };
 
 // Начальное значение {объект города, массив списка предложений, название сортировки}
-const initialOffers = offers.filter((item) => item.city === CITY_DEFAULT.title);
+const initialOffers = offers.filter((item) => item.city.name === CITY_DEFAULT.name);
+const citiesJSON = offers.map((item) => JSON.stringify(item.city));
+const cities: City[] = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
+
 const initialState = {
   city: CITY_DEFAULT,
   offersList: initialOffers,
   sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
   cities,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
 };
 
 //               state: {объект города, массив списка предложений}
@@ -40,8 +49,8 @@ const initialState = {
 const reducer = (state: State = initialState, action: ActionsType): State => {
   switch (action.type) {
     case ActionName.ChangeCity: {
-      const city = cities.find((town) => town.title === action.payload) as City;
-      const offersList = offers.filter((item) => item.city === city.title);
+      const city = state.cities.find((town) => town.name === action.payload) as City;
+      const offersList = offers.filter((item) => item.city.name === city.name);
 
       return {
         ...state,
@@ -59,6 +68,18 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
         offersList,
       };
     }
+
+    case ActionName.LoadOffers: {
+      const {offers: offersList} = action.payload;
+      return {...state, offersList};
+    }
+
+    case ActionName.RequireAuthorization:
+      return {...state, authorizationStatus: action.payload, isDataLoaded: true}; //isDataLoaded: true ???????
+
+    case ActionName.RequireLogout:
+      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+
     default:
       return state;
   }
