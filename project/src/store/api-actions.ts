@@ -1,6 +1,7 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
-import {loadOffersAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
+import {Comment} from '../types/comment';
+import {loadOffersAction, loadCommentsAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
@@ -11,6 +12,12 @@ export const fetchOffersAction = (): ThunkActionResult =>
     // к основному адресу BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(loadOffersAction(data));
+  };
+
+export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${offerId}`);
+    dispatch(loadCommentsAction(data));
   };
 
 // Обращение к определенного API в целях проверки статуса авторизации пользователя
@@ -27,8 +34,6 @@ export const checkAuthAction = (): ThunkActionResult =>
 export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    // eslint-disable-next-line no-console
-    console.log(token);
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));

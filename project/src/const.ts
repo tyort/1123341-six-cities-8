@@ -44,6 +44,7 @@ export const cities = [
 // Запросы на "бэкэнд"
 export enum APIRoute {
   Offers = '/hotels',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }

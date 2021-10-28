@@ -1,4 +1,5 @@
 import {Offer} from '../types/offer';
+import {Comment} from '../types/comment';
 import {AppRoute, AuthorizationStatus} from '../const';
 
 import {
@@ -22,6 +23,13 @@ export const loadOffersAction = (offers: Offer[]) => ({
   type: ActionName.LoadOffers,
   payload: {
     offers,
+  },
+} as const);
+
+export const loadCommentsAction = (comments: Comment[]) => ({
+  type: ActionName.LoadComments,
+  payload: {
+    comments,
   },
 } as const);
 
