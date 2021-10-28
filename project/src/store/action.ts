@@ -1,5 +1,5 @@
 import {Offer} from '../types/offer';
-import {AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus} from '../const';
 
 import {
   ActionName,
@@ -32,5 +32,10 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 export const requireLogout = () => ({
   type: ActionName.RequireLogout,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionName.RedirectToRoute,
+  payload: url,
 } as const);
 

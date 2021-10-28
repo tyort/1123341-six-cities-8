@@ -1,8 +1,8 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
-import {loadOffersAction, requireAuthorization, requireLogout} from './action';
+import {loadOffersAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
-import {APIRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
 
 // ThunkActionResult - расширенный нами тип ThunkAction от redux-thunk
@@ -31,6 +31,7 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
     console.log(token);
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
 export const logoutAction = (): ThunkActionResult =>

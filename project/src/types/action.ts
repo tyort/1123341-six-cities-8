@@ -3,7 +3,8 @@ import {
   changeSortNameAction,
   loadOffersAction,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  redirectToRoute
 } from '../store/action';
 
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
@@ -15,7 +16,8 @@ export enum ActionName {
   ChangeSortName = 'offers/changeSortName',
   LoadOffers = 'offers/loadOffers',
   RequireAuthorization = 'user/requireAuthorization',
-  RequireLogout = 'user/requireLogout'
+  RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'app/redirectToRoute'
 }
 
 export enum SortName {
@@ -45,6 +47,7 @@ export type ActionsType =
 | ReturnType<typeof loadOffersAction>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
+| ReturnType<typeof redirectToRoute>
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, ActionsType>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, ActionsType>;
