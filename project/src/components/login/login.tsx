@@ -1,11 +1,13 @@
 import {useRef, FormEvent} from 'react';
-// import {useHistory} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import Logo from '../logo/logo';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import {AuthUserData} from '../../types/auth-user-data';
-// import {AppRoute} from '../../const';
+
+type LoginScreenProps = {
+  onRedirectSubmitHandler: () => void;
+};
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthUserData) {
@@ -16,14 +18,13 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 
 const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & LoginScreenProps;
 
-function LoginScreen(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+function LoginScreen(props: ConnectedComponentProps): JSX.Element {
+  const {onSubmit, onRedirectSubmitHandler} = props;
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  // const history = useHistory();
 
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -53,7 +54,10 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
             <form
               className="login__form form"
               action=""
-              onSubmit={onSubmitHandle}
+              onSubmit={(evt) => {
+                onSubmitHandle(evt);
+                onRedirectSubmitHandler();
+              }}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>

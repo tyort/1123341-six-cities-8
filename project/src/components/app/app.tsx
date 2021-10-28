@@ -87,12 +87,19 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
+          // вместо render можно попробовать children?????
           render={() => <FavoritesScreen offers={offers}/>}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.SignIn}>
-          <LoginScreen/>
-        </Route>
+        <Route
+          exact
+          path={AppRoute.SignIn}
+          render={({history}) => (
+            <LoginScreen
+              onRedirectSubmitHandler={() => history.push(AppRoute.Main)}
+            />
+          )}
+        />
         {offers.map((offer) => (
           <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
             <PlaceOfferScreenWrapped
