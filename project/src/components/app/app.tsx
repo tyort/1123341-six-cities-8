@@ -96,12 +96,9 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route
           exact
           path={AppRoute.SignIn}
-          render={({history}) => (
-            <LoginScreen
-              onRedirectSubmitHandler={() => history.push(AppRoute.Main)}
-            />
-          )}
-        />
+        >
+          <LoginScreen/>
+        </Route>
         {offers.map((offer) => (
           <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
