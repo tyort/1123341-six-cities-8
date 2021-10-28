@@ -53,8 +53,8 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         </div>
         <h2 className="place-card__name">
           <Link
-            to={`/offer/${offer.id}`}
-            onClick={() => history.push(`/offer/${offer.id}`)}
+            to={`/hotels/${offer.id}`}
+            onClick={() => history.push(`/hotels/${offer.id}`)}
           >{title}
           </Link>
         </h2>

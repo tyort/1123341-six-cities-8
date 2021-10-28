@@ -103,7 +103,7 @@ function App(props: PropsFromRedux): JSX.Element {
           )}
         />
         {offers.map((offer) => (
-          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+          <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
               offers={offers}
