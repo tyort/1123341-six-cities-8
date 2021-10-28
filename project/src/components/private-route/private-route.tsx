@@ -1,12 +1,12 @@
+import {PropsWithChildren} from 'react';
 import {Route, Redirect, RouteProps} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
-type PrivateRouteProps = RouteProps & {
-  render: () => JSX.Element;
+type PrivateRouteProps = RouteProps & PropsWithChildren<{
   authorizationStatus: AuthorizationStatus;
-}
+}>
 
 const mapStateToProps = ({authorizationStatus}: State) => ({
   authorizationStatus,
@@ -18,7 +18,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & PrivateRouteProps;
 
 function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
-  const {exact, path, render, authorizationStatus} = props;
+  const {exact, path, authorizationStatus, children} = props;
 
   return (
     <Route
@@ -26,7 +26,7 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
       path={path}
       render={() => (
         authorizationStatus === AuthorizationStatus.Auth
-          ? render()
+          ? children
           : <Redirect to={AppRoute.SignIn} />
       )}
     />

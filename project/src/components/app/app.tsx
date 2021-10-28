@@ -87,9 +87,11 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          // вместо render можно попробовать children?????
-          render={() => <FavoritesScreen offers={offers}/>}
         >
+          <FavoritesScreen
+            offers={offers}
+            cities={cities}
+          />
         </PrivateRoute>
         <Route
           exact
