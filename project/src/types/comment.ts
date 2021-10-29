@@ -10,3 +10,9 @@ export type Comment = {
     name: string
   }
 };
+
+export type NewComment = {
+  comment: string,
+  rating: number
+};
+
