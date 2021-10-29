@@ -1,6 +1,6 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
-import {Comment} from '../types/comment';
+import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
@@ -50,4 +50,9 @@ export const logoutAction = (): ThunkActionResult =>
     api.delete(APIRoute.Logout); // закрыть сессию на сервере
     dropToken(); // удалит токен из браузера
     dispatch(requireLogout());
+  };
+
+export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.post(`${APIRoute.Comments}/${offerId}`, {comment, rating});
   };

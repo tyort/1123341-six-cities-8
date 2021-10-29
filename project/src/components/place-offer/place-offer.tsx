@@ -46,7 +46,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & OfferScreenProps;
 
 function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
-  const {authorizationStatus, currentOffer, isMainScreen, renderMap, renderCard,
+  const {currentOffer, isMainScreen, renderMap, renderCard,
     nearbyOffers, comments, onCommentsLoad, onNearbyLoad} = props;
 
   const {bedrooms, type, host, title, images, category,
@@ -147,8 +147,8 @@ function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
               </div>
             </div>
             <PlaceReviewsScreen
-              authorizationStatus={authorizationStatus}
               comments={offerComments}
+              currentOffer={currentOffer}
             />
           </div>
         </div>
