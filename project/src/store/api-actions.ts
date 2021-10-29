@@ -5,6 +5,9 @@ import {loadOffersAction, loadNearbyAction, loadCommentsAction, requireAuthoriza
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
+import {toast} from 'react-toastify';
+
+const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 // ThunkActionResult - расширенный нами тип ThunkAction от redux-thunk
 export const fetchOffersAction = (): ThunkActionResult =>
@@ -29,11 +32,12 @@ export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
 // Обращение к определенного API в целях проверки статуса авторизации пользователя
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      // в случае успеха, т.е. promise зарезолвится
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      });
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      toast.info(AUTH_FAIL_MESSAGE);
+    }
   };
 
 // Авторизация пользователя
