@@ -1,13 +1,15 @@
 import ReviewScreen from '../review/review';
 import {Comment} from '../../types/comment';
 import {nanoid} from 'nanoid';
+import {AuthorizationStatus} from '../../const';
 
 type ReviewsScreenProps = {
   comments: Comment[];
+  authorizationStatus: AuthorizationStatus
 }
 
 function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
-  const {comments} = props;
+  const {comments, authorizationStatus} = props;
 
   return (
     <section className="property__reviews reviews">
@@ -20,6 +22,8 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
           />
         ))}
       </ul>
+      {authorizationStatus === AuthorizationStatus.Auth
+      &&
       <form
         className="reviews__form form"
         action="#"
@@ -82,7 +86,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
           </p>
           <button className="reviews__submit form__submit button" type="submit">Submit</button>
         </div>
-      </form>
+      </form>}
     </section>
   );
 }
