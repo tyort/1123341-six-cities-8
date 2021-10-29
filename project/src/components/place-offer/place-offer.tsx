@@ -1,11 +1,16 @@
 /* eslint-disable camelcase */
+import {useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer} from '../../types/offer';
+import {Comment} from '../../types/comment';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 import {State} from '../../types/state';
+import {ThunkAppDispatch} from '../../types/action';
+import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+
 
 type OfferScreenProps = {
   currentOffer: Offer;
@@ -21,17 +26,45 @@ type OfferScreenProps = {
 
 const mapStateToProps = (state: State) => ({
   nearbyOffers: state.nearbyOffers,
+  comments: state.comments,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onCommentsLoad(offerId: number) {
+    dispatch(fetchCommentsAction(offerId));
+  },
+
+  onNearbyLoad(offerId: number) {
+    dispatch(fetchNearbyAction(offerId));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & OfferScreenProps;
 
 function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
-  const {currentOffer, isMainScreen, renderMap, renderCard, nearbyOffers} = props;
+  const {currentOffer, isMainScreen, renderMap, renderCard,
+    nearbyOffers, comments, onCommentsLoad, onNearbyLoad} = props;
+
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
+
+  const [offerComments, setComments] = useState<Comment[]>(comments);
+  const [offerNearby, setNearby] = useState<Offer[]>(nearbyOffers);
+
+  useEffect(() => {
+    onCommentsLoad(currentOffer.id as number);
+    onNearbyLoad(currentOffer.id as number);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  useEffect(() => {
+    setComments(comments);
+    setNearby(nearbyOffers);
+  }, [comments, nearbyOffers]);
 
   return (
     <main className="page__main page__main--property">
@@ -113,20 +146,14 @@ function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
               </div>
             </div>
             <PlaceReviewsScreen
-              offer={currentOffer}
-              onCommentLoad={(proposal, comment) => {
-                // eslint-disable-next-line no-console
-                console.log(proposal);
-                // eslint-disable-next-line no-console
-                console.log(comment);
-              }}
+              comments={offerComments}
             />
           </div>
         </div>
-        {renderMap(currentOffer, isMainScreen, [...nearbyOffers, currentOffer], currentOffer.city)}
+        {renderMap(currentOffer, isMainScreen, [...offerNearby, currentOffer], currentOffer.city)}
       </section>
       <PlaceNearbyScreen
-        offers={nearbyOffers}
+        offers={offerNearby}
         isMainScreen={isMainScreen}
         renderCard={renderCard}
       />

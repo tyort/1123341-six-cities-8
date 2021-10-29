@@ -1,27 +1,13 @@
-import {connect, ConnectedProps} from 'react-redux';
-import {useState, FormEvent, ChangeEvent} from 'react';
 import ReviewScreen from '../review/review';
-import {Offer} from '../../types/offer';
-import {State} from '../../types/state';
+import {Comment} from '../../types/comment';
 import {nanoid} from 'nanoid';
 
 type ReviewsScreenProps = {
-  offer: Offer;
-  onCommentLoad: (offer: Offer, comment: string) => void;
+  comments: Comment[];
 }
 
-const mapStateToProps = (state: State) => ({
-  comments: state.comments,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & ReviewsScreenProps;
-
-function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
-  const {offer, onCommentLoad, comments} = props;
-  const [userComment, setUserComment] = useState('');
+function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
+  const {comments} = props;
 
   return (
     <section className="property__reviews reviews">
@@ -38,10 +24,10 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
         className="reviews__form form"
         action="#"
         method="post"
-        onSubmit={(evt: FormEvent<HTMLFormElement>) => {
-          evt.preventDefault();
-          onCommentLoad(offer, userComment);
-        }}
+        // onSubmit={(evt: FormEvent<HTMLFormElement>) => {
+        //   evt.preventDefault();
+        //   onCommentLoad(offer, userComment);
+        // }}
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
@@ -85,9 +71,9 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => {
-            setUserComment(evt.target.value);
-          }}
+          // onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => {
+          //   setUserComment(evt.target.value);
+          // }}
         >
         </textarea>
         <div className="reviews__button-wrapper">
@@ -101,5 +87,4 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PlaceReviewsScreen};
-export default connector(PlaceReviewsScreen);
+export default PlaceReviewsScreen;
