@@ -1,6 +1,6 @@
 import {connect, ConnectedProps} from 'react-redux';
 import ReviewScreen from '../review/review';
-import {Comment, NewComment} from '../../types/comment';
+import {NewComment} from '../../types/comment';
 import {nanoid} from 'nanoid';
 import {AuthorizationStatus} from '../../const';
 import {Fragment, useState, useRef, FormEvent} from 'react';
@@ -20,17 +20,17 @@ const starsStatuses = new Map([
 ]);
 
 type ReviewsScreenProps = {
-  comments: Comment[];
   currentOffer: Offer;
 }
 
 const mapStateToProps = (state: State) => ({
   nearbyOffers: state.nearbyOffers,
   authorizationStatus: state.authorizationStatus,
+  comments: state.comments,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onFucjkas(newComment: NewComment) {
+  onSetComment(newComment: NewComment) {
     dispatch(setCommentAction(newComment));
   },
 });
@@ -42,7 +42,7 @@ type ConnectedComponentProps = PropsFromRedux & ReviewsScreenProps;
 
 
 function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
-  const {comments, authorizationStatus, currentOffer, onFucjkas} = props;
+  const {comments, authorizationStatus, currentOffer, onSetComment} = props;
   const stars = new Array(STARS_COUNT).fill('');
   const [rating, setRating] = useState<number | null>(null);
   const commentTable = useRef<HTMLTextAreaElement | null>(null);
@@ -50,7 +50,7 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
-      onFucjkas({offerId: currentOffer.id as number, comment: commentTable.current.value, rating});
+      onSetComment({offerId: currentOffer.id as number, comment: commentTable.current.value, rating});
     }
   };
 
@@ -104,9 +104,6 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          // onChange={(evt: ChangeEvent<HTMLTextAreaElement>) => {
-          //   setUserComment(evt.target.value);
-          // }}
         >
         </textarea>
         <div className="reviews__button-wrapper">
