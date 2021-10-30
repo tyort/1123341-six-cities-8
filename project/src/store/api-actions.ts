@@ -9,11 +9,16 @@ import {toast} from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
-// ThunkActionResult - расширенный нами тип ThunkAction от redux-thunk
+// ThunkActionResult - расширенный нами ThunkAction(middleware) от redux-thunk, возвращающие промис
+// async (dispatch, _getState, api):...... - это экшн, только вместо объекта функция
 export const fetchOffersAction = (): ThunkActionResult =>
+  // dispatch -для отправки действий с хранилищем
+  // _getState - текущее состояние хранилища
   async (dispatch, _getState, api): Promise<void> => {
-    // к основному адресу BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
+
+    // После завершения асинхронного запроса...(brb)
+    const {data} = await api.get<Offer[]>(APIRoute.Offers); // к BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
+    // (brb)...мы можем закинуть данные в хранилище
     dispatch(loadOffersAction(data));
   };
 

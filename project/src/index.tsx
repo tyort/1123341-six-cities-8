@@ -23,7 +23,12 @@ const api = createAPI(
 const store = createStore(
   reducer,
   composeWithDevTools(
+    // Посредник в Redux. В момент между:
+    //  1) Мы бросили экшен,
+    //  2) Экшн обработал редьюсер.
+    // -- можно совершить действие
     applyMiddleware(thunk.withExtraArgument(api)),
+    // все экшн store проходят через redirect(middleware)
     applyMiddleware(redirect),
   ),
 );
