@@ -6,7 +6,7 @@ import {AuthorizationStatus} from '../const';
 
 export type State = {
   city: City,
-  offersList: Offer[],
+  currentOffers: Offer[],
   sortName: ChangeSortPayload,
   cities: City[],
   authorizationStatus: AuthorizationStatus,

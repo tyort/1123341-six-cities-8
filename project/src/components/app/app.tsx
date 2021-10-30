@@ -24,7 +24,7 @@ export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean
 // актуальные состояния данных из хранилища в одноименные пропсы компонента
 const mapStateToProps = (state: State) => ({
   // новый пропс в компоненте
-  offers: state.offersList,
+  offers: state.currentOffers,
   city: state.city,
   currentSortName: state.sortName,
   cities: state.cities,

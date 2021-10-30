@@ -37,7 +37,7 @@ const cities: City[] = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
 
 const initialState = {
   city: CITY_DEFAULT,
-  offersList: initialOffers,
+  currentOffers: initialOffers,
   sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
   cities,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -52,28 +52,28 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
   switch (action.type) {
     case ActionName.ChangeCity: {
       const city = state.cities.find((town) => town.name === action.payload) as City;
-      const offersList = offers.filter((item) => item.city.name === city.name);
+      const currentOffers = offers.filter((item) => item.city.name === city.name);
 
       return {
         ...state,
         city,
-        offersList,
+        currentOffers,
         sortName: SORT_NAME_DEFAULT,
       };
     }
     case ActionName.ChangeSortName: {
-      const offersList = sortOffers(state.offersList, action.payload, state.city);
+      const currentOffers = sortOffers(state.currentOffers, action.payload, state.city);
 
       return {
         ...state,
         sortName: action.payload,
-        offersList,
+        currentOffers,
       };
     }
 
     case ActionName.LoadOffers: {
-      const {offers: offersList} = action.payload;
-      return {...state, offersList};
+      const {offers: currentOffers} = action.payload;
+      return {...state, currentOffers};
     }
 
     case ActionName.LoadComments: {
