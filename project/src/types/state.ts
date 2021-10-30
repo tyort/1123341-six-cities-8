@@ -5,7 +5,8 @@ import {ChangeSortPayload} from '../types/action';
 import {AuthorizationStatus} from '../const';
 
 export type State = {
-  city: City,
+  city: City | undefined,
+  allOffers: Offer[],
   currentOffers: Offer[],
   sortName: ChangeSortPayload,
   cities: City[],

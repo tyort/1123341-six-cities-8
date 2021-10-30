@@ -17,6 +17,7 @@ import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
 import browserHistory from '../../browser-history';
+import {City} from '../../types/city';
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -69,11 +70,11 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
             offers={offers}
-            city={city}
+            city={city as City}
             isMainScreen
           >
             <CityScreen
-              currentCity={city}
+              currentCity={city as City}
               cities={cities}
               onCityChoose={onCityChoose}
             />
