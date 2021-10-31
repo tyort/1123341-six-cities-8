@@ -10,6 +10,7 @@ type FavoritesScreenProps = {
 
 function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
   const {offers, cities} = props;
+  const favoriteOffers = offers.filter((offer) => offer.is_favorite === true);
 
   return (
     <main className="page__main page__main--favorites">
@@ -27,7 +28,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers
+                  {favoriteOffers
                     .filter((offer) => (offer.city.name === place.name))
                     .map((offer) => {
                       const {price, rating, title, type, preview_image} = offer;
@@ -37,7 +38,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                         <article key={offer.id} className="favorites__card place-card">
                           <div className="favorites__image-wrapper place-card__image-wrapper">
                             <a href="/">
-                              <img className="place-card__image" src={`img/${preview_image}`} width="150" height="110" alt="Place view"/>
+                              <img className="place-card__image" src={`${preview_image}`} width="150" height="110" alt="Place view"/>
                             </a>
                           </div>
                           <div className="favorites__card-info place-card__info">

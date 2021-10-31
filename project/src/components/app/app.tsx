@@ -26,6 +26,7 @@ export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean
 const mapStateToProps = (state: State) => ({
   // новый пропс в компоненте
   offers: state.currentOffers,
+  allOffers: state.allOffers,
   city: state.city,
   currentSortName: state.sortName,
   cities: state.cities,
@@ -56,7 +57,7 @@ const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 function App(props: PropsFromRedux): JSX.Element {
-  const {city, offers, cities, onCityChoose, currentSortName, onSortChoose, isDataLoaded, authorizationStatus} = props;
+  const {allOffers, city, offers, cities, onCityChoose, currentSortName, onSortChoose, isDataLoaded, authorizationStatus} = props;
 
   if (authIsUnknown(authorizationStatus) || !isDataLoaded) {
     return (
@@ -89,7 +90,7 @@ function App(props: PropsFromRedux): JSX.Element {
           path={AppRoute.Favorites}
         >
           <FavoritesScreen
-            offers={offers}
+            offers={allOffers}
             cities={cities}
           />
         </PrivateRoute>
