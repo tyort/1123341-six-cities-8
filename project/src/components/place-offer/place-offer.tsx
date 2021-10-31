@@ -49,6 +49,8 @@ function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
 
+  const percentRating = rating * 20;
+
   useEffect(() => {
     onCommentsLoad(currentOffer.id as number);
     onNearbyLoad(currentOffer.id as number);
@@ -85,7 +87,7 @@ function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: `${percentRating}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="property__rating-value rating__value">{rating}</span>

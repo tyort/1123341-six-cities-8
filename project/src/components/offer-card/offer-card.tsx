@@ -12,6 +12,7 @@ type CardScreenProps = {
 function OfferCard(props: CardScreenProps): JSX.Element {
   const {offer, onCardMainHover, isMainScreen} = props;
   const {price, rating, title, type, preview_image} = offer;
+  const percentRating = rating * 20;
 
   return (
     <article
@@ -48,7 +49,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating}%`}}></span>
+            <span style={{width: `${percentRating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

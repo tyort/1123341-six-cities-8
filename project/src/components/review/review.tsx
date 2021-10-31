@@ -6,6 +6,7 @@ type ReviewScreenProps = {
 
 function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
   const {review} = props;
+  const percentRating = review.rating * 20;
 
   return (
     <li className="reviews__item">
@@ -20,7 +21,7 @@ function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${review.rating}%`}}></span>
+            <span style={{width: `${percentRating}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

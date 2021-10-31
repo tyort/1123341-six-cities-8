@@ -31,6 +31,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                     .filter((offer) => (offer.city.name === place.name))
                     .map((offer) => {
                       const {price, rating, title, type, preview_image} = offer;
+                      const percentRating = rating * 20;
 
                       return (
                         <article key={offer.id} className="favorites__card place-card">
@@ -54,7 +55,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                             </div>
                             <div className="place-card__rating rating">
                               <div className="place-card__stars rating__stars">
-                                <span style={{width: `${rating}%`}}></span>
+                                <span style={{width: `${percentRating}%`}}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>
