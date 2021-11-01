@@ -1,9 +1,8 @@
 import {ActionsType} from '../../types/action';
 import {ActionName, SortName} from '../../const';
-import {State} from '../../types/state';
+import {OffersState} from '../../types/state';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {AuthorizationStatus} from '../../const';
 
 const CITY_NAME_DEFAULT = 'Paris';
 
@@ -16,7 +15,7 @@ const sortOffers = (proffer: Offer[], sortName: SortName, city: City): Offer[] =
     case SortName.RateDescending:
       return proffer.slice().sort((a, b) => b.rating - a.rating);
     default:
-      // ??????Чтобы выдать порядок какой был на сервере
+      // Выдать порядок какой был на сервере
       return proffer.slice().filter((item) => item.city.name === city.name);
   }
 };
@@ -27,15 +26,11 @@ const initialState = {
   allOffers: [],
   sortName: SortName.Popular,
   cities: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
-  comments: [],
-  nearbyOffers: [],
 };
 
-//               state: {объект города, массив списка предложений}
 //               action: {type: 'название', payload: переменная с компонента}
-const reducer = (state: State = initialState, action: ActionsType): State => {
+const offersReducer = (state: OffersState = initialState, action: ActionsType): OffersState => {
   switch (action.type) {
     case ActionName.ChangeCity: {
       const city = state.cities.find((town) => town.name === action.payload) as City;
@@ -71,25 +66,9 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
       return {...state, allOffers, currentOffers, cities, city, isDataLoaded: true};
     }
 
-    case ActionName.LoadComments: {
-      const {comments} = action.payload;
-      return {...state, comments};
-    }
-
-    case ActionName.LoadNearby: {
-      const {nearbyOffers} = action.payload;
-      return {...state, nearbyOffers};
-    }
-
-    case ActionName.RequireAuthorization:
-      return {...state, authorizationStatus: action.payload};
-
-    case ActionName.RequireLogout:
-      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
-
     default:
       return state;
   }
 };
 
-export {reducer};
+export {offersReducer};

@@ -3,17 +3,15 @@ import {Comment} from '../types/comment';
 import {City} from '../types/city';
 import {SortName} from '../const';
 import {AuthorizationStatus} from '../const';
+import {RootState} from '../store/root-reducer';
 
-export type State = {
+export type OffersState = {
   city: City | undefined,
   allOffers: Offer[],
   currentOffers: Offer[],
   sortName: SortName,
   cities: City[],
-  authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
-  comments: Comment[],
-  nearbyOffers: Offer[]
 };
 
 export type SingleOfferState = {
@@ -24,3 +22,5 @@ export type SingleOfferState = {
 export type AuthState = {
   authorizationStatus: AuthorizationStatus,
 };
+
+export type State = RootState;

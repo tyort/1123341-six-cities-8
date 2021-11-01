@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {createAPI} from './services/api';
 import App from './components/app/app';
-import {reducer} from './store/offers-reducer/offers-reducer';
+import {rootReducer} from './store/root-reducer';
 import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './const';
 import {fetchOffersAction, checkAuthAction} from './store/api-actions';
@@ -15,20 +15,14 @@ import {redirect} from './store/middlewares/redirect';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
 const store = createStore(
-  reducer,
+  rootReducer,
   composeWithDevTools(
-    // Посредник в Redux. В момент между:
-    //  1) Мы бросили экшен,
-    //  2) Экшн обработал редьюсер.
-    // -- можно совершить действие
     applyMiddleware(thunk.withExtraArgument(api)),
-    // все экшн store проходят через redirect(middleware)
     applyMiddleware(redirect),
   ),
 );
