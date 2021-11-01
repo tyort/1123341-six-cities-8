@@ -1,8 +1,8 @@
-import {ActionsType, ActionName, SortName, ChangeSortPayload} from '../types/action';
-import {State} from '../types/state';
-import {Offer} from '../types/offer';
-import {City} from '../types/city';
-import {AuthorizationStatus} from '../const';
+import {ActionsType, ActionName, SortName, ChangeSortPayload} from '../../types/action';
+import {State} from '../../types/state';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
+import {AuthorizationStatus} from '../../const';
 
 const SORT_NAME_DEFAULT = 'Popular';
 const CITY_NAME_DEFAULT = 'Paris';
