@@ -15,3 +15,12 @@ export type State = {
   comments: Comment[],
   nearbyOffers: Offer[]
 };
+
+export type SingleOfferState = {
+  comments: Comment[],
+  nearbyOffers: Offer[]
+}
+
+export type AuthState = {
+  authorizationStatus: AuthorizationStatus,
+};
