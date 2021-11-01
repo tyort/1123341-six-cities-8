@@ -1,13 +1,12 @@
-import {ActionsType, ActionName, SortName, ChangeSortPayload} from '../../types/action';
+import {ActionsType, ActionName, SortName} from '../../types/action';
 import {State} from '../../types/state';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {AuthorizationStatus} from '../../const';
 
-const SORT_NAME_DEFAULT = 'Popular';
 const CITY_NAME_DEFAULT = 'Paris';
 
-const sortOffers = (proffer: Offer[], sortName: ChangeSortPayload, city: City): Offer[] => {
+const sortOffers = (proffer: Offer[], sortName: SortName, city: City): Offer[] => {
   switch (sortName) {
     case SortName.PriceAscending:
       return proffer.slice().sort((a, b) => a.price - b.price);
@@ -25,7 +24,7 @@ const initialState = {
   city: undefined,
   currentOffers: [],
   allOffers: [],
-  sortName: SORT_NAME_DEFAULT as ChangeSortPayload,
+  sortName: SortName.Popular,
   cities: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
@@ -45,7 +44,7 @@ const reducer = (state: State = initialState, action: ActionsType): State => {
         ...state,
         city,
         currentOffers,
-        sortName: SORT_NAME_DEFAULT,
+        sortName: SortName.Popular,
       };
     }
     case ActionName.ChangeSortName: {

@@ -39,12 +39,6 @@ export type ChangeCityPayload =
 | 'Hamburg'
 | 'Dusseldorf'
 
-export type ChangeSortPayload =
-| 'Popular'
-| 'Price: low to high'
-| 'Price: high to low'
-| 'Top rated first'
-
 export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>

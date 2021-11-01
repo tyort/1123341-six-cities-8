@@ -12,7 +12,7 @@ import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {State} from '../../types/state';
-import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/action';
+import {ActionsType, ChangeCityPayload, SortName} from '../../types/action';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
     dispatch(changeCityAction(cityName));
   },
 
-  onSortChoose(sortName: ChangeSortPayload) {
+  onSortChoose(sortName: SortName) {
     dispatch(changeSortNameAction(sortName));
   },
 });
