@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
@@ -16,6 +16,7 @@ import {ActionsType, ChangeCityPayload, ChangeSortPayload} from '../../types/act
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
+import browserHistory from '../../browser-history';
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -64,7 +65,7 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
@@ -86,15 +87,23 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen offers={offers}/>}
-          authorizationStatus={AuthorizationStatus.NoAuth}
         >
+          <FavoritesScreen
+            offers={offers}
+            cities={cities}
+          />
         </PrivateRoute>
-        <Route exact path={AppRoute.SignIn}>
-          <LoginScreen/>
-        </Route>
+        <Route
+          exact
+          path={AppRoute.SignIn}
+          render={({history}) => (
+            <LoginScreen
+              onRedirectSubmitHandler={() => history.push(AppRoute.Main)}
+            />
+          )}
+        />
         {offers.map((offer) => (
-          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+          <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
               offers={offers}

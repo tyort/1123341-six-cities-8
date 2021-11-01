@@ -29,7 +29,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         : 'near-places__image-wrapper'} place-card__image-wrapper`}
       >
         <a href="/">
-          <img className="place-card__image" src={`img/${preview_image}`} width="260" height="200" alt="Interior view"/>
+          <img className="place-card__image" src={`${preview_image}`} width="260" height="200" alt="Interior view"/>
         </a>
       </div>
       <div className="place-card__info">
@@ -53,8 +53,8 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         </div>
         <h2 className="place-card__name">
           <Link
-            to={`/offer/${offer.id}`}
-            onClick={() => history.push(`/offer/${offer.id}`)}
+            to={`/hotels/${offer.id}`}
+            onClick={() => history.push(`/hotels/${offer.id}`)}
           >{title}
           </Link>
         </h2>

@@ -24,9 +24,11 @@ export const checkAuthAction = (): ThunkActionResult =>
   };
 
 // Авторизация пользователя
-export const loginAction = ({login: email, password}: AuthUserData): ThunkActionResult =>
+export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+    // eslint-disable-next-line no-console
+    console.log(token);
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
