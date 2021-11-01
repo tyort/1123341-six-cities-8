@@ -1,5 +1,5 @@
 import {nanoid} from 'nanoid';
-import {SortName} from '../../types/action';
+import {SortName} from '../../const';
 
 type SortingProps = {
   currentSortName: SortName;

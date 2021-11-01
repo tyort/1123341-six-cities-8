@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
@@ -12,7 +12,7 @@ import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {State} from '../../types/state';
-import {ActionsType, CityName, SortName} from '../../types/action';
+import {ActionsType} from '../../types/action';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';

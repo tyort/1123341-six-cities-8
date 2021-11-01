@@ -1,7 +1,7 @@
 import {Offer} from '../types/offer';
 import {Comment} from '../types/comment';
 import {City} from '../types/city';
-import {SortName} from '../types/action';
+import {SortName} from '../const';
 import {AuthorizationStatus} from '../const';
 
 export type State = {

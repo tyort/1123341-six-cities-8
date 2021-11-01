@@ -1,4 +1,5 @@
-import {ActionName, ActionsType} from '../../types/action';
+import {ActionsType} from '../../types/action';
+import {ActionName} from '../../const';
 import {SingleOfferState} from '../../types/state';
 
 const initialState: SingleOfferState = {

@@ -6,7 +6,7 @@ import {
   ActionName,
   CityName,
   SortName
-} from '../types/action';
+} from '../const';
 
 // аргументы попадают из диспатча
 export const changeCityAction = (cityName: CityName) => ({

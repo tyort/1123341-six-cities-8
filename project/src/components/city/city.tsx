@@ -1,4 +1,4 @@
-import {CityName} from '../../types/action';
+import {CityName} from '../../const';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 

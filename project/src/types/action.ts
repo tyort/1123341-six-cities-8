@@ -13,34 +13,6 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AxiosInstance} from 'axios';
 import {State} from '../types/state';
 
-export enum ActionName {
-  ChangeCity = 'offers/changeCity',
-  ChangeSortName = 'offers/changeSortName',
-  LoadOffers = 'offers/loadOffers',
-  LoadComments = 'offers/loadComments',
-  LoadNearby = 'offers/loadNearbyOffers',
-  RequireAuthorization = 'user/requireAuthorization',
-  RequireLogout = 'user/requireLogout',
-  RedirectToRoute = 'app/redirectToRoute'
-}
-
-export enum SortName {
-  Popular = 'Popular',
-  PriceAscending = 'Price: low to high',
-  PriceDescending = 'Price: high to low',
-  RateDescending = 'Top rated first'
-}
-
-export enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf',
-}
-
-
 export type ActionsType =
 | ReturnType<typeof changeCityAction>
 | ReturnType<typeof changeSortNameAction>

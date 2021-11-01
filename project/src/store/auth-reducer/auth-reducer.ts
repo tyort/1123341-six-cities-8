@@ -1,6 +1,6 @@
-import {ActionName, ActionsType} from '../../types/action';
+import {ActionsType} from '../../types/action';
 import {AuthState} from '../../types/state';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, ActionName} from '../../const';
 
 const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,

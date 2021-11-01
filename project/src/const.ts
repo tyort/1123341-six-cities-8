@@ -49,3 +49,14 @@ export enum CityName {
   Dusseldorf = 'Dusseldorf',
 }
 
+export enum ActionName {
+  ChangeCity = 'offers/changeCity',
+  ChangeSortName = 'offers/changeSortName',
+  LoadOffers = 'offers/loadOffers',
+  LoadComments = 'offers/loadComments',
+  LoadNearby = 'offers/loadNearbyOffers',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'app/redirectToRoute'
+}
+

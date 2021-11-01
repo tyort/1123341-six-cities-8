@@ -1,4 +1,5 @@
-import {ActionsType, ActionName, SortName} from '../../types/action';
+import {ActionsType} from '../../types/action';
+import {ActionName, SortName} from '../../const';
 import {State} from '../../types/state';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
