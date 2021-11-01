@@ -22,9 +22,9 @@ type OfferScreenProps = {
   ) => JSX.Element;
 }
 
-const mapStateToProps = (state: State) => ({
-  nearbyOffers: state.nearbyOffers,
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({OFFER, USER}: State) => ({
+  nearbyOffers: OFFER.nearbyOffers,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

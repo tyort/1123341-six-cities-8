@@ -15,10 +15,10 @@ type ReviewsScreenProps = {
   currentOffer: Offer;
 }
 
-const mapStateToProps = (state: State) => ({
-  nearbyOffers: state.nearbyOffers,
-  authorizationStatus: state.authorizationStatus,
-  comments: state.comments,
+const mapStateToProps = ({OFFER, USER}: State) => ({
+  nearbyOffers: OFFER.nearbyOffers,
+  authorizationStatus: USER.authorizationStatus,
+  comments: OFFER.comments,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

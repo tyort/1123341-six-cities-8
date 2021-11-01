@@ -23,15 +23,15 @@ export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean
   authorizationStatus === AuthorizationStatus.Unknown;
 
 // актуальные состояния данных из хранилища в одноименные пропсы компонента
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = ({USER, OFFERS}: State) => ({
   // новый пропс в компоненте
-  offers: state.currentOffers,
-  allOffers: state.allOffers,
-  city: state.city,
-  currentSortName: state.sortName,
-  cities: state.cities,
-  isDataLoaded: state.isDataLoaded,
-  authorizationStatus: state.authorizationStatus,
+  offers: OFFERS.currentOffers,
+  allOffers: OFFERS.allOffers,
+  city: OFFERS.city,
+  currentSortName: OFFERS.sortName,
+  cities: OFFERS.cities,
+  isDataLoaded: OFFERS.isDataLoaded,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
