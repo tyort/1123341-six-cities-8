@@ -1,5 +1,4 @@
 import {nanoid} from 'nanoid';
-import {sortNames} from '../../const';
 import {SortName} from '../../types/action';
 
 type SortingProps = {
@@ -27,7 +26,7 @@ function Sorting(props: SortingProps): JSX.Element {
         </svg>
       </span>
       <ul className="places__options places__options--custom">
-        {sortNames.map((name) => (
+        {Object.values(SortName).map((name) => (
           <li
             key={nanoid(10)}
             data-sort-name={name}
