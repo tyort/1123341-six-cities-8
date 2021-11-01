@@ -18,20 +18,19 @@ import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
 import browserHistory from '../../browser-history';
 import {City} from '../../types/city';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-// актуальные состояния данных из хранилища в одноименные пропсы компонента
-const mapStateToProps = ({USER, OFFERS}: State) => ({
-  // новый пропс в компоненте
+const mapStateToProps = (state: State) => ({
   offers: OFFERS.currentOffers,
   allOffers: OFFERS.allOffers,
   city: OFFERS.city,
   currentSortName: OFFERS.sortName,
   cities: OFFERS.cities,
   isDataLoaded: OFFERS.isDataLoaded,
-  authorizationStatus: USER.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({

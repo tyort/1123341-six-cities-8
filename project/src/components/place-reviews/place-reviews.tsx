@@ -9,15 +9,15 @@ import {State} from '../../types/state';
 import {Offer} from '../../types/offer';
 import {ThunkAppDispatch} from '../../types/action';
 import {setCommentAction} from '../../store/api-actions';
-
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 
 type ReviewsScreenProps = {
   currentOffer: Offer;
 }
 
-const mapStateToProps = ({OFFER, USER}: State) => ({
+const mapStateToProps = (state: State) => ({
   nearbyOffers: OFFER.nearbyOffers,
-  authorizationStatus: USER.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
   comments: OFFER.comments,
 });
 

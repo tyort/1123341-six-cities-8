@@ -9,6 +9,7 @@ import {nanoid} from 'nanoid';
 import {State} from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 
 type OfferScreenProps = {
   currentOffer: Offer;
@@ -22,9 +23,9 @@ type OfferScreenProps = {
   ) => JSX.Element;
 }
 
-const mapStateToProps = ({OFFER, USER}: State) => ({
+const mapStateToProps = (state: State) => ({
   nearbyOffers: OFFER.nearbyOffers,
-  authorizationStatus: USER.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

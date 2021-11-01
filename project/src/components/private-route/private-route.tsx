@@ -3,13 +3,14 @@ import {Route, Redirect, RouteProps} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import {State} from '../../types/state';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 
 type PrivateRouteProps = RouteProps & PropsWithChildren<{
   authorizationStatus: AuthorizationStatus;
 }>
 
-const mapStateToProps = ({USER}: State) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const connector = connect(mapStateToProps);
