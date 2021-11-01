@@ -31,13 +31,15 @@ export enum SortName {
   RateDescending = 'Top rated first'
 }
 
-export type ChangeCityPayload =
-| 'Paris'
-| 'Cologne'
-| 'Brussels'
-| 'Amsterdam'
-| 'Hamburg'
-| 'Dusseldorf'
+export enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
 
 export type ActionsType =
 | ReturnType<typeof changeCityAction>

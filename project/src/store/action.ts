@@ -4,12 +4,12 @@ import {AppRoute, AuthorizationStatus} from '../const';
 
 import {
   ActionName,
-  ChangeCityPayload,
+  CityName,
   SortName
 } from '../types/action';
 
 // аргументы попадают из диспатча
-export const changeCityAction = (cityName: ChangeCityPayload) => ({
+export const changeCityAction = (cityName: CityName) => ({
   type: ActionName.ChangeCity,
   payload: cityName,
 } as const);

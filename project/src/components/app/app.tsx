@@ -12,7 +12,7 @@ import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {State} from '../../types/state';
-import {ActionsType, ChangeCityPayload, SortName} from '../../types/action';
+import {ActionsType, CityName, SortName} from '../../types/action';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
@@ -35,7 +35,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
-  onCityChoose(cityName: ChangeCityPayload) {
+  onCityChoose(cityName: CityName) {
     // changeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
     dispatch(changeCityAction(cityName));
