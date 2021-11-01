@@ -10,15 +10,17 @@ import {Offer} from '../../types/offer';
 import {ThunkAppDispatch} from '../../types/action';
 import {setCommentAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
+import {getOfferNearbies, getOfferComments} from '../../store/single-offer-reducer/selectors';
+
 
 type ReviewsScreenProps = {
   currentOffer: Offer;
 }
 
 const mapStateToProps = (state: State) => ({
-  nearbyOffers: OFFER.nearbyOffers,
+  nearbyOffers: getOfferNearbies(state),
   authorizationStatus: getAuthorizationStatus(state),
-  comments: OFFER.comments,
+  comments: getOfferComments(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({

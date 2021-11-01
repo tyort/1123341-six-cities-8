@@ -19,17 +19,19 @@ import {nanoid} from 'nanoid';
 import browserHistory from '../../browser-history';
 import {City} from '../../types/city';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
+import {getAllOffers, getSortedOffersInCity, getCurrentCity, getCurrentSortName,
+  getAllCities, getOffersLoadStatus} from '../../store/offers-reducer/selectors';
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 const mapStateToProps = (state: State) => ({
-  offers: OFFERS.currentOffers,
-  allOffers: OFFERS.allOffers,
-  city: OFFERS.city,
-  currentSortName: OFFERS.sortName,
-  cities: OFFERS.cities,
-  isDataLoaded: OFFERS.isDataLoaded,
+  offers: getSortedOffersInCity(state),
+  allOffers: getAllOffers(state),
+  city: getCurrentCity(state),
+  currentSortName: getCurrentSortName(state),
+  cities: getAllCities(state),
+  isDataLoaded: getOffersLoadStatus(state),
   authorizationStatus: getAuthorizationStatus(state),
 });
 
