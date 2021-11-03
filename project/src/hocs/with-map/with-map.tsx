@@ -1,3 +1,4 @@
+import {MouseEvent} from 'react';
 import {useState} from 'react';
 import {ComponentType} from 'react';
 import Map from '../../components/map/map';
@@ -48,16 +49,19 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
         renderCard={(offer: Offer, isMainScreen: boolean) => {
           // eslint-disable-next-line no-console
           console.log('renderCard');
+
+          const onCardMainHover = (evt: MouseEvent<HTMLElement>): void => {
+            isMainScreen && evt.type === 'mouseenter'
+              ? setHoveredCard(offer)
+              : setHoveredCard(undefined);
+          };
+
           return (
             <OfferCard
               key={nanoid(10)}
               offer={offer}
               isMainScreen={isMainScreen}
-              onCardMainHover={(card: Offer | undefined): void => {
-                if (JSON.stringify(card) !== JSON.stringify(hoveredCard) && isMainScreen) {
-                  setHoveredCard(card);
-                }
-              }}
+              onCardMainHover={onCardMainHover}
             />
           );
         }}

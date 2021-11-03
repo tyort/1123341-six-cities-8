@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 
 type CardScreenProps = {
   offer: Offer;
-  onCardMainHover: (card: Offer | undefined) => void;
+  onCardMainHover: (evt: MouseEvent<HTMLElement>) => void;
   isMainScreen: boolean;
 }
 
@@ -21,11 +21,11 @@ function OfferCard(props: CardScreenProps): JSX.Element {
       className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
       onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
         evt.preventDefault();
-        onCardMainHover(offer);
+        onCardMainHover(evt);
       }}
       onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
         evt.preventDefault();
-        onCardMainHover(undefined);
+        onCardMainHover(evt);
       }}
     >
       <div className={`${isMainScreen
