@@ -1,7 +1,8 @@
-import {Dispatch} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
+import {useSelector, useDispatch} from 'react-redux';
+import {nanoid} from 'nanoid';
+import browserHistory from '../../browser-history';
+// компоненты, хоки
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
@@ -11,53 +12,42 @@ import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {State} from '../../types/state';
-import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
-import {nanoid} from 'nanoid';
-import browserHistory from '../../browser-history';
-import {City} from '../../types/city';
+// из store
+import {changeCityAction, changeSortNameAction} from '../../store/action';
+// селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getAllOffers, getSortedOffersInCity, getCurrentCity, getCurrentSortName,
   getAllCities, getOffersLoadStatus} from '../../store/offers-reducer/selectors';
 
+import {City} from '../../types/city';
+import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
+
+
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
-
-const mapStateToProps = (state: State) => ({
-  offers: getSortedOffersInCity(state),
-  allOffers: getAllOffers(state),
-  city: getCurrentCity(state),
-  currentSortName: getCurrentSortName(state),
-  cities: getAllCities(state),
-  isDataLoaded: getOffersLoadStatus(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCityChoose(cityName: CityName) {
-    // changeCityAction - это Action из store/action;
-    // Сообщаем хранилищу, что пора обновить поля, выполнив action
-    dispatch(changeCityAction(cityName));
-  },
-
-  onSortChoose(sortName: SortName) {
-    dispatch(changeSortNameAction(sortName));
-  },
-});
-
-// Настраиваем "мостик" между Redux и React;
-// 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-// Выделим новые пропсы, сформированные в redux;
-type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
-function App(props: PropsFromRedux): JSX.Element {
-  const {allOffers, city, offers, cities, onCityChoose, currentSortName, onSortChoose, isDataLoaded, authorizationStatus} = props;
+function App(): JSX.Element {
+  const offers = useSelector(getSortedOffersInCity);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getOffersLoadStatus);
+  const city = useSelector(getCurrentCity);
+  const currentSortName = useSelector(getCurrentSortName);
+  const cities = useSelector(getAllCities);
+  const allOffers = useSelector(getAllOffers);
+
+  const dispatch = useDispatch();
+
+  const onCityChoose = (cityName: CityName) => {
+    dispatch(changeCityAction(cityName));
+  };
+
+  const onSortChoose = (sortName: SortName) => {
+    dispatch(changeSortNameAction(sortName));
+  };
 
   if (authIsUnknown(authorizationStatus) || !isDataLoaded) {
     return (
@@ -116,5 +106,4 @@ function App(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {App};
-export default connector(App);
+export default App;
