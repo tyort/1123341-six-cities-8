@@ -1,15 +1,12 @@
 /* eslint-disable camelcase */
 import {useEffect} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
-import {State} from '../../types/state';
-import {ThunkAppDispatch} from '../../types/action';
 import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
-import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
 
 type OfferScreenProps = {
@@ -24,38 +21,19 @@ type OfferScreenProps = {
   ) => JSX.Element;
 }
 
-const mapStateToProps = (state: State) => ({
-  nearbyOffers: getOfferNearbies(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onCommentsLoad(offerId: number) {
-    dispatch(fetchCommentsAction(offerId));
-  },
-
-  onNearbyLoad(offerId: number) {
-    dispatch(fetchNearbyAction(offerId));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & OfferScreenProps;
-
-function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
-  const {currentOffer, isMainScreen, renderMap, renderCard,
-    nearbyOffers, onCommentsLoad, onNearbyLoad} = props;
-
+function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
+  const {currentOffer, isMainScreen, renderMap, renderCard} = props;
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
-
   const percentRating = rating * 20;
 
+  const nearbyOffers = useSelector(getOfferNearbies);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onCommentsLoad(currentOffer.id as number);
-    onNearbyLoad(currentOffer.id as number);
+    dispatch(fetchCommentsAction(currentOffer.id as number));
+    dispatch(fetchNearbyAction(currentOffer.id as number));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -154,5 +132,4 @@ function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PlaceOfferScreen};
-export default connector(PlaceOfferScreen);
+export default PlaceOfferScreen;
