@@ -1,50 +1,37 @@
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import ReviewScreen from '../review/review';
 import RatingScreen from '../rating/rating';
-import {NewComment} from '../../types/comment';
 import {nanoid} from 'nanoid';
 import {AuthorizationStatus} from '../../const';
 import {useRef, FormEvent, useState} from 'react';
-import {State} from '../../types/state';
 import {Offer} from '../../types/offer';
-import {ThunkAppDispatch} from '../../types/action';
 import {setCommentAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
-import {getOfferNearbies, getOfferComments} from '../../store/single-offer-reducer/selectors';
-
+import {getOfferComments} from '../../store/single-offer-reducer/selectors';
 
 type ReviewsScreenProps = {
   currentOffer: Offer;
 }
 
-const mapStateToProps = (state: State) => ({
-  nearbyOffers: getOfferNearbies(state),
-  authorizationStatus: getAuthorizationStatus(state),
-  comments: getOfferComments(state),
-});
+function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
+  const {currentOffer} = props;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSetComment(newComment: NewComment) {
-    dispatch(setCommentAction(newComment));
-  },
-});
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const comments = useSelector(getOfferComments);
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const dispatch = useDispatch();
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & ReviewsScreenProps;
-
-
-function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
-  const {comments, authorizationStatus, currentOffer, onSetComment} = props;
   const commentTable = useRef<HTMLTextAreaElement | null>(null);
   const [rating, setRating] = useState<number | null>(null);
-
 
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
-      onSetComment({offerId: currentOffer.id as number, comment: commentTable.current.value, rating});
+      dispatch(setCommentAction({
+        offerId: currentOffer.id as number,
+        comment: commentTable.current.value,
+        rating,
+      }));
     }
   };
 
@@ -95,5 +82,4 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PlaceReviewsScreen};
-export default connector(PlaceReviewsScreen);
+export default PlaceReviewsScreen;
