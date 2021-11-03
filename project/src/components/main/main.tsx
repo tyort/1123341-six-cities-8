@@ -20,6 +20,8 @@ type MainScreenProps = PropsWithChildren<{
 }>
 
 function MainScreen(props: MainScreenProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('MainScreen');
   const {city, offers, isMainScreen, renderMap, renderCard, children} = props;
   const dispatch = useDispatch();
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:

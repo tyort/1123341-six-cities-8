@@ -6,7 +6,9 @@ type SortingProps = {
   onSortChoose: (sortName: SortName) => void;
 };
 
-function Sorting(props: SortingProps): JSX.Element {
+function SortingScreen(props: SortingProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('SortingScreen');
   const {currentSortName, onSortChoose} = props;
   return (
     <form className="places__sorting" action="#" method="get">
@@ -47,4 +49,4 @@ function Sorting(props: SortingProps): JSX.Element {
   );
 }
 
-export default Sorting;
+export default SortingScreen;

@@ -10,6 +10,8 @@ type CardScreenProps = {
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('OfferCard');
   const {offer, onCardMainHover, isMainScreen} = props;
   const {price, rating, title, type, preview_image} = offer;
   const percentRating = rating * 20;

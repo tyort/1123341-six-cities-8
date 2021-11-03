@@ -3,6 +3,8 @@ import {Map, TileLayer} from 'leaflet';
 import {City} from '../types/city';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map | null {
+  // eslint-disable-next-line no-console
+  console.log('useMap');
   const [currentMap, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
@@ -13,6 +15,8 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
     // После прорисовки компонента данные НЕ меняются
     // useEffect вызывается, условие if НЕ выполняется, setMap НЕ срабатывает
     if (mapRef.current !== null && currentMap === null) {
+      // eslint-disable-next-line no-console
+      console.log('Прорисовка карты');
       // Создаем объект карты
       const mapInstance = new Map(mapRef.current, {
         center: {
