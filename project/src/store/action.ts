@@ -28,9 +28,9 @@ export const loadNearbyAction = createAction(
   (nearbyOffers: Offer[]) => ({payload: nearbyOffers}),
 );
 
-export const requireAuthorization = (
+export const requireAuthorization = createAction(
   ActionName.RequireAuthorization,
-  (authStatus: AuthorizationStatus) => ({payload: authStatus})
+  (authorizationStatus: AuthorizationStatus) => ({payload: authorizationStatus}),
 );
 
 export const requireLogout = createAction(ActionName.RequireLogout);
