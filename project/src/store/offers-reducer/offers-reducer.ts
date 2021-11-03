@@ -1,8 +1,9 @@
-import {ActionsType} from '../../types/action';
-import {ActionName, SortName} from '../../const';
-import {OffersState} from '../../types/state';
+import {createReducer} from '@reduxjs/toolkit';
+import {SortName} from '../../const';
+import {changeCityAction, changeSortNameAction, loadOffersAction} from '../action';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
+import {OffersState} from '../../types/state';
 
 const CITY_NAME_DEFAULT = 'Paris';
 
@@ -20,7 +21,7 @@ const sortOffers = (proffer: Offer[], sortName: SortName, city: City): Offer[] =
   }
 };
 
-const initialState = {
+const initialState: OffersState = {
   city: undefined,
   currentOffers: [],
   allOffers: [],
@@ -30,45 +31,28 @@ const initialState = {
 };
 
 //               action: {type: 'название', payload: переменная с компонента}
-const offersReducer = (state: OffersState = initialState, action: ActionsType): OffersState => {
-  switch (action.type) {
-    case ActionName.ChangeCity: {
-      const city = state.cities.find((town) => town.name === action.payload) as City;
-      const currentOffers = state.allOffers.filter((item) => item.city.name === city.name);
-
-      return {
-        ...state,
-        city,
-        currentOffers,
-        sortName: SortName.Popular,
-      };
-    }
-    case ActionName.ChangeSortName: {
-      const currentOffers = state.sortName !== SortName.Popular
+const offersReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeCityAction, (state, action) => {
+      state.city= state.cities.find((town) => town.name === action.payload);
+      state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
+      state.sortName = SortName.Popular;
+    })
+    .addCase(changeSortNameAction, (state, action) => {
+      state.currentOffers = state.sortName !== SortName.Popular
         ? sortOffers(state.currentOffers, action.payload, state.city as City)
         : sortOffers(state.allOffers, action.payload, state.city as City);
-
-      return {
-        ...state,
-        sortName: action.payload,
-        currentOffers,
-      };
-    }
-
-    case ActionName.LoadOffers: {
-      const {offers: allOffers} = action.payload;
-      const citiesJSON = allOffers.map((item) => JSON.stringify(item.city));
-      const cities = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
-      const oneOffer = allOffers.find((item) => item.city.name === CITY_NAME_DEFAULT);
-      const city = oneOffer && oneOffer.city;
-      const currentOffers = allOffers.filter((item) => item.city.name === (city as City).name);
-
-      return {...state, allOffers, currentOffers, cities, city, isDataLoaded: true};
-    }
-
-    default:
-      return state;
-  }
-};
+      state.sortName = action.payload;
+    })
+    .addCase(loadOffersAction, (state, action) => {
+      state.allOffers = action.payload;
+      const citiesJSON = state.allOffers.map((item) => JSON.stringify(item.city));
+      state.cities = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
+      const oneOffer = state.allOffers.find((item) => item.city.name === CITY_NAME_DEFAULT);
+      state.city = oneOffer && oneOffer.city;
+      state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
+      state.isDataLoaded = true;
+    });
+});
 
 export {offersReducer};
