@@ -1,10 +1,9 @@
 import {Link} from 'react-router-dom';
 import {PropsWithChildren, Children} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {ThunkAppDispatch} from '../../types/action';
 import {logoutAction} from '../../store/api-actions';
 
 type MainScreenProps = PropsWithChildren<{
@@ -20,29 +19,9 @@ type MainScreenProps = PropsWithChildren<{
   ) => JSX.Element;
 }>
 
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  logoutApp() {
-    dispatch(logoutAction());
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainScreenProps;
-
-function MainScreen(props: ConnectedComponentProps): JSX.Element {
-  const {
-    city,
-    offers,
-    isMainScreen,
-    renderMap,
-    renderCard,
-    children,
-    logoutApp,
-  } = props;
-
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const {city, offers, isMainScreen, renderMap, renderCard, children} = props;
+  const dispatch = useDispatch();
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
 
@@ -67,7 +46,7 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
                     to="/"
                     onClick={(evt) => {
                       evt.preventDefault();
-                      logoutApp();
+                      dispatch(logoutAction());
                     }}
                   >
                     <span className="header__signout">Sign out</span>
@@ -108,5 +87,4 @@ function MainScreen(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {MainScreen};
-export default connector(MainScreen);
+export default MainScreen;
