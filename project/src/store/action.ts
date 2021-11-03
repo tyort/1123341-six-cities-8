@@ -36,7 +36,7 @@ export const requireAuthorization = createAction(
 export const requireLogout = createAction(ActionName.RequireLogout);
 
 
-export const redirectToRoute = (
+export const redirectToRoute = createAction(
   ActionName.RedirectToRoute,
-  (url: AppRoute) => ({payload: url})
+  (url: AppRoute) => ({payload: url}),
 );
