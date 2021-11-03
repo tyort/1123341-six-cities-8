@@ -30,7 +30,6 @@ const initialState: OffersState = {
   isDataLoaded: false,
 };
 
-//               action: {type: 'название', payload: переменная с компонента}
 const offersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCityAction, (state, action) => {
