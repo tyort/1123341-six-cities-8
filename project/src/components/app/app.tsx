@@ -31,6 +31,8 @@ const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 
 function App(): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('AppScreen');
   const offers = useSelector(getSortedOffersInCity);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getOffersLoadStatus);

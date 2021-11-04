@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import {MouseEvent} from 'react';
+import {MouseEvent, memo} from 'react';
 import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 
@@ -19,14 +19,8 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   return (
     <article
       className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
-      onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
-        evt.preventDefault();
-        onCardMainHover(evt);
-      }}
-      onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
-        evt.preventDefault();
-        onCardMainHover(evt);
-      }}
+      onMouseEnter={onCardMainHover}
+      onMouseLeave={onCardMainHover}
     >
       <div className={`${isMainScreen
         ? 'cities__image-wrapper'
@@ -67,6 +61,6 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);
 
 
