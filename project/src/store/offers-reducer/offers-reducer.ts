@@ -44,6 +44,8 @@ const offersReducer = createReducer(initialState, (builder) => {
       state.sortName = action.payload;
     })
     .addCase(loadOffersAction, (state, action) => {
+      // eslint-disable-next-line no-console
+      console.log(loadOffersAction.toString());
       state.allOffers = action.payload;
       const citiesJSON = state.allOffers.map((item) => JSON.stringify(item.city));
       state.cities = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
