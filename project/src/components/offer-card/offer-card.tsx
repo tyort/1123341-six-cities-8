@@ -19,7 +19,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   return (
     <Fragment>
       {offers.map((offer) => {
-        const {price, rating, title, type, preview_image} = offer;
+        const {price, rating, title, type, preview_image, is_favorite} = offer;
         const percentRating = rating * 20;
 
         const onMouseHandler = (evt: MouseEvent<HTMLElement>) => {
@@ -50,7 +50,14 @@ function OfferCard(props: CardScreenProps): JSX.Element {
                   <b className="place-card__price-value">&euro;{price}</b>
                   <span className="place-card__price-text">&#47;&nbsp;night</span>
                 </div>
-                <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+                <button
+                  className={`${is_favorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}
+                  type="button"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
+                  }}
+                >
                   <svg className="place-card__bookmark-icon" width="18" height="19">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
