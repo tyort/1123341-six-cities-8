@@ -12,7 +12,7 @@ import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
 type OfferScreenProps = {
   currentOffer: Offer;
   isMainScreen: boolean;
-  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer,
     isMainScreen: boolean,
