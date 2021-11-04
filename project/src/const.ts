@@ -31,6 +31,7 @@ export enum APIRoute {
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
 export enum SortName {
@@ -53,8 +54,9 @@ export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
   LoadOffers = 'offers/loadOffers',
-  LoadComments = 'offers/loadComments',
-  LoadNearby = 'offers/loadNearbyOffers',
+  LoadComments = 'offer/loadComments',
+  LoadNearby = 'offer/loadNearbyOffers',
+  ChangeFavorite = 'offer/isFavorite',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   RedirectToRoute = 'app/redirectToRoute'
