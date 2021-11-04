@@ -1,11 +1,9 @@
-import {MouseEvent} from 'react';
 import {useState} from 'react';
 import {ComponentType} from 'react';
 import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {nanoid} from 'nanoid';
 
 type HOCProps = {
   renderMap: (
@@ -14,7 +12,7 @@ type HOCProps = {
     offers: Offer[],
     center: City,
   ) => void
-  renderCard: (offer: Offer, isMainScreen: boolean) => void
+  renderCard: (offers: Offer[], isMainScreen: boolean) => void
 };
 
 function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HOCProps>> {
@@ -46,20 +44,17 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           );
         }}
 
-        renderCard={(offer: Offer, isMainScreen: boolean) => {
+        renderCard={(offers: Offer[], isMainScreen: boolean) => {
           // eslint-disable-next-line no-console
           console.log('renderCard');
 
-          const onCardMainHover = (evt: MouseEvent<HTMLElement>): void => {
-            isMainScreen && evt.type === 'mouseenter'
-              ? setHoveredCard(offer)
-              : setHoveredCard(undefined);
+          const onCardMainHover = (hoveredOffer: Offer | undefined): void => {
+            isMainScreen && setHoveredCard(hoveredOffer);
           };
 
           return (
             <OfferCard
-              key={nanoid(10)}
-              offer={offer}
+              offers={offers}
               isMainScreen={isMainScreen}
               onCardMainHover={onCardMainHover}
             />

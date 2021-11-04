@@ -2,7 +2,7 @@ import {Offer} from '../../types/offer';
 
 type NearbyScreenProps = {
   offers: Offer[];
-  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
   isMainScreen: boolean;
 }
 
@@ -14,11 +14,7 @@ function PlaceNearbyScreen(props: NearbyScreenProps): JSX.Element {
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className="near-places__list places__list">
-          {offers
-            .map((offer) => (
-              renderCard(offer, isMainScreen)
-            ))
-            .slice(0, 3)}
+          {renderCard(offers.slice(0, 3), isMainScreen)}
         </div>
       </section>
     </div>

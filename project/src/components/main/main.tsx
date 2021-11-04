@@ -10,7 +10,7 @@ type MainScreenProps = PropsWithChildren<{
   offers: Offer[];
   city: City;
   isMainScreen: boolean;
-  renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
+  renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer | undefined,
     isMainScreen: boolean,
@@ -74,9 +74,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.name}</b>
               {mainChildren[1]}
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => (
-                  renderCard(offer, isMainScreen)
-                ))}
+                {renderCard(offers, isMainScreen)}
               </div>
             </section>
             <div className="cities__right-section">
