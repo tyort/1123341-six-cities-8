@@ -61,6 +61,11 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   );
 }
 
-export default memo(OfferCard);
+export default memo(OfferCard, (prevProps, nextProps) =>
+  // `prevProps` — старые пропсы;
+  // `nextProps` — новые пропсы.
+  // Логика сравнения
+  prevProps.offer === nextProps.offer,
+);
 
 
