@@ -17,7 +17,7 @@ import withMap from '../../hocs/with-map/with-map';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 // селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
-import {getAllOffers, getSortedOffersInCity, getCurrentCity, getCurrentSortName,
+import {getAllOffers, getCurrentCity, getCurrentSortName,
   getAllCities, getOffersLoadStatus} from '../../store/offers-reducer/selectors';
 
 import {City} from '../../types/city';
@@ -33,7 +33,6 @@ const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 function App(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('AppScreen');
-  const offers = useSelector(getSortedOffersInCity);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getOffersLoadStatus);
   const city = useSelector(getCurrentCity);
@@ -62,7 +61,6 @@ function App(): JSX.Element {
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
-            offers={offers}
             city={city as City}
             isMainScreen
           >
@@ -92,7 +90,7 @@ function App(): JSX.Element {
         >
           <LoginScreen/>
         </Route>
-        {offers.map((offer) => (
+        {allOffers.map((offer) => (
           <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
