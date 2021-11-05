@@ -54,6 +54,7 @@ export enum ActionName {
   ChangeCity = 'offers/changeCity',
   ChangeSortName = 'offers/changeSortName',
   LoadOffers = 'offers/loadOffers',
+  LoadFavorites = 'offers/loadFavorites',
   LoadComments = 'offer/loadComments',
   LoadNearby = 'offer/loadNearbyOffers',
   ChangeFavorite = 'offer/isFavorite',

@@ -3,7 +3,7 @@ import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction,
-  requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction} from './action';
+  requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
@@ -22,6 +22,12 @@ export const fetchOffersAction = (): ThunkActionResult =>
     const {data} = await api.get<Offer[]>(APIRoute.Offers); // к BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
     // (brb)...мы можем закинуть данные в хранилище
     dispatch(loadOffersAction(data));
+  };
+
+export const fetchFavoritesAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+    dispatch(loadFavoritesAction(data));
   };
 
 export const fetchCommentsAction = (offerId: number): ThunkActionResult =>

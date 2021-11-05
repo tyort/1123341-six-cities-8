@@ -79,10 +79,7 @@ function App(): JSX.Element {
           exact
           path={AppRoute.Favorites}
         >
-          <FavoritesScreen
-            offers={allOffers}
-            cities={cities}
-          />
+          <FavoritesScreen/>
         </PrivateRoute>
         <Route
           exact

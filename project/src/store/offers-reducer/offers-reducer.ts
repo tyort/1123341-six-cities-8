@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {SortName} from '../../const';
-import {changeCityAction, changeSortNameAction, loadOffersAction, setFavoriteAction} from '../action';
+import {changeCityAction, changeSortNameAction, loadOffersAction, setFavoriteAction, loadFavoritesAction} from '../action';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {OffersState} from '../../types/state';
@@ -56,6 +56,12 @@ const offersReducer = createReducer(initialState, (builder) => {
       const index = state.allOffers.findIndex((offer) => offer.id === action.payload.id);
       state.allOffers = [...state.allOffers.slice(0, index), action.payload, ...state.allOffers.slice(index + 1)];
       state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
+    })
+    .addCase(loadFavoritesAction, (state, action) => {
+      action.payload.forEach((favoriteOffer) => {
+        const index = state.allOffers.findIndex((offer) => offer.id === favoriteOffer.id);
+        state.allOffers = [...state.allOffers.slice(0, index), favoriteOffer, ...state.allOffers.slice(index + 1)];
+      });
     });
 });
 
