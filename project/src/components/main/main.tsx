@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom';
 import {PropsWithChildren, Children} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {logoutAction} from '../../store/api-actions';
+import {getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 type MainScreenProps = PropsWithChildren<{
-  offers: Offer[];
   city: City;
   isMainScreen: boolean;
   renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
@@ -22,8 +22,11 @@ type MainScreenProps = PropsWithChildren<{
 function MainScreen(props: MainScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MainScreen');
-  const {city, offers, isMainScreen, renderMap, renderCard, children} = props;
+  const {city, isMainScreen, renderMap, renderCard, children} = props;
+  const offers = useSelector(getSortedOffersInCity);
+
   const dispatch = useDispatch();
+
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
 

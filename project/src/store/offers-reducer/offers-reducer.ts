@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {SortName} from '../../const';
-import {changeCityAction, changeSortNameAction, loadOffersAction} from '../action';
+import {changeCityAction, changeSortNameAction, loadOffersAction, setFavoriteAction} from '../action';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {OffersState} from '../../types/state';
@@ -44,8 +44,6 @@ const offersReducer = createReducer(initialState, (builder) => {
       state.sortName = action.payload;
     })
     .addCase(loadOffersAction, (state, action) => {
-      // eslint-disable-next-line no-console
-      console.log(loadOffersAction.toString());
       state.allOffers = action.payload;
       const citiesJSON = state.allOffers.map((item) => JSON.stringify(item.city));
       state.cities = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
@@ -53,6 +51,11 @@ const offersReducer = createReducer(initialState, (builder) => {
       state.city = oneOffer && oneOffer.city;
       state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
       state.isDataLoaded = true;
+    })
+    .addCase(setFavoriteAction, (state, action) => {
+      const index = state.allOffers.findIndex((offer) => offer.id === action.payload.id);
+      state.allOffers = [...state.allOffers.slice(0, index), action.payload, ...state.allOffers.slice(index + 1)];
+      state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
     });
 });
 

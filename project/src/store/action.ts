@@ -28,7 +28,7 @@ export const loadNearbyAction = createAction(
   (nearbyOffers: Offer[]) => ({payload: nearbyOffers}),
 );
 
-export const changeFavoritesAction = createAction(
+export const setFavoriteAction = createAction(
   ActionName.ChangeFavorite,
   (offer: Offer) => ({payload: offer}),
 );

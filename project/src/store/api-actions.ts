@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
-import {loadOffersAction, loadNearbyAction, loadCommentsAction, requireAuthorization, requireLogout, redirectToRoute} from './action';
+import {loadOffersAction, loadNearbyAction, loadCommentsAction,
+  requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction} from './action';
 import {saveToken, dropToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
@@ -63,6 +65,13 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.post(`${APIRoute.Comments}/${offerId}`, {comment, rating});
+    const {data} = await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
     dispatch(loadCommentsAction(data));
+  };
+
+export const changeFavoriteAction = ({id, is_favorite}: Offer): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const status = Number(is_favorite);
+    const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${status}`);
+    dispatch(setFavoriteAction(data));
   };
