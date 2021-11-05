@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 import {MouseEvent, memo, Fragment} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Offer} from '../../types/offer';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {changeFavoriteAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {nanoid} from 'nanoid';
-
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 type CardScreenProps = {
   offers: Offer[];
@@ -17,6 +18,9 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('OfferCard');
   const {offers, onCardMainHover, isMainScreen} = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const history = useHistory();
+
   const dispatch = useDispatch();
 
   return (
@@ -35,6 +39,11 @@ function OfferCard(props: CardScreenProps): JSX.Element {
 
         const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
+          if (authorizationStatus !== AuthorizationStatus.Auth) {
+            history.push(AppRoute.SignIn);
+            return;
+          }
+          evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
           evt.currentTarget.classList.contains('place-card__bookmark-button--active')
             ? dispatch(changeFavoriteAction({...offer, is_favorite: true}))
             : dispatch(changeFavoriteAction({...offer, is_favorite: false}));
@@ -64,11 +73,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
                 <button
                   className={`${is_favorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}
                   type="button"
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
-                    buttonClickHandler(evt);
-                  }}
+                  onClick={buttonClickHandler}
                 >
                   <svg className="place-card__bookmark-icon" width="18" height="19">
                     <use xlinkHref="#icon-bookmark"></use>
