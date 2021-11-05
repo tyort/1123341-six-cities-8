@@ -28,6 +28,11 @@ export const loadNearbyAction = createAction(
   (nearbyOffers: Offer[]) => ({payload: nearbyOffers}),
 );
 
+export const changeFavoritesAction = createAction(
+  ActionName.ChangeFavorite,
+  (offer: Offer) => ({payload: offer}),
+);
+
 export const requireAuthorization = createAction(
   ActionName.RequireAuthorization,
   (authorizationStatus: AuthorizationStatus) => ({payload: authorizationStatus}),
