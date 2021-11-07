@@ -2,7 +2,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import {SingleOfferState} from '../../types/state';
 import {loadCommentsAction, loadNearbyAction} from '../action';
 
-const initialState: SingleOfferState = {
+export const initialState: SingleOfferState = {
   comments: [],
   nearbyOffers: [],
 };

@@ -1,5 +1,6 @@
 import {Offer} from '../types/offer';
-import {datatype, random, name, internet, image} from 'faker';
+import {Comment} from '../types/comment';
+import {datatype, random, name, internet, image, date} from 'faker';
 
 const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
 export const cities = [
@@ -82,8 +83,27 @@ export const makeFakeOffer = (): Offer => ({
   'preview_image': image.image(),
 } as Offer);
 
+export const makeFakeComment = (): Comment => ({
+  comment: random.words(),
+  date: date.past(),
+  id: datatype.number(),
+  rating: datatype.number(),
+  user: {
+    'avatar_url': image.imageUrl(),
+    id: datatype.number(),
+    'is_pro': datatype.boolean(),
+    name: name.firstName(),
+  },
+});
+
 export const makeFakeOffers = (): Offer[] => (
   new Array(5)
     .fill(null)
     .map(() => makeFakeOffer()) as Offer[]
+);
+
+export const makeFakeComments = (): Comment[] => (
+  new Array(5)
+    .fill(null)
+    .map(() => makeFakeComment()) as Comment[]
 );
