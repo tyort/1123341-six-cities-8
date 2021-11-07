@@ -3,7 +3,7 @@ import {AuthState} from '../../types/state';
 import {requireAuthorization, requireLogout} from '../action';
 import {AuthorizationStatus} from '../../const';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
