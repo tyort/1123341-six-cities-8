@@ -21,7 +21,7 @@ const sortOffers = (proffer: Offer[], sortName: SortName, city: City): Offer[] =
   }
 };
 
-const initialState: OffersState = {
+export const initialState: OffersState = {
   city: undefined,
   currentOffers: [],
   allOffers: [],
@@ -49,13 +49,17 @@ const offersReducer = createReducer(initialState, (builder) => {
       state.cities = [...new Set(citiesJSON)].map((item) => JSON.parse(item));
       const oneOffer = state.allOffers.find((item) => item.city.name === CITY_NAME_DEFAULT);
       state.city = oneOffer && oneOffer.city;
-      state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
+      state.currentOffers = state.city
+        ? state.allOffers.filter((item) => item.city.name === (state.city as City).name)
+        : [];
       state.isDataLoaded = true;
     })
     .addCase(setFavoriteAction, (state, action) => {
       const index = state.allOffers.findIndex((offer) => offer.id === action.payload.id);
       state.allOffers = [...state.allOffers.slice(0, index), action.payload, ...state.allOffers.slice(index + 1)];
-      state.currentOffers = state.allOffers.filter((item) => item.city.name === (state.city as City).name);
+      state.currentOffers = state.city
+        ? state.allOffers.filter((item) => item.city.name === (state.city as City).name)
+        : [];
     })
     .addCase(loadFavoritesAction, (state, action) => {
       action.payload.forEach((favoriteOffer) => {
