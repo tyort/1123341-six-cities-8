@@ -5,10 +5,6 @@ import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import {AuthUserData} from '../../types/auth-user-data';
 
-type LoginScreenProps = {
-  onRedirectSubmitHandler: () => void;
-};
-
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthUserData) {
     // loginAction - асинхронный action
@@ -18,10 +14,9 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 
 const connector = connect(null, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & LoginScreenProps;
 
-function LoginScreen(props: ConnectedComponentProps): JSX.Element {
-  const {onSubmit, onRedirectSubmitHandler} = props;
+function LoginScreen(props: PropsFromRedux): JSX.Element {
+  const {onSubmit} = props;
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -54,10 +49,7 @@ function LoginScreen(props: ConnectedComponentProps): JSX.Element {
             <form
               className="login__form form"
               action=""
-              onSubmit={(evt) => {
-                onSubmitHandle(evt);
-                onRedirectSubmitHandler();
-              }}
+              onSubmit={onSubmitHandle}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>

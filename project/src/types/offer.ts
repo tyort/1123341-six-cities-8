@@ -7,15 +7,6 @@ export type Host = {
   'is_pro': boolean;
 }
 
-export type Review = {
-  avatar: string;
-  name: string;
-  id: string;
-  setRating: string | number;
-  text: string;
-  date: string;
-}
-
 export type Location = {
   latitude: number;
   longitude: number;
@@ -35,7 +26,6 @@ export type Offer = {
   price: number;
   goods: string[];
   host: Host;
-  reviews: Review[];
   'is_favorite': boolean;
   'is_premium': boolean;
   bedrooms: number;

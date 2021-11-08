@@ -17,6 +17,7 @@ import {changeCityAction, changeSortNameAction} from '../../store/action';
 import withMap from '../../hocs/with-map/with-map';
 import {nanoid} from 'nanoid';
 import browserHistory from '../../browser-history';
+import {City} from '../../types/city';
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -24,7 +25,7 @@ export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean
 // актуальные состояния данных из хранилища в одноименные пропсы компонента
 const mapStateToProps = (state: State) => ({
   // новый пропс в компоненте
-  offers: state.offersList,
+  offers: state.currentOffers,
   city: state.city,
   currentSortName: state.sortName,
   cities: state.cities,
@@ -32,9 +33,7 @@ const mapStateToProps = (state: State) => ({
   authorizationStatus: state.authorizationStatus,
 });
 
-// Эта функция добавит нашему компоненту пропс onCityChoose;
 const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
-  // должны передать потомку этот колбэк
   onCityChoose(cityName: ChangeCityPayload) {
     // changeCityAction - это Action из store/action;
     // Сообщаем хранилищу, что пора обновить поля, выполнив action
@@ -49,6 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => ({
 // Настраиваем "мостик" между Redux и React;
 // 1-ый аргумент -- перенос данных полей хранилища в пропсы компонента;
 const connector = connect(mapStateToProps, mapDispatchToProps);
+
 // Выделим новые пропсы, сформированные в redux;
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -70,11 +70,11 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
             offers={offers}
-            city={city}
+            city={city as City}
             isMainScreen
           >
             <CityScreen
-              currentCity={city}
+              currentCity={city as City}
               cities={cities}
               onCityChoose={onCityChoose}
             />
@@ -96,17 +96,13 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route
           exact
           path={AppRoute.SignIn}
-          render={({history}) => (
-            <LoginScreen
-              onRedirectSubmitHandler={() => history.push(AppRoute.Main)}
-            />
-          )}
-        />
+        >
+          <LoginScreen/>
+        </Route>
         {offers.map((offer) => (
           <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
-              offers={offers}
               isMainScreen={false}
             />
           </Route>
@@ -120,6 +116,4 @@ function App(props: PropsFromRedux): JSX.Element {
 }
 
 export {App};
-// Если не обернуть в коннект, то будет требовать от родителя передать пропсы,
-// которые мы сформировали через редакс
 export default connector(App);

@@ -1,26 +1,59 @@
 /* eslint-disable camelcase */
+import {useEffect} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
-import {Offer, Location} from '../../types/offer';
+import {Offer} from '../../types/offer';
+import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
+import {State} from '../../types/state';
+import {ThunkAppDispatch} from '../../types/action';
+import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
 
 type OfferScreenProps = {
   currentOffer: Offer;
-  offers: Offer[];
   isMainScreen: boolean;
   renderCard: (offer: Offer, isMainScreen: boolean) => JSX.Element;
   renderMap: (
     currentOffer: Offer,
     isMainScreen: boolean,
     offers: Offer[],
-    center: Location,
+    center: City,
   ) => JSX.Element;
 }
 
-function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {currentOffer, offers, isMainScreen, renderMap, renderCard} = props;
+const mapStateToProps = (state: State) => ({
+  nearbyOffers: state.nearbyOffers,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onCommentsLoad(offerId: number) {
+    dispatch(fetchCommentsAction(offerId));
+  },
+
+  onNearbyLoad(offerId: number) {
+    dispatch(fetchNearbyAction(offerId));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & OfferScreenProps;
+
+function PlaceOfferScreen(props: ConnectedComponentProps): JSX.Element {
+  const {currentOffer, isMainScreen, renderMap, renderCard,
+    nearbyOffers, onCommentsLoad, onNearbyLoad} = props;
+
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
+
+  useEffect(() => {
+    onCommentsLoad(currentOffer.id as number);
+    onNearbyLoad(currentOffer.id as number);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="page__main page__main--property">
@@ -29,7 +62,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
           <div className="property__gallery">
             {images.map((image) => (
               <div key={nanoid(10)} className="property__image-wrapper">
-                <img className="property__image" src={`img/${image}`} alt="View studio"/>
+                <img className="property__image" src={`${image}`} alt="View studio"/>
               </div>
             ))}
           </div>
@@ -86,7 +119,7 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={`img/${host.avatar_url}`} width="74" height="74" alt="Host avatar"/>
+                  <img className="property__avatar user__avatar" src={`${host.avatar_url}`} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="property__user-name">
                   {host.name}
@@ -102,21 +135,14 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               </div>
             </div>
             <PlaceReviewsScreen
-              offer={currentOffer}
-              onCommentLoad={(proposal, comment) => {
-                // eslint-disable-next-line no-console
-                console.log(proposal);
-                // eslint-disable-next-line no-console
-                console.log(comment);
-              }}
+              currentOffer={currentOffer}
             />
           </div>
         </div>
-        {renderMap(currentOffer, isMainScreen, offers, currentOffer.location)}
+        {renderMap(currentOffer, isMainScreen, [...nearbyOffers, currentOffer], currentOffer.city)}
       </section>
       <PlaceNearbyScreen
-        offers={offers}
-        currentOffer={currentOffer}
+        offers={nearbyOffers}
         isMainScreen={isMainScreen}
         renderCard={renderCard}
       />
@@ -124,4 +150,5 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   );
 }
 
-export default PlaceOfferScreen;
+export {PlaceOfferScreen};
+export default connector(PlaceOfferScreen);

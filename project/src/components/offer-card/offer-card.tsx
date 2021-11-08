@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import {MouseEvent} from 'react';
 import {Offer} from '../../types/offer';
-import {useHistory, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 type CardScreenProps = {
   offer: Offer;
@@ -12,15 +12,16 @@ type CardScreenProps = {
 function OfferCard(props: CardScreenProps): JSX.Element {
   const {offer, onCardMainHover, isMainScreen} = props;
   const {price, rating, title, type, preview_image} = offer;
-  const history = useHistory();
 
   return (
     <article
       className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
       onMouseEnter={(evt: MouseEvent<HTMLElement>) => {
+        evt.preventDefault();
         onCardMainHover(offer);
       }}
       onMouseLeave={(evt: MouseEvent<HTMLElement>) => {
+        evt.preventDefault();
         onCardMainHover(undefined);
       }}
     >
@@ -54,7 +55,6 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         <h2 className="place-card__name">
           <Link
             to={`/hotels/${offer.id}`}
-            onClick={() => history.push(`/hotels/${offer.id}`)}
           >{title}
           </Link>
         </h2>

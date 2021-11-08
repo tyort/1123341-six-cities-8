@@ -1,5 +1,6 @@
 import {Offer} from '../types/offer';
-import {AuthorizationStatus} from '../const';
+import {Comment} from '../types/comment';
+import {AppRoute, AuthorizationStatus} from '../const';
 
 import {
   ActionName,
@@ -25,6 +26,20 @@ export const loadOffersAction = (offers: Offer[]) => ({
   },
 } as const);
 
+export const loadCommentsAction = (comments: Comment[]) => ({
+  type: ActionName.LoadComments,
+  payload: {
+    comments,
+  },
+} as const);
+
+export const loadNearbyAction = (nearbyOffers: Offer[]) => ({
+  type: ActionName.LoadNearby,
+  payload: {
+    nearbyOffers,
+  },
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionName.RequireAuthorization,
   payload: authStatus,
@@ -32,5 +47,10 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 export const requireLogout = () => ({
   type: ActionName.RequireLogout,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionName.RedirectToRoute,
+  payload: url,
 } as const);
 

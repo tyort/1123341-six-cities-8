@@ -11,6 +11,10 @@ import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './const';
 import {fetchOffersAction, checkAuthAction} from './store/api-actions';
 import {ThunkAppDispatch} from './types/action';
+import {redirect} from './store/middlewares/redirect';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
@@ -19,7 +23,13 @@ const api = createAPI(
 const store = createStore(
   reducer,
   composeWithDevTools(
+    // Посредник в Redux. В момент между:
+    //  1) Мы бросили экшен,
+    //  2) Экшн обработал редьюсер.
+    // -- можно совершить действие
     applyMiddleware(thunk.withExtraArgument(api)),
+    // все экшн store проходят через redirect(middleware)
+    applyMiddleware(redirect),
   ),
 );
 
@@ -29,6 +39,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
+      <ToastContainer />
       <App/>
     </Provider>
   </React.StrictMode>,
