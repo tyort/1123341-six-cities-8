@@ -1,7 +1,6 @@
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {nanoid} from 'nanoid';
-import browserHistory from '../../browser-history';
 // компоненты, хоки
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
@@ -57,7 +56,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
+    <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainScreenWrapped
