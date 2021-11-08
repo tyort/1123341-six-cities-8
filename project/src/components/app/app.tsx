@@ -93,7 +93,7 @@ function App(): JSX.Element {
           <LoginScreen/>
         </Route>
         {offers.map((offer) => (
-          <Route key={nanoid(10)} exact path={`/hotels/${offer.id}`}>
+          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
             <PlaceOfferScreenWrapped
               currentOffer={offer}
               isMainScreen={false}
