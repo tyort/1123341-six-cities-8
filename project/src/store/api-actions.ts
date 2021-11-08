@@ -4,9 +4,9 @@ import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction,
   requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction} from './action';
-import {saveToken, dropToken, Token} from '../services/token';
+import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
-import {AuthUserData} from '../types/auth-user-data';
+import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
@@ -56,8 +56,8 @@ export const checkAuthAction = (): ThunkActionResult =>
 // Авторизация пользователя
 export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
+    saveToken(data.token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   };

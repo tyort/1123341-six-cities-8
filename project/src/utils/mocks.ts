@@ -85,7 +85,7 @@ export const makeFakeOffer = (): Offer => ({
 
 export const makeFakeComment = (): Comment => ({
   comment: random.words(),
-  date: date.past(),
+  date: date.past().toString(),
   id: datatype.number(),
   rating: datatype.number(),
   user: {
