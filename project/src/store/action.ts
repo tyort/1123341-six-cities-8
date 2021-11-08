@@ -1,56 +1,42 @@
 import {Offer} from '../types/offer';
 import {Comment} from '../types/comment';
-import {AppRoute, AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus, ActionName, CityName, SortName} from '../const';
+import {createAction} from '@reduxjs/toolkit';
 
-import {
-  ActionName,
-  ChangeCityPayload,
-  ChangeSortPayload
-} from '../types/action';
+export const changeCityAction = createAction(
+  ActionName.ChangeCity,
+  (cityName: CityName) => ({payload: cityName}),
+);
 
-// аргументы попадают из диспатча
-export const changeCityAction = (cityName: ChangeCityPayload) => ({
-  type: ActionName.ChangeCity,
-  payload: cityName,
-} as const);
+export const changeSortNameAction = createAction(
+  ActionName.ChangeSortName,
+  (sortName: SortName) => ({payload: sortName}),
+);
 
-export const changeSortNameAction = (sortName: ChangeSortPayload) => ({
-  type: ActionName.ChangeSortName,
-  payload: sortName,
-} as const);
+export const loadOffersAction = createAction(
+  ActionName.LoadOffers,
+  (offers: Offer[]) => ({payload: offers}),
+);
 
-export const loadOffersAction = (offers: Offer[]) => ({
-  type: ActionName.LoadOffers,
-  payload: {
-    offers,
-  },
-} as const);
+export const loadCommentsAction = createAction(
+  ActionName.LoadComments,
+  (comments: Comment[]) => ({payload: comments}),
+);
 
-export const loadCommentsAction = (comments: Comment[]) => ({
-  type: ActionName.LoadComments,
-  payload: {
-    comments,
-  },
-} as const);
+export const loadNearbyAction = createAction(
+  ActionName.LoadNearby,
+  (nearbyOffers: Offer[]) => ({payload: nearbyOffers}),
+);
 
-export const loadNearbyAction = (nearbyOffers: Offer[]) => ({
-  type: ActionName.LoadNearby,
-  payload: {
-    nearbyOffers,
-  },
-} as const);
+export const requireAuthorization = createAction(
+  ActionName.RequireAuthorization,
+  (authorizationStatus: AuthorizationStatus) => ({payload: authorizationStatus}),
+);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
-  type: ActionName.RequireAuthorization,
-  payload: authStatus,
-} as const);
+export const requireLogout = createAction(ActionName.RequireLogout);
 
-export const requireLogout = () => ({
-  type: ActionName.RequireLogout,
-} as const);
 
-export const redirectToRoute = (url: AppRoute) => ({
-  type: ActionName.RedirectToRoute,
-  payload: url,
-} as const);
-
+export const redirectToRoute = createAction(
+  ActionName.RedirectToRoute,
+  (url: AppRoute) => ({payload: url}),
+);

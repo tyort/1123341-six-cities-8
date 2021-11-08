@@ -1,13 +1,14 @@
 import {nanoid} from 'nanoid';
-import {sortNames} from '../../const';
-import {ChangeSortPayload} from '../../types/action';
+import {SortName} from '../../const';
 
 type SortingProps = {
-  currentSortName: ChangeSortPayload;
-  onSortChoose: (sortName: ChangeSortPayload) => void;
+  currentSortName: SortName;
+  onSortChoose: (sortName: SortName) => void;
 };
 
-function Sorting(props: SortingProps): JSX.Element {
+function SortingScreen(props: SortingProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('SortingScreen');
   const {currentSortName, onSortChoose} = props;
   return (
     <form className="places__sorting" action="#" method="get">
@@ -27,7 +28,7 @@ function Sorting(props: SortingProps): JSX.Element {
         </svg>
       </span>
       <ul className="places__options places__options--custom">
-        {sortNames.map((name) => (
+        {Object.values(SortName).map((name) => (
           <li
             key={nanoid(10)}
             data-sort-name={name}
@@ -38,7 +39,7 @@ function Sorting(props: SortingProps): JSX.Element {
             tabIndex={0}
             onClick={(evt) => {
               evt.preventDefault();
-              onSortChoose(evt.currentTarget.dataset.sortName as ChangeSortPayload);
+              onSortChoose(evt.currentTarget.dataset.sortName as SortName);
             }}
           >{name}
           </li>
@@ -48,4 +49,4 @@ function Sorting(props: SortingProps): JSX.Element {
   );
 }
 
-export default Sorting;
+export default SortingScreen;

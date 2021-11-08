@@ -7,13 +7,6 @@ export enum AppRoute {
   Room = '/offer/:id'
 }
 
-export const sortNames = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
-
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -32,20 +25,38 @@ export const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-export const cities = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
-
 // Запросы на "бэкэнд"
 export enum APIRoute {
   Offers = '/hotels',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+}
+
+export enum SortName {
+  Popular = 'Popular',
+  PriceAscending = 'Price: low to high',
+  PriceDescending = 'Price: high to low',
+  RateDescending = 'Top rated first'
+}
+
+export enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
+export enum ActionName {
+  ChangeCity = 'offers/changeCity',
+  ChangeSortName = 'offers/changeSortName',
+  LoadOffers = 'offers/loadOffers',
+  LoadComments = 'offers/loadComments',
+  LoadNearby = 'offers/loadNearbyOffers',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'app/redirectToRoute'
 }
 
