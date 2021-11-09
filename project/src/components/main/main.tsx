@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom';
 import {PropsWithChildren, Children} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {logoutAction} from '../../store/api-actions';
+import {getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 type MainScreenProps = PropsWithChildren<{
-  offers: Offer[];
   city: City;
   isMainScreen: boolean;
   renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
@@ -22,8 +22,11 @@ type MainScreenProps = PropsWithChildren<{
 function MainScreen(props: MainScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MainScreen');
-  const {city, offers, isMainScreen, renderMap, renderCard, children} = props;
+  const {city, isMainScreen, renderMap, renderCard, children} = props;
+  const offers = useSelector(getSortedOffersInCity);
+
   const dispatch = useDispatch();
+
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
 
@@ -60,7 +63,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${offers.length === 0 && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -68,19 +71,33 @@ function MainScreen(props: MainScreenProps): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.name}</b>
-              {mainChildren[1]}
-              <div className="cities__places-list places__list tabs__content">
-                {renderCard(offers, isMainScreen)}
-              </div>
-            </section>
-            <div className="cities__right-section">
-              {renderMap(undefined, isMainScreen, offers, city)}
+
+          {offers.length === 0
+            ?
+            <div className="cities__places-container cities__places-container--empty container">
+              <section className="cities__no-places">
+                <div className="cities__status-wrapper tabs__content">
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
+                </div>
+              </section>
+              <div className="cities__right-section"></div>
             </div>
-          </div>
+            :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.name}</b>
+                {mainChildren[1]}
+                <div className="cities__places-list places__list tabs__content">
+                  {renderCard(offers, isMainScreen)}
+                </div>
+              </section>
+              <div className="cities__right-section">
+                {renderMap(undefined, isMainScreen, offers, city)}
+              </div>
+            </div>}
+
         </div>
       </main>
     </div>
