@@ -44,8 +44,10 @@ function LoginScreen(): JSX.Element {
                 <input
                   ref={emailRef}
                   className="login__input form__input"
-                  type="email" name="email"
+                  type="email"
+                  name="email"
                   placeholder="Email"
+                  data-testid="email"
                   required
                 />
               </div>
@@ -57,6 +59,7 @@ function LoginScreen(): JSX.Element {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  data-testid="password"
                   required
                 />
               </div>
