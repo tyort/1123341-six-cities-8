@@ -18,6 +18,11 @@ export const loadOffersAction = createAction(
   (offers: Offer[]) => ({payload: offers}),
 );
 
+export const loadFavoritesAction = createAction(
+  ActionName.LoadFavorites,
+  (offers: Offer[]) => ({payload: offers}),
+);
+
 export const loadCommentsAction = createAction(
   ActionName.LoadComments,
   (comments: Comment[]) => ({payload: comments}),
@@ -26,6 +31,11 @@ export const loadCommentsAction = createAction(
 export const loadNearbyAction = createAction(
   ActionName.LoadNearby,
   (nearbyOffers: Offer[]) => ({payload: nearbyOffers}),
+);
+
+export const setFavoriteAction = createAction(
+  ActionName.ChangeFavorite,
+  (offer: Offer) => ({payload: offer}),
 );
 
 export const requireAuthorization = createAction(

@@ -1,16 +1,21 @@
 /* eslint-disable camelcase */
-import {Offer} from '../../types/offer';
-import {City} from '../../types/city';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchFavoritesAction} from '../../store/api-actions';
+import {getAllOffers} from '../../store/offers-reducer/selectors';
 import {nanoid} from 'nanoid';
 
-type FavoritesScreenProps = {
-  offers: Offer[];
-  cities: City[];
-}
-
-function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
-  const {offers, cities} = props;
+function FavoritesScreen(): JSX.Element {
+  const offers = useSelector(getAllOffers);
   const favoriteOffers = offers.filter((offer) => offer.is_favorite === true);
+  const cities = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="page__main page__main--favorites">
@@ -23,13 +28,13 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <a className="locations__item-link" href="/">
-                      <span>{place.name}</span>
+                      <span>{place}</span>
                     </a>
                   </div>
                 </div>
                 <div className="favorites__places">
                   {favoriteOffers
-                    .filter((offer) => (offer.city.name === place.name))
+                    .filter((offer) => (offer.city.name === place))
                     .map((offer) => {
                       const {price, rating, title, type, preview_image} = offer;
                       const percentRating = rating * 20;
