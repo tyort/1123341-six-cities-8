@@ -1,4 +1,4 @@
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {nanoid} from 'nanoid';
 // компоненты, хоки
@@ -56,49 +56,47 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path={AppRoute.Main}>
-          <MainScreenWrapped
-            city={city as City}
-            isMainScreen
-          >
-            <CityScreen
-              currentCity={city as City}
-              cities={cities}
-              onCityChoose={onCityChoose}
-            />
-            <SortingScreen
-              currentSortName={currentSortName}
-              onSortChoose={onSortChoose}
-            />
-          </MainScreenWrapped>
-        </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.Favorites}
+    <Switch>
+      <Route exact path={AppRoute.Main}>
+        <MainScreenWrapped
+          city={city as City}
+          isMainScreen
         >
-          <FavoritesScreen/>
-        </PrivateRoute>
-        <Route
-          exact
-          path={AppRoute.SignIn}
-        >
-          <LoginScreen/>
+          <CityScreen
+            currentCity={city as City}
+            cities={cities}
+            onCityChoose={onCityChoose}
+          />
+          <SortingScreen
+            currentSortName={currentSortName}
+            onSortChoose={onSortChoose}
+          />
+        </MainScreenWrapped>
+      </Route>
+      <PrivateRoute
+        exact
+        path={AppRoute.Favorites}
+      >
+        <FavoritesScreen/>
+      </PrivateRoute>
+      <Route
+        exact
+        path={AppRoute.SignIn}
+      >
+        <LoginScreen/>
+      </Route>
+      {allOffers.map((offer) => (
+        <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+          <PlaceOfferScreenWrapped
+            currentOffer={offer}
+            isMainScreen={false}
+          />
         </Route>
-        {allOffers.map((offer) => (
-          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
-            <PlaceOfferScreenWrapped
-              currentOffer={offer}
-              isMainScreen={false}
-            />
-          </Route>
-        ))}
-        <Route>
-          <NotFoundScreen/>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      ))}
+      <Route>
+        <NotFoundScreen/>
+      </Route>
+    </Switch>
   );
 }
 
