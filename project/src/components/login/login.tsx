@@ -2,8 +2,11 @@ import {useRef, FormEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {loginAction} from '../../store/api-actions';
 import Logo from '../logo/logo';
+import {useHistory} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function LoginScreen(): JSX.Element {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -17,6 +20,7 @@ function LoginScreen(): JSX.Element {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       }));
+      history.push(AppRoute.Main);
     }
   };
 
