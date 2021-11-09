@@ -96,10 +96,19 @@ export const makeFakeComment = (): Comment => ({
   },
 });
 
+export const makeFakeFavoriteOffer = (): Offer => ({
+  ...makeFakeOffer(),
+  'is_favorite': true,
+});
+
 export const makeFakeOffers = (): Offer[] => (
   new Array(5)
     .fill(null)
     .map(() => makeFakeOffer()) as Offer[]
+);
+
+export const makeFakeFavoriteOffers = (): Offer[] => (
+  cities.map((city) => ({...makeFakeFavoriteOffer(), city}))
 );
 
 export const makeFakeComments = (): Comment[] => (
