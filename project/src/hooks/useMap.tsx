@@ -1,24 +1,24 @@
-import {useEffect, useState, MutableRefObject} from 'react';
+import {useEffect, useState} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import {City} from '../types/city';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map | null {
+function useMap(mapRefCurrent: HTMLElement | null, center: City): Map | null {
   // eslint-disable-next-line no-console
   console.log('useMap');
   const [currentMap, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    // 1-ая прорисовка компонента: при mapRef.current === null && currentMap === null
-    // После прорисовки компонента mapRef.current !== null
+    // 1-ая прорисовка компонента: при mapRefCurrent === null && currentMap === null
+    // После прорисовки компонента mapRefCurrent !== null
     // Срабатывает useEffect, условие if выполняется, срабатывает setMap.
-    // 2-ая прорисовка компонента: при mapRef.current !== null && currentMap !== null
+    // 2-ая прорисовка компонента: при mapRefCurrent !== null && currentMap !== null
     // После прорисовки компонента данные НЕ меняются
     // useEffect вызывается, условие if НЕ выполняется, setMap НЕ срабатывает
-    if (mapRef.current !== null && currentMap === null) {
+    if (mapRefCurrent !== null && currentMap === null) {
       // eslint-disable-next-line no-console
       console.log('Прорисовка карты');
       // Создаем объект карты
-      const mapInstance = new Map(mapRef.current, {
+      const mapInstance = new Map(mapRefCurrent, {
         center: {
           lat: center.location.latitude,
           lng: center.location.longitude,
@@ -39,7 +39,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
 
       setMap(mapInstance);
     }
-  }, [mapRef, currentMap, center]);
+  }, [mapRefCurrent, currentMap, center]);
 
   return currentMap;
 }

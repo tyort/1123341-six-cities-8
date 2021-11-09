@@ -1,6 +1,6 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, MutableRefObject} from 'react';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import useMap from '../../hooks/useMap';
@@ -18,8 +18,8 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   console.log('MapScreen');
   // currentOffer - выбранная карточка на главной странице и представленная в place-offer
   const {offers, center, isMainScreen, currentOffer} = props;
-  const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
-  const currentMap = useMap(mapRef, center);
+  const mapRef: MutableRefObject<HTMLElement | null> = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
+  const currentMap = useMap(mapRef.current, center);
 
   useEffect(() => {
     if (currentMap) {
