@@ -1,22 +1,10 @@
 import {useRef, FormEvent} from 'react';
+import {useDispatch} from 'react-redux';
 import {loginAction} from '../../store/api-actions';
 import Logo from '../logo/logo';
-import {connect, ConnectedProps} from 'react-redux';
-import {ThunkAppDispatch} from '../../types/action';
-import {AuthUserData} from '../../types/auth-user-data';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthUserData) {
-    // loginAction - асинхронный action
-    dispatch(loginAction(authData));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function LoginScreen(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+function LoginScreen(): JSX.Element {
+  const dispatch = useDispatch();
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -25,10 +13,10 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
     evt.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
+      dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value,
-      });
+      }));
     }
   };
 
@@ -93,5 +81,4 @@ function LoginScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {LoginScreen};
-export default connector(LoginScreen);
+export default LoginScreen;

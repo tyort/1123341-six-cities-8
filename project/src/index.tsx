@@ -1,40 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-import {composeWithDevTools} from 'redux-devtools-extension';
 import {createAPI} from './services/api';
 import App from './components/app/app';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/root-reducer';
 import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './const';
 import {fetchOffersAction, checkAuthAction} from './store/api-actions';
-import {ThunkAppDispatch} from './types/action';
 import {redirect} from './store/middlewares/redirect';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
-const store = createStore(
-  reducer,
-  composeWithDevTools(
-    // Посредник в Redux. В момент между:
-    //  1) Мы бросили экшен,
-    //  2) Экшн обработал редьюсер.
-    // -- можно совершить действие
-    applyMiddleware(thunk.withExtraArgument(api)),
-    // все экшн store проходят через redirect(middleware)
-    applyMiddleware(redirect),
-  ),
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
-(store.dispatch as ThunkAppDispatch)(fetchOffersAction());
+(store.dispatch)(checkAuthAction());
+(store.dispatch)(fetchOffersAction());
 
 ReactDOM.render(
   <React.StrictMode>

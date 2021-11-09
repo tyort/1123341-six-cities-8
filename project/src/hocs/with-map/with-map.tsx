@@ -4,7 +4,6 @@ import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {nanoid} from 'nanoid';
 
 type HOCProps = {
   renderMap: (
@@ -13,7 +12,7 @@ type HOCProps = {
     offers: Offer[],
     center: City,
   ) => void
-  renderCard: (offer: Offer, isMainScreen: boolean) => void
+  renderCard: (offers: Offer[], isMainScreen: boolean) => void
 };
 
 function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HOCProps>> {
@@ -31,28 +30,36 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           isMainScreen: boolean,
           offers: Offer[],
           center: City,
-        ) => (
-          <Map
-            // на карте главной страницы будем перекрашивать актуальный маркер
-            currentOffer={isMainScreen ? hoveredCard : currentOffer}
-            isMainScreen={isMainScreen}
-            offers={offers}
-            center={center}
-          />
-        )}
+        ) => {
+          // eslint-disable-next-line no-console
+          console.log('renderMap');
+          return (
+            <Map
+              // на карте главной страницы будем перекрашивать актуальный маркер
+              currentOffer={isMainScreen ? hoveredCard : currentOffer}
+              isMainScreen={isMainScreen}
+              offers={offers}
+              center={center}
+            />
+          );
+        }}
 
-        renderCard={(offer: Offer, isMainScreen: boolean) => (
-          <OfferCard
-            key={nanoid(10)}
-            offer={offer}
-            isMainScreen={isMainScreen}
-            onCardMainHover={(card: Offer | undefined): void => {
-              if (JSON.stringify(card) !== JSON.stringify(hoveredCard) && isMainScreen) {
-                setHoveredCard(card);
-              }
-            }}
-          />
-        )}
+        renderCard={(offers: Offer[], isMainScreen: boolean) => {
+          // eslint-disable-next-line no-console
+          console.log('renderCard');
+
+          const onCardMainHover = (hoveredOffer: Offer | undefined): void => {
+            isMainScreen && setHoveredCard(hoveredOffer);
+          };
+
+          return (
+            <OfferCard
+              offers={offers}
+              isMainScreen={isMainScreen}
+              onCardMainHover={onCardMainHover}
+            />
+          );
+        }}
       />
     );
   }

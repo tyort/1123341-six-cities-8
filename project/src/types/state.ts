@@ -1,17 +1,26 @@
 import {Offer} from '../types/offer';
 import {Comment} from '../types/comment';
 import {City} from '../types/city';
-import {ChangeSortPayload} from '../types/action';
+import {SortName} from '../const';
 import {AuthorizationStatus} from '../const';
+import {RootState} from '../store/root-reducer';
 
-export type State = {
+export type OffersState = {
   city: City | undefined,
   allOffers: Offer[],
   currentOffers: Offer[],
-  sortName: ChangeSortPayload,
+  sortName: SortName,
   cities: City[],
-  authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
+};
+
+export type SingleOfferState = {
   comments: Comment[],
   nearbyOffers: Offer[]
+}
+
+export type AuthState = {
+  authorizationStatus: AuthorizationStatus,
 };
+
+export type State = RootState;

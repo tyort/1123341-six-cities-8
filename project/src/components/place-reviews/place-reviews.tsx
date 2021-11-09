@@ -1,57 +1,43 @@
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import ReviewScreen from '../review/review';
-import {NewComment} from '../../types/comment';
+import RatingScreen from '../rating/rating';
 import {nanoid} from 'nanoid';
 import {AuthorizationStatus} from '../../const';
-import {Fragment, useState, useRef, FormEvent} from 'react';
-import {State} from '../../types/state';
+import {useRef, FormEvent, useState} from 'react';
 import {Offer} from '../../types/offer';
-import {ThunkAppDispatch} from '../../types/action';
 import {setCommentAction} from '../../store/api-actions';
-
-
-const STARS_COUNT = 5;
-const starsStatuses = new Map([
-  [1, 'terribly'],
-  [2, 'badly'],
-  [3, 'not bad'],
-  [4, 'good'],
-  [5, 'perfect'],
-]);
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
+import {getOfferComments} from '../../store/single-offer-reducer/selectors';
 
 type ReviewsScreenProps = {
   currentOffer: Offer;
 }
 
-const mapStateToProps = (state: State) => ({
-  nearbyOffers: state.nearbyOffers,
-  authorizationStatus: state.authorizationStatus,
-  comments: state.comments,
-});
+function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
+  const {currentOffer} = props;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSetComment(newComment: NewComment) {
-    dispatch(setCommentAction(newComment));
-  },
-});
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const comments = useSelector(getOfferComments);
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const dispatch = useDispatch();
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & ReviewsScreenProps;
-
-
-function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
-  const {comments, authorizationStatus, currentOffer, onSetComment} = props;
-  const stars = new Array(STARS_COUNT).fill('');
-  const [rating, setRating] = useState<number | null>(null);
   const commentTable = useRef<HTMLTextAreaElement | null>(null);
+  const [rating, setRating] = useState<number | null>(null);
 
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
-      onSetComment({offerId: currentOffer.id as number, comment: commentTable.current.value, rating});
+      dispatch(setCommentAction({
+        offerId: currentOffer.id as number,
+        comment: commentTable.current.value,
+        rating,
+      }));
     }
+  };
+
+  const onRateChange = (evt: FormEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    setRating(Number(evt.currentTarget.value));
   };
 
   return (
@@ -74,30 +60,9 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
         onSubmit={onSubmitHandle}
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
-        <div className="reviews__rating-form form__rating">
-          {stars.map((_star, index) => {
-            const realIndex = STARS_COUNT - index;
-            return(
-              <Fragment key={nanoid(10)}>
-                <input
-                  className="form__rating-input visually-hidden"
-                  name="rating"
-                  value={realIndex}
-                  id={`${realIndex}-stars`}
-                  type="radio"
-                  onChange={(evt) => {
-                    setRating(Number(evt.currentTarget.value));
-                  }}
-                />
-                <label htmlFor={`${realIndex}-stars`} className="reviews__rating-label form__rating-label" title={`${starsStatuses.get(realIndex)}`}>
-                  <svg className="form__star-image" width="37" height="33">
-                    <use xlinkHref="#icon-star"></use>
-                  </svg>
-                </label>
-              </Fragment>
-            );
-          })}
-        </div>
+        <RatingScreen
+          onRateChange={onRateChange}
+        />
         <textarea
           ref={commentTable}
           className="reviews__textarea form__textarea"
@@ -117,5 +82,4 @@ function PlaceReviewsScreen(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PlaceReviewsScreen};
-export default connector(PlaceReviewsScreen);
+export default PlaceReviewsScreen;

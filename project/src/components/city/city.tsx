@@ -1,14 +1,16 @@
-import {ChangeCityPayload} from '../../types/action';
+import {CityName} from '../../const';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 
 type CityScreenProps = {
   cities: City[];
-  onCityChoose: (cityTitle: ChangeCityPayload) => void;
+  onCityChoose: (cityTitle: CityName) => void;
   currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('CityScreen');
   const {cities, currentCity, onCityChoose} = props;
 
   return (
@@ -20,7 +22,7 @@ function CityScreen(props: CityScreenProps): JSX.Element {
           data-city={city.name}
           onClick={(evt) => {
             evt.preventDefault();
-            onCityChoose(evt.currentTarget.dataset.city as ChangeCityPayload);
+            onCityChoose(evt.currentTarget.dataset.city as CityName);
           }}
         >
           <a

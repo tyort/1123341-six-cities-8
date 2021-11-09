@@ -14,6 +14,8 @@ type MapScreenProps = {
 }
 
 function MapScreen(props: MapScreenProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log('MapScreen');
   // currentOffer - выбранная карточка на главной странице и представленная в place-offer
   const {offers, center, isMainScreen, currentOffer} = props;
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
@@ -21,6 +23,8 @@ function MapScreen(props: MapScreenProps): JSX.Element {
 
   useEffect(() => {
     if (currentMap) {
+      // eslint-disable-next-line no-console
+      console.log('Прорисовка маркеров');
       offers.forEach((offer) => {
         const {location} = offer;
         leaflet
