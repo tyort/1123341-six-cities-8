@@ -89,7 +89,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
               </div>
               <h2 className="place-card__name">
                 <Link
-                  to={`/hotels/${offer.id}`}
+                  to={`/offer/${offer.id}`}
                 >{title}
                 </Link>
               </h2>
