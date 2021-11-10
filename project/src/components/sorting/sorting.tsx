@@ -14,6 +14,7 @@ function SortingScreen(props: SortingProps): JSX.Element {
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
+        data-testid="option-open"
         className="places__sorting-type"
         tabIndex={0}
         onClick={(evt) => {
@@ -27,7 +28,7 @@ function SortingScreen(props: SortingProps): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom">
+      <ul data-testid="sort-list" className="places__options places__options--custom">
         {Object.values(SortName).map((name) => (
           <li
             key={nanoid(10)}
