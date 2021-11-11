@@ -1,4 +1,5 @@
 import {Switch, Route} from 'react-router-dom';
+import {MouseEvent} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {nanoid} from 'nanoid';
 // компоненты, хоки
@@ -13,11 +14,12 @@ import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
 import withMap from '../../hocs/with-map/with-map';
 // из store
+import {logoutAction} from '../../store/api-actions';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 // селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getAllOffers, getCurrentCity, getCurrentSortName,
-  getAllCities, getOffersLoadStatus} from '../../store/offers-reducer/selectors';
+  getAllCities, getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 import {City} from '../../types/city';
 import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
@@ -38,6 +40,8 @@ function App(): JSX.Element {
   const currentSortName = useSelector(getCurrentSortName);
   const cities = useSelector(getAllCities);
   const allOffers = useSelector(getAllOffers);
+  const sortedOffers = useSelector(getSortedOffersInCity);
+
 
   const dispatch = useDispatch();
 
@@ -47,6 +51,11 @@ function App(): JSX.Element {
 
   const onSortChoose = (sortName: SortName) => {
     dispatch(changeSortNameAction(sortName));
+  };
+
+  const onLogout = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
   };
 
   if (authIsUnknown(authorizationStatus) || !isDataLoaded) {
@@ -61,6 +70,8 @@ function App(): JSX.Element {
         <MainScreenWrapped
           city={city as City}
           isMainScreen
+          onLogoutHandler={onLogout}
+          offers={sortedOffers}
         >
           <CityScreen
             currentCity={city as City}

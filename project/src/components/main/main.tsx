@@ -1,13 +1,12 @@
 import {Link} from 'react-router-dom';
-import {PropsWithChildren, Children} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {PropsWithChildren, Children, MouseEvent} from 'react';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {logoutAction} from '../../store/api-actions';
-import {getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 type MainScreenProps = PropsWithChildren<{
+  offers: Offer[];
+  onLogoutHandler: (evt: MouseEvent<HTMLElement>) => void
   city: City;
   isMainScreen: boolean;
   renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
@@ -22,10 +21,7 @@ type MainScreenProps = PropsWithChildren<{
 function MainScreen(props: MainScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MainScreen');
-  const {city, isMainScreen, renderMap, renderCard, children} = props;
-  const offers = useSelector(getSortedOffersInCity);
-
-  const dispatch = useDispatch();
+  const {onLogoutHandler, offers, city, isMainScreen, renderMap, renderCard, children} = props;
 
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
@@ -49,10 +45,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                   <Link
                     className="header__nav-link"
                     to="/"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      dispatch(logoutAction());
-                    }}
+                    onClick={onLogoutHandler}
                   >
                     <span className="header__signout">Sign out</span>
                   </Link>
