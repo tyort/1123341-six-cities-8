@@ -21,6 +21,7 @@ export type SingleOfferState = {
 
 export type AuthState = {
   authorizationStatus: AuthorizationStatus,
+  email: string | null
 };
 
 export type State = RootState;

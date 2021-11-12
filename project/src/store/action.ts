@@ -38,6 +38,11 @@ export const setFavoriteAction = createAction(
   (offer: Offer) => ({payload: offer}),
 );
 
+export const setEmailAction = createAction(
+  ActionName.SetEmail,
+  (email: string) => ({payload: email}),
+);
+
 export const requireAuthorization = createAction(
   ActionName.RequireAuthorization,
   (authorizationStatus: AuthorizationStatus) => ({payload: authorizationStatus}),
