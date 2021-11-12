@@ -72,6 +72,7 @@ function App(): JSX.Element {
           isMainScreen
           onLogoutHandler={onLogout}
           offers={sortedOffers}
+          authorizationStatus={authorizationStatus}
         >
           <CityScreen
             currentCity={city as City}
