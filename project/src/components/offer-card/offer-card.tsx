@@ -51,6 +51,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
 
         return (
           <article
+            data-testid="offer-article"
             key={nanoid(10)}
             className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
             onMouseEnter={hoverHandler}
@@ -89,6 +90,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
               </div>
               <h2 className="place-card__name">
                 <Link
+                  data-testid="offer-link"
                   to={`/offer/${offer.id}`}
                 >{title}
                 </Link>
