@@ -1,18 +1,27 @@
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
+import thunk from 'redux-thunk';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
+import userEvent from '@testing-library/user-event';
+import {createAPI} from '../../services/api';
 import {Provider} from 'react-redux';
 import {AuthorizationStatus, SortName, AppRoute} from '../../const';
-import {makeFakeOffers, makeFakeComments, cities} from '../../utils/mocks';
+import {makeFakeFavoriteOffers, makeFakeComments, cities} from '../../utils/mocks';
 import App from './app';
 
-const mockStore = configureMockStore();
-const mockOffers = makeFakeOffers();
+const onFakeUnauthorized = jest.fn();
+const api = createAPI(onFakeUnauthorized());
+const middlewares = [thunk.withExtraArgument(api)];
+const mockStore = configureMockStore(middlewares);
+const mockOffers = makeFakeFavoriteOffers();
 const mockComments = makeFakeComments();
 
 const store = mockStore({
-  USER: {authorizationStatus: AuthorizationStatus.Auth},
+  USER: {
+    authorizationStatus: AuthorizationStatus.Auth,
+    email: 'what@mail.ru',
+  },
   OFFERS: {
     city: cities[2],
     allOffers: mockOffers,
@@ -39,15 +48,21 @@ describe('Application Routing', () => {
     history.push(AppRoute.Main);
     render(fakeApp);
 
-    expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${mockOffers.length} places to stay in ${cities[2].name}`, 'i'))).toBeInTheDocument();
+
     expect(screen.getByText(/Sort by/i)).toBeInTheDocument();
     expect(screen.getAllByText(/Popular/i)).toBeInstanceOf(Array);
     expect(screen.getAllByText(/Popular/i)).toHaveLength(2);
+
+    userEvent.click(screen.getByTestId(/option-open/i));
+    expect(screen.getByTestId(/sort-list/i)).toHaveClass('places__options--opened');
+
+    expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
+
     expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
       .toBeInstanceOf(Array);
     expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
       .toHaveLength(7);
-    expect(screen.getByText(new RegExp(`to stay in ${cities[2].name}`, 'i'))).toBeInTheDocument();
   });
 
   it('should render "LoginScreen" when user navigate to "/login"', () => {
@@ -58,17 +73,27 @@ describe('Application Routing', () => {
     expect(screen.getAllByText(/Sign in/i)).toHaveLength(2);
     expect(screen.getAllByText(/Sign in/i)).toBeInstanceOf(Array);
     expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();
+
+    userEvent.type(screen.getByTestId('email'), 'keks');
+    userEvent.type(screen.getByTestId('password'), '123456');
+
+    expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
   });
 
-  // Проблема в асинхронности:
-  // it('should render private "FavoritesScreen" when user navigate to "/favorites"', () => {
-  //   history.push(AppRoute.Favorites);
-  //   render(fakeApp);
+  it('should render private "FavoritesScreen" when user navigate to "/favorites"', async () => {
+    history.push(AppRoute.Favorites);
+    render(fakeApp);
 
-  //   expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
-  //   ????? предложения загружаются через асинхронное действие
-  //   Поэтому проверить города надо по-особенному
-  // });
+    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
+        .toBeInstanceOf(Array);
+      expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
+        .toHaveLength(6);
+    });
+  });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
     history.push('/non-existent-route');
@@ -78,7 +103,14 @@ describe('Application Routing', () => {
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
 
-  // it('should render "PlaceOfferScreenWrapped" when user navigate to /offer/:offerId', () => {
-  // ?????? Непонятно как реализовывать, как выбрать id, и нужно ли учитывать асинхронность
-  // });
+  it('should render "PlaceOfferScreenWrapped" when user navigate to /offer/:offerId', async () => {
+    history.push(`/offer/${mockOffers[0].id}`);
+    render(fakeApp);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
+      expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
+      expect(screen.getAllByText(new RegExp(mockOffers[0].title, 'i'))).toBeInstanceOf(Array);
+    });
+  });
 });

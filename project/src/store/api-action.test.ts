@@ -9,7 +9,7 @@ import {fetchCommentsAction, checkAuthAction, loginAction, fetchOffersAction, ch
   logoutAction, fetchFavoritesAction, fetchNearbyAction, setCommentAction} from './api-actions';
 
 import {loadCommentsAction, loadFavoritesAction, requireAuthorization, redirectToRoute,
-  loadOffersAction, requireLogout, loadNearbyAction, setFavoriteAction} from './action';
+  loadOffersAction, requireLogout, loadNearbyAction, setFavoriteAction, setEmailAction} from './action';
 
 import {APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import {AuthUserData} from '../types/auth-user-data';
@@ -32,13 +32,14 @@ describe('Async actions', () => {
     const store = mockStore();
     mockAPI
       .onGet(APIRoute.Login)
-      .reply(200, []);
+      .reply(200, {email: 'chick@mail.ru'});
 
     expect(store.getActions()).toEqual([]);
 
     await store.dispatch(checkAuthAction());
 
     expect(store.getActions()).toEqual([
+      setEmailAction('chick@mail.ru'),
       requireAuthorization(AuthorizationStatus.Auth),
     ]);
   });
@@ -47,7 +48,7 @@ describe('Async actions', () => {
     const fakeUser: AuthUserData = {email: 'test@test.ru', password: '123456'};
     mockAPI
       .onPost(APIRoute.Login)
-      .reply(200, {token: 'secret'});
+      .reply(200, {token: 'secret', email: 'chick@mail.ru'});
 
     const store = mockStore();
 
@@ -56,6 +57,7 @@ describe('Async actions', () => {
     await store.dispatch(loginAction(fakeUser));
 
     expect(store.getActions()).toEqual([
+      setEmailAction('chick@mail.ru'),
       requireAuthorization(AuthorizationStatus.Auth),
       redirectToRoute(AppRoute.Main),
     ]);
