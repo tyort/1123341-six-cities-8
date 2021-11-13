@@ -1,20 +1,25 @@
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {Route, Router, Switch} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import LoginScreen from './login';
+import {AuthorizationStatus} from '../../const';
 
 const mockStore = configureMockStore();
 
 describe('Component: LoginScreen', () => {
-  it('should render "LoginScreen" when user navigate to "login" url', () => {
+  it('should render "LoginScreen" when non-authorised user navigate to "/login" url', () => {
     const history = createMemoryHistory();
     history.push('/login');
 
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.NoAuth},
+    });
+
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={store}>
         <Router history={history}>
           <LoginScreen />
         </Router>
@@ -31,5 +36,31 @@ describe('Component: LoginScreen', () => {
 
     expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+  });
+
+  it('should render "LoginScreen" when authorised user navigate to "/login" url', () => {
+    const history = createMemoryHistory();
+    history.push('/login');
+
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.Auth},
+    });
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Switch>
+            <Route path="/login" exact>
+              <LoginScreen/>
+            </Route>
+            <Route path="/" exact>
+              <h1>This is main page</h1>
+            </Route>
+          </Switch>
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getByText(/This is main page/i)).toBeInTheDocument();
   });
 });

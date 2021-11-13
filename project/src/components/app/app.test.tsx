@@ -65,20 +65,10 @@ describe('Application Routing', () => {
       .toHaveLength(7);
   });
 
-  it('should render "LoginScreen" when user navigate to "/login"', () => {
-    history.push(AppRoute.SignIn);
+  it('should render "LoginScreen" when authorised user navigate to "/login" url', () => {
+    history.push('/login');
     render(fakeApp);
-
-    expect(screen.getByText(/Amsterdam/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Sign in/i)).toHaveLength(2);
-    expect(screen.getAllByText(/Sign in/i)).toBeInstanceOf(Array);
-    expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();
-
-    userEvent.type(screen.getByTestId('email'), 'keks');
-    userEvent.type(screen.getByTestId('password'), '123456');
-
-    expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${mockOffers.length} places to stay in ${cities[2].name}`, 'i'))).toBeInTheDocument();
   });
 
   it('should render private "FavoritesScreen" when user navigate to "/favorites"', async () => {

@@ -1,9 +1,13 @@
 import {useRef, FormEvent} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {loginAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import Logo from '../logo/logo';
 
 function LoginScreen(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -19,6 +23,12 @@ function LoginScreen(): JSX.Element {
       }));
     }
   };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return (
+      <Redirect to={AppRoute.Main} />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">
