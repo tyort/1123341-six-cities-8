@@ -49,7 +49,8 @@ export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get(APIRoute.Login);
+      dispatch(setEmailAction(data.email));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
@@ -61,8 +62,8 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
   async (dispatch, _getState, api) => {
     const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
     saveToken(data.token);
+    dispatch(setEmailAction(data.email));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(setEmailAction(email));
     dispatch(redirectToRoute(AppRoute.Main));
   };
 
