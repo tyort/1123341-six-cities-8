@@ -26,7 +26,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   return (
     <Fragment>
       {offers.map((offer) => {
-        const {price, rating, title, type, preview_image, is_favorite} = offer;
+        const {price, rating, title, type, preview_image, is_favorite, is_premium} = offer;
         const percentRating = rating * 20;
 
 
@@ -57,6 +57,11 @@ function OfferCard(props: CardScreenProps): JSX.Element {
             onMouseEnter={hoverHandler}
             onMouseLeave={hoverHandler}
           >
+            {is_premium
+            &&
+            <div className="place-card__mark">
+              <span>Premium</span>
+            </div>}
             <div className={`${isMainScreen
               ? 'cities__image-wrapper'
               : 'near-places__image-wrapper'} place-card__image-wrapper`}
