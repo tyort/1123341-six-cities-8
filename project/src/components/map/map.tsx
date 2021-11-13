@@ -21,6 +21,9 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
   const currentMap = useMap(mapRef, center);
 
+  // eslint-disable-next-line no-console
+  console.log(currentMap);
+
   useEffect(() => {
     if (currentMap) {
       // eslint-disable-next-line no-console
@@ -40,7 +43,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
           .addTo(currentMap);
       });
     }
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentMap, offers, currentOffer]);
 
   return (

@@ -39,7 +39,6 @@ describe('HOC: withMap', () => {
         <MainScreenWrapped
           city={cities[1]}
           isMainScreen
-          onLogoutHandler={jest.fn()}
           offers={mockOffers}
         >
           <p>This is Sorting component</p>
