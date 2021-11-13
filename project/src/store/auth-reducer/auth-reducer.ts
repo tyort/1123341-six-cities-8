@@ -5,7 +5,7 @@ import {AuthorizationStatus} from '../../const';
 
 export const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  email: null,
+  email: 'johndoo@NONAME.com',
 };
 
 const authReducer = createReducer(initialState, (builder) => {

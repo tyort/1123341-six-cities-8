@@ -1,5 +1,4 @@
 import {Switch, Route} from 'react-router-dom';
-import {MouseEvent} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {nanoid} from 'nanoid';
 // компоненты, хоки
@@ -12,9 +11,10 @@ import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
+import HeaderUserScreen from '../header-user/header-user';
+// Хок
 import withMap from '../../hocs/with-map/with-map';
 // из store
-import {logoutAction} from '../../store/api-actions';
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 // селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
@@ -42,7 +42,6 @@ function App(): JSX.Element {
   const allOffers = useSelector(getAllOffers);
   const sortedOffers = useSelector(getSortedOffersInCity);
 
-
   const dispatch = useDispatch();
 
   const onCityChoose = (cityName: CityName) => {
@@ -51,11 +50,6 @@ function App(): JSX.Element {
 
   const onSortChoose = (sortName: SortName) => {
     dispatch(changeSortNameAction(sortName));
-  };
-
-  const onLogout = (evt: MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
-    dispatch(logoutAction());
   };
 
   if (authIsUnknown(authorizationStatus) || !isDataLoaded) {
@@ -70,9 +64,7 @@ function App(): JSX.Element {
         <MainScreenWrapped
           city={city as City}
           isMainScreen
-          onLogoutHandler={onLogout}
           offers={sortedOffers}
-          authorizationStatus={authorizationStatus}
         >
           <CityScreen
             currentCity={city as City}
@@ -83,6 +75,7 @@ function App(): JSX.Element {
             currentSortName={currentSortName}
             onSortChoose={onSortChoose}
           />
+          <HeaderUserScreen/>
         </MainScreenWrapped>
       </Route>
       <PrivateRoute
@@ -102,7 +95,9 @@ function App(): JSX.Element {
           <PlaceOfferScreenWrapped
             currentOffer={offer}
             isMainScreen={false}
-          />
+          >
+            <HeaderUserScreen/>
+          </PlaceOfferScreenWrapped>
         </Route>
       ))}
       <Route>

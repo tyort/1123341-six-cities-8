@@ -1,14 +1,10 @@
-import {Link} from 'react-router-dom';
-import {PropsWithChildren, Children, MouseEvent} from 'react';
+import {PropsWithChildren, Children} from 'react';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
-import {AuthorizationStatus, AppRoute} from '../../const';
 
 type MainScreenProps = PropsWithChildren<{
-  authorizationStatus: AuthorizationStatus;
   offers: Offer[];
-  onLogoutHandler: (evt: MouseEvent<HTMLElement>) => void
   city: City;
   isMainScreen: boolean;
   renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
@@ -23,7 +19,7 @@ type MainScreenProps = PropsWithChildren<{
 function MainScreen(props: MainScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MainScreen');
-  const {authorizationStatus, onLogoutHandler, offers, city, isMainScreen, renderMap, renderCard, children} = props;
+  const {offers, city, isMainScreen, renderMap, renderCard, children} = props;
 
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
@@ -34,41 +30,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              {authorizationStatus === AuthorizationStatus.Auth
-                ?
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="/">
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    </a>
-                  </li>
-                  <li className="header__nav-item">
-                    <Link
-                      className="header__nav-link"
-                      to="/"
-                      onClick={onLogoutHandler}
-                    >
-                      <span className="header__signout">Sign out</span>
-                    </Link>
-                  </li>
-                </ul>
-                :
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    <Link
-                      className="header__nav-link header__nav-link--profile"
-                      to={AppRoute.SignIn}
-                    >
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
-                      </div>
-                      <span className="header__login">Sign in</span>
-                    </Link>
-                  </li>
-                </ul>}
-            </nav>
+            {mainChildren[2]}
           </div>
         </div>
       </header>
