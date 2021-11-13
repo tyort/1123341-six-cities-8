@@ -7,6 +7,7 @@ import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
+import NotPlacesScreen from '../not-places/not-places';
 import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
@@ -100,6 +101,11 @@ function App(): JSX.Element {
           </PlaceOfferScreenWrapped>
         </Route>
       ))}
+      <Route
+        path={AppRoute.NotPlaces}
+      >
+        <NotPlacesScreen/>
+      </Route>
       <Route>
         <NotFoundScreen/>
       </Route>
