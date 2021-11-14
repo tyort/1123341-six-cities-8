@@ -64,9 +64,9 @@ function OfferCard(props: CardScreenProps): JSX.Element {
               ? 'cities__image-wrapper'
               : 'near-places__image-wrapper'} place-card__image-wrapper`}
             >
-              <a href="/">
+              <Link onClick={(evt) => evt.preventDefault()} to="/">
                 <img className="place-card__image" src={`${preview_image}`} width="260" height="200" alt="Interior view"/>
-              </a>
+              </Link>
             </div>
             <div className="place-card__info">
               <div className="place-card__price-wrapper">
