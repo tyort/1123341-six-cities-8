@@ -60,6 +60,7 @@ export enum ActionName {
   ChangeFavorite = 'offer/isFavorite',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  SetEmail = 'user/setEmail',
   RedirectToRoute = 'app/redirectToRoute'
 }
 

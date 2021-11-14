@@ -26,6 +26,7 @@ function RatingScreen(props: RatingScreenProps): JSX.Element {
         return(
           <Fragment key={nanoid(10)}>
             <input
+              data-testid={`star-${index}`}
               className="form__rating-input visually-hidden"
               name="rating"
               value={realIndex}

@@ -3,10 +3,10 @@ import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction,
-  requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction} from './action';
-import {saveToken, dropToken, Token} from '../services/token';
+  requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction, setEmailAction} from './action';
+import {saveToken, dropToken, getToken} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
-import {AuthUserData} from '../types/auth-user-data';
+import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
@@ -26,6 +26,7 @@ export const fetchOffersAction = (): ThunkActionResult =>
 
 export const fetchFavoritesAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+
     const {data} = await api.get<Offer[]>(APIRoute.Favorite);
     dispatch(loadFavoritesAction(data));
   };
@@ -34,6 +35,8 @@ export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${offerId}`);
     dispatch(loadCommentsAction(data));
+    // eslint-disable-next-line no-console
+    console.log(getToken());
   };
 
 export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
@@ -46,7 +49,8 @@ export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get(APIRoute.Login);
+      dispatch(setEmailAction(data.email));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       toast.info(AUTH_FAIL_MESSAGE);
@@ -56,8 +60,9 @@ export const checkAuthAction = (): ThunkActionResult =>
 // Авторизация пользователя
 export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
+    saveToken(data.token);
+    dispatch(setEmailAction(data.email));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   };

@@ -38,10 +38,10 @@ const offersReducer = createReducer(initialState, (builder) => {
       state.sortName = SortName.Popular;
     })
     .addCase(changeSortNameAction, (state, action) => {
+      state.sortName = action.payload;
       state.currentOffers = state.sortName !== SortName.Popular
         ? sortOffers(state.currentOffers, action.payload, state.city as City)
         : sortOffers(state.allOffers, action.payload, state.city as City);
-      state.sortName = action.payload;
     })
     .addCase(loadOffersAction, (state, action) => {
       state.allOffers = action.payload;

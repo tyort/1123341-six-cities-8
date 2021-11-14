@@ -8,10 +8,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
   const [currentMap, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
-    // 1-ая прорисовка компонента: при mapRef.current === null && currentMap === null
-    // После прорисовки компонента mapRef.current !== null
+    // 1-ая прорисовка компонента: при mapRef === null && currentMap === null
+    // После прорисовки компонента mapRef !== null
     // Срабатывает useEffect, условие if выполняется, срабатывает setMap.
-    // 2-ая прорисовка компонента: при mapRef.current !== null && currentMap !== null
+    // 2-ая прорисовка компонента: при mapRef !== null && currentMap !== null
     // После прорисовки компонента данные НЕ меняются
     // useEffect вызывается, условие if НЕ выполняется, setMap НЕ срабатывает
     if (mapRef.current !== null && currentMap === null) {

@@ -1,7 +1,6 @@
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {nanoid} from 'nanoid';
-import browserHistory from '../../browser-history';
 // компоненты, хоки
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
@@ -12,13 +11,15 @@ import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading-screen/loading-screen';
+import HeaderUserScreen from '../header-user/header-user';
+// Хок
 import withMap from '../../hocs/with-map/with-map';
 // из store
 import {changeCityAction, changeSortNameAction} from '../../store/action';
 // селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getAllOffers, getCurrentCity, getCurrentSortName,
-  getAllCities, getOffersLoadStatus} from '../../store/offers-reducer/selectors';
+  getAllCities, getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 import {City} from '../../types/city';
 import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
@@ -39,6 +40,7 @@ function App(): JSX.Element {
   const currentSortName = useSelector(getCurrentSortName);
   const cities = useSelector(getAllCities);
   const allOffers = useSelector(getAllOffers);
+  const sortedOffers = useSelector(getSortedOffersInCity);
 
   const dispatch = useDispatch();
 
@@ -57,49 +59,51 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route exact path={AppRoute.Main}>
-          <MainScreenWrapped
-            city={city as City}
-            isMainScreen
+    <Switch>
+      <Route exact path={AppRoute.Main}>
+        <MainScreenWrapped
+          city={city as City}
+          isMainScreen
+          offers={sortedOffers}
+        >
+          <CityScreen
+            currentCity={city as City}
+            cities={cities}
+            onCityChoose={onCityChoose}
+          />
+          <SortingScreen
+            currentSortName={currentSortName}
+            onSortChoose={onSortChoose}
+          />
+          <HeaderUserScreen/>
+        </MainScreenWrapped>
+      </Route>
+      <PrivateRoute
+        exact
+        path={AppRoute.Favorites}
+      >
+        <FavoritesScreen/>
+      </PrivateRoute>
+      <Route
+        exact
+        path={AppRoute.SignIn}
+      >
+        <LoginScreen/>
+      </Route>
+      {allOffers.map((offer) => (
+        <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+          <PlaceOfferScreenWrapped
+            currentOffer={offer}
+            isMainScreen={false}
           >
-            <CityScreen
-              currentCity={city as City}
-              cities={cities}
-              onCityChoose={onCityChoose}
-            />
-            <SortingScreen
-              currentSortName={currentSortName}
-              onSortChoose={onSortChoose}
-            />
-          </MainScreenWrapped>
+            <HeaderUserScreen/>
+          </PlaceOfferScreenWrapped>
         </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.Favorites}
-        >
-          <FavoritesScreen/>
-        </PrivateRoute>
-        <Route
-          exact
-          path={AppRoute.SignIn}
-        >
-          <LoginScreen/>
-        </Route>
-        {allOffers.map((offer) => (
-          <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
-            <PlaceOfferScreenWrapped
-              currentOffer={offer}
-              isMainScreen={false}
-            />
-          </Route>
-        ))}
-        <Route>
-          <NotFoundScreen/>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      ))}
+      <Route>
+        <NotFoundScreen/>
+      </Route>
+    </Switch>
   );
 }
 
