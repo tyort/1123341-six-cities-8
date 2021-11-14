@@ -1,3 +1,4 @@
+import { months } from '../../const';
 import {Comment} from '../../types/comment';
 
 type ReviewScreenProps = {
@@ -7,6 +8,13 @@ type ReviewScreenProps = {
 function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
   const {review} = props;
   const percentRating = review.rating * 20;
+
+  const visualDate = (commentDate: string) => {
+    const date = new Date(commentDate);
+    const monthName = months.get(date.getMonth());
+    const year = date.getFullYear();
+    return `${monthName} ${year}`;
+  };
 
   return (
     <li className="reviews__item">
@@ -28,7 +36,7 @@ function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime={`${review.date}`}>{review.date}</time>
+        <time className="reviews__time" dateTime={`${review.date}`}>{visualDate(review.date)}</time>
       </div>
     </li>
   );
