@@ -21,19 +21,16 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
   const currentMap = useMap(mapRef, center);
 
-  // eslint-disable-next-line no-console
-  console.log(currentMap);
-
   useEffect(() => {
     if (currentMap) {
       // eslint-disable-next-line no-console
       console.log('Прорисовка маркеров');
+      // Странно, хоть offers меняется, но, добавив их в зависимости, возникнет ошибка.
       offers.forEach((offer) => {
-        const {location} = offer;
         leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           })
           .setIcon(
             currentOffer !== undefined && offer.id === currentOffer.id
@@ -44,7 +41,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
       });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentMap, offers, currentOffer]);
+  }, [currentMap, currentOffer]);
 
   return (
     <section

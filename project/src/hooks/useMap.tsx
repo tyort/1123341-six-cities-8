@@ -9,7 +9,6 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
 
   useEffect(() => {
     if (currentMap) {
-      currentMap.eachLayer((layer) => layer.remove());
       currentMap.remove();
       setMap(null);
     }
@@ -46,7 +45,8 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
       mapInstance.addLayer(layer); // подключаем слой к объекту карты
       setMap(mapInstance);
     }
-  }, [mapRef, currentMap, center]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapRef, currentMap]);
 
   return currentMap;
 }
