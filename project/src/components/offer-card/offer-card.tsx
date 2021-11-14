@@ -44,9 +44,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
             return;
           }
           evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
-          evt.currentTarget.classList.contains('place-card__bookmark-button--active')
-            ? dispatch(changeFavoriteAction({...offer, is_favorite: true}))
-            : dispatch(changeFavoriteAction({...offer, is_favorite: false}));
+          dispatch(changeFavoriteAction({...offer, is_favorite: !offer.is_favorite}));
         };
 
         return (
