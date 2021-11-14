@@ -7,17 +7,9 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
   console.log('useMap');
   const [currentMap, setMap] = useState<Map | null>(null);
 
-  const layer = new TileLayer(
-    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    },
-  );
-
   useEffect(() => {
     if (currentMap) {
-      currentMap.removeLayer(layer);
+      currentMap.eachLayer((layer) => layer.remove());
       currentMap.remove();
       setMap(null);
     }
@@ -42,10 +34,18 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
         },
         zoom: center.location.zoom,
       });
+
+      const layer = new TileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+      );
+
       mapInstance.addLayer(layer); // подключаем слой к объекту карты
       setMap(mapInstance);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapRef, currentMap, center]);
 
   return currentMap;
