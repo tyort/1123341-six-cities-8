@@ -4,7 +4,10 @@ import {Redirect} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {loginAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
+import {toast} from 'react-toastify';
 import Logo from '../logo/logo';
+
+const passPattern = /^(?=.*[A-Za-z])(?=.*\d)/i;
 
 function LoginScreen(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
@@ -16,11 +19,13 @@ function LoginScreen(): JSX.Element {
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null && passPattern.test(passwordRef.current.value)) {
       dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value,
       }));
+    } else {
+      toast.info('Пароль должен содержать хотя бы одну цифру и одну английскую букву');
     }
   };
 
