@@ -1,7 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux';
 import ReviewScreen from '../review/review';
 import RatingScreen from '../rating/rating';
-import {nanoid} from 'nanoid';
 import {AuthorizationStatus} from '../../const';
 import {useRef, FormEvent, useState, useEffect} from 'react';
 import {Offer} from '../../types/offer';
@@ -69,12 +68,9 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
-        {comments.map((review) => (
-          <ReviewScreen
-            key={nanoid(10)}
-            review={review}
-          />
-        ))}
+        <ReviewScreen
+          comments={comments}
+        />
       </ul>
       {authorizationStatus === AuthorizationStatus.Auth
       &&
