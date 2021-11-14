@@ -76,8 +76,12 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
-    dispatch(loadCommentsAction(data));
+    try {
+      const {data} = await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
+      dispatch(loadCommentsAction(data));
+    } catch {
+      toast.info('Произошла ошибка при отправке данных');
+    }
   };
 
 export const changeFavoriteAction = ({id, is_favorite}: Offer): ThunkActionResult =>

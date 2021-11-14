@@ -15,6 +15,7 @@ type ReviewsScreenProps = {
 
 function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   const {currentOffer} = props;
+  const [isBtnDisabled, setBtnDisabled] = useState<boolean>(true);
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const comments = useSelector(getOfferComments);
@@ -32,12 +33,30 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
         comment: commentTable.current.value,
         rating,
       }));
+
+      evt.currentTarget.reset();
+      setBtnDisabled(true);
+      setRating(null);
     }
   };
 
   const onRateChange = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setRating(Number(evt.currentTarget.value));
+
+    if (document.querySelector('textarea')?.checkValidity() && document.querySelector('textarea')?.value !== '') {
+      setBtnDisabled(false);
+    }
+  };
+
+  const onDisbledChange = (evt: FormEvent<HTMLTextAreaElement>) => {
+    evt.preventDefault();
+
+    if (evt.currentTarget.validity.valid && isBtnDisabled && rating !== null) {
+      setBtnDisabled(false);
+    } else if (!evt.currentTarget.validity.valid && !isBtnDisabled) {
+      setBtnDisabled(true);
+    }
   };
 
   return (
@@ -64,18 +83,23 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
           onRateChange={onRateChange}
         />
         <textarea
+          maxLength={300}
+          minLength={50}
           ref={commentTable}
           className="reviews__textarea form__textarea"
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
+          onChange={onDisbledChange}
         >
         </textarea>
         <div className="reviews__button-wrapper">
           <p className="reviews__help">
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit">Submit</button>
+          {isBtnDisabled
+            ? <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+            : <button className="reviews__submit form__submit button" type="submit">Submit</button>}
         </div>
       </form>}
     </section>
