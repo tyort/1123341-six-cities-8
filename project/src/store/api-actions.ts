@@ -60,11 +60,15 @@ export const checkAuthAction = (): ThunkActionResult =>
 // Авторизация пользователя
 export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
-    saveToken(data.token);
-    dispatch(setEmailAction(data.email));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    try {
+      const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(setEmailAction(data.email));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      toast.info('Введите корректный email');
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>
