@@ -41,6 +41,7 @@ function SortingScreen(props: SortingProps): JSX.Element {
             onClick={(evt) => {
               evt.preventDefault();
               onSortChoose(evt.currentTarget.dataset.sortName as SortName);
+              (evt.currentTarget.parentElement as HTMLElement).classList.toggle('places__options--opened', false);
             }}
           >{name}
           </li>
