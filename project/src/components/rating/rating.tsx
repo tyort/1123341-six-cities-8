@@ -12,10 +12,11 @@ const starsStatuses = new Map([
 
 type RatingScreenProps = {
   onRateChange: (evt: FormEvent<HTMLInputElement>) => void;
+  isDisabled: boolean;
 }
 
 function RatingScreen(props: RatingScreenProps): JSX.Element {
-  const {onRateChange} = props;
+  const {isDisabled, onRateChange} = props;
   const stars = new Array(STARS_COUNT).fill('');
 
   return (
@@ -34,7 +35,12 @@ function RatingScreen(props: RatingScreenProps): JSX.Element {
               type="radio"
               onChange={onRateChange}
             />
-            <label htmlFor={`${realIndex}-stars`} className="reviews__rating-label form__rating-label" title={`${starsStatuses.get(realIndex)}`}>
+            <label
+              htmlFor={`${realIndex}-stars`}
+              className="reviews__rating-label form__rating-label"
+              title={`${starsStatuses.get(realIndex)}`}
+              style={isDisabled ? { pointerEvents: 'none' } : { pointerEvents: 'auto' }}
+            >
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>

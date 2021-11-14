@@ -3,7 +3,7 @@ import ReviewScreen from '../review/review';
 import RatingScreen from '../rating/rating';
 import {nanoid} from 'nanoid';
 import {AuthorizationStatus} from '../../const';
-import {useRef, FormEvent, useState} from 'react';
+import {useRef, FormEvent, useState, useEffect} from 'react';
 import {Offer} from '../../types/offer';
 import {setCommentAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
@@ -16,9 +16,14 @@ type ReviewsScreenProps = {
 function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   const {currentOffer} = props;
   const [isBtnDisabled, setBtnDisabled] = useState<boolean>(true);
+  const [isFormDisabled, setFormDisabled] = useState<boolean>(false);
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const comments = useSelector(getOfferComments);
+
+  useEffect(() => {
+    setFormDisabled(false);
+  }, [comments]);
 
   const dispatch = useDispatch();
 
@@ -28,6 +33,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
+      setFormDisabled(true);
       dispatch(setCommentAction({
         offerId: currentOffer.id as number,
         comment: commentTable.current.value,
@@ -49,7 +55,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
     }
   };
 
-  const onDisbledChange = (evt: FormEvent<HTMLTextAreaElement>) => {
+  const onTextareaChange = (evt: FormEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
 
     if (evt.currentTarget.validity.valid && isBtnDisabled && rating !== null) {
@@ -81,6 +87,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <RatingScreen
           onRateChange={onRateChange}
+          isDisabled={isFormDisabled}
         />
         <textarea
           maxLength={300}
@@ -90,7 +97,8 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          onChange={onDisbledChange}
+          onChange={onTextareaChange}
+          disabled={isFormDisabled}
         >
         </textarea>
         <div className="reviews__button-wrapper">
