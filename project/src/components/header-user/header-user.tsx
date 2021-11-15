@@ -33,7 +33,7 @@ function HeaderScreen(): JSX.Element {
           <li className="header__nav-item">
             <Link
               className="header__nav-link"
-              to="/"
+              to={AppRoute.Main}
               onClick={logOutClickHandler}
             >
               <span className="header__signout">Sign out</span>

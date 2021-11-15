@@ -66,7 +66,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "LoginScreen" when authorised user navigate to "/login" url', () => {
-    history.push('/login');
+    history.push(AppRoute.SignIn);
     render(fakeApp);
     expect(screen.getByText(new RegExp(`${mockOffers.length} places to stay in ${cities[2].name}`, 'i'))).toBeInTheDocument();
   });
@@ -94,7 +94,7 @@ describe('Application Routing', () => {
   });
 
   it('should render "PlaceOfferScreenWrapped" when user navigate to /offer/:offerId', async () => {
-    history.push(`/offer/${mockOffers[0].id}`);
+    history.push(`${AppRoute.OfferPostfix}${mockOffers[0].id}`);
     render(fakeApp);
 
     await waitFor(() => {

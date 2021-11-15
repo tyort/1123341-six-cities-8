@@ -92,7 +92,7 @@ function App(): JSX.Element {
         <LoginScreen/>
       </Route>
       {allOffers.map((offer) => (
-        <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+        <Route key={nanoid(10)} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
           <PlaceOfferScreenWrapped
             currentOffer={offer}
             isMainScreen={false}
@@ -102,7 +102,7 @@ function App(): JSX.Element {
         </Route>
       ))}
       <Route
-        path={AppRoute.NotPlaces}
+        path={AppRoute.OfferPostfix}
       >
         <NotPlacesScreen/>
       </Route>

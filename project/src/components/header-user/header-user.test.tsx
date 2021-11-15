@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {Router, Switch, Route, BrowserRouter} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import HeaderScreen from './header-user';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
@@ -42,10 +42,10 @@ describe('Component: HeaderScreen', () => {
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            <Route path="/" exact>
+            <Route path={AppRoute.Main} exact>
               <HeaderScreen/>
             </Route>
-            <Route path="/login" exact>
+            <Route path={AppRoute.SignIn} exact>
               <h1>You have to be authorised</h1>
             </Route>
           </Switch>

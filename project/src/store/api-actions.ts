@@ -10,6 +10,9 @@ import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
 
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+const EMAIL_FAIL_MESSAGE = 'Введите корректный email';
+const POST_DATA_FAIL_MESSAGE = 'Произошла ошибка при отправке данных';
+const NEARBY_AS_POSTFIX = 'nearby';
 
 // ThunkActionResult - расширенный нами ThunkAction(middleware) от redux-thunk, возвращающие промис
 // async (dispatch, _getState, api):...... - это экшн, только вместо объекта функция
@@ -41,7 +44,7 @@ export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
 
 export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/${NEARBY_AS_POSTFIX}`);
     dispatch(loadNearbyAction(data));
   };
 
@@ -67,7 +70,7 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
-      toast.info('Введите корректный email');
+      toast.info(EMAIL_FAIL_MESSAGE);
     }
   };
 
@@ -84,7 +87,7 @@ export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkA
       const {data} = await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
       dispatch(loadCommentsAction(data));
     } catch {
-      toast.info('Произошла ошибка при отправке данных');
+      toast.info(POST_DATA_FAIL_MESSAGE);
     }
   };
 
