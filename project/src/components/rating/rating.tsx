@@ -13,10 +13,11 @@ const starsStatuses = new Map([
 type RatingScreenProps = {
   onRateChange: (evt: FormEvent<HTMLInputElement>) => void;
   isDisabled: boolean;
+  rating: number | null;
 }
 
 function RatingScreen(props: RatingScreenProps): JSX.Element {
-  const {isDisabled, onRateChange} = props;
+  const {isDisabled, onRateChange, rating} = props;
   const stars = new Array(STARS_COUNT).fill('');
 
   return (
@@ -34,6 +35,7 @@ function RatingScreen(props: RatingScreenProps): JSX.Element {
               id={`${realIndex}-stars`}
               type="radio"
               onChange={onRateChange}
+              checked={rating === realIndex && true}
             />
             <label
               htmlFor={`${realIndex}-stars`}

@@ -84,6 +84,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
         <RatingScreen
           onRateChange={onRateChange}
           isDisabled={isFormDisabled}
+          rating={rating}
         />
         <textarea
           maxLength={300}
