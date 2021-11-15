@@ -1,21 +1,23 @@
 import {render, screen} from '@testing-library/react';
 import {BrowserRouter} from 'react-router-dom';
 import ReviewScreen from './review';
-import {makeFakeComment} from '../../utils/mocks';
+import {makeFakeComments} from '../../utils/mocks';
 
-const mockComment = makeFakeComment();
+const mockComments = makeFakeComments();
 
 describe('Component: ReviewScreen', () => {
   it('should render "ReviewScreen" when user navigate to specific offer url', () => {
     render(
       <BrowserRouter>
         <ReviewScreen
-          review={mockComment}
+          comments={mockComments}
         />
       </BrowserRouter>,
     );
 
-    expect(screen.getByText(new RegExp(`${mockComment.user.name}`, 'i'))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`${mockComment.comment}`, 'i'))).toBeInTheDocument();
+    mockComments.forEach((comment) => {
+      expect(screen.getByText(new RegExp(`${comment.user.name}`, 'i'))).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(`${comment.comment}`, 'i'))).toBeInTheDocument();
+    });
   });
 });

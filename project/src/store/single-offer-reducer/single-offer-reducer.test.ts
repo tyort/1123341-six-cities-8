@@ -2,8 +2,14 @@ import {singleOfferReducer, initialState} from './single-offer-reducer';
 import {SingleOfferState} from '../../types/state';
 import {loadCommentsAction, loadNearbyAction} from '../action';
 import {makeFakeComments, makeFakeOffers} from '../../utils/mocks';
+import {Comment} from '../../types/comment';
 
-const mockFakeComments = makeFakeComments();
+const sortedComments = (comments: Comment[]): Comment[] => comments
+  .slice()
+  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+  .slice(0, 10);
+
+const mockFakeComments = sortedComments(makeFakeComments());
 const mockFakeOffers = makeFakeOffers();
 
 describe('Reducer: singleOfferReducer', () => {

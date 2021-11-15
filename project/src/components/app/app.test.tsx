@@ -103,4 +103,13 @@ describe('Application Routing', () => {
       expect(screen.getAllByText(new RegExp(mockOffers[0].title, 'i'))).toBeInstanceOf(Array);
     });
   });
+
+  it('should render "NotPlacesScreen" when user navigate to non-existent offer', async () => {
+    history.push('/offer/non-existent-offer');
+    render(fakeApp);
+
+    await waitFor(() => {
+      expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
+    });
+  });
 });
