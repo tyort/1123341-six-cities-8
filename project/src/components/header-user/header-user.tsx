@@ -13,7 +13,7 @@ function HeaderScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const onLogout = (evt: MouseEvent<HTMLElement>) => {
+  const logOutClickHandler = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -34,7 +34,7 @@ function HeaderScreen(): JSX.Element {
             <Link
               className="header__nav-link"
               to="/"
-              onClick={onLogout}
+              onClick={logOutClickHandler}
             >
               <span className="header__signout">Sign out</span>
             </Link>

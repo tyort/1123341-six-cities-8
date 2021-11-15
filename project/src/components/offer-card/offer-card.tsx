@@ -10,14 +10,14 @@ import {AuthorizationStatus, AppRoute} from '../../const';
 
 type CardScreenProps = {
   offers: Offer[];
-  onCardMainHover: (hoveredOffer: Offer | undefined) => void;
+  cardHoverHandler: (hoveredOffer: Offer | undefined) => void;
   isMainScreen: boolean;
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('OfferCard');
-  const {offers, onCardMainHover, isMainScreen} = props;
+  const {offers, cardHoverHandler, isMainScreen} = props;
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
 
@@ -33,8 +33,8 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         const hoverHandler = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
           evt.type === 'mouseenter'
-            ? onCardMainHover(offer)
-            : onCardMainHover(undefined);
+            ? cardHoverHandler(offer)
+            : cardHoverHandler(undefined);
         };
 
         const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {

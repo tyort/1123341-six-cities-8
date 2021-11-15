@@ -5,14 +5,14 @@ import {cities} from '../../utils/mocks';
 import userEvent from '@testing-library/user-event';
 
 describe('Component: CityScreen', () => {
-  const onCityChoose = jest.fn();
+  const cityChangeHandler = jest.fn();
 
   it('should render "CityScreen" when user navigate to "/main" url', () => {
     render(
       <BrowserRouter>
         <CityScreen
           currentCity={cities[2]}
-          onCityChoose={onCityChoose}
+          cityChangeHandler={cityChangeHandler}
           cities={cities}
         />
       </BrowserRouter>,
@@ -24,6 +24,6 @@ describe('Component: CityScreen', () => {
       .toHaveLength(6);
     screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i)
       .forEach((city) => userEvent.click(city));
-    expect(onCityChoose).toBeCalledTimes(6);
+    expect(cityChangeHandler).toBeCalledTimes(6);
   });
 });

@@ -30,7 +30,7 @@ const store = mockStore({
 
 describe('Component: OfferCardScreen', () => {
   it('should render several "OfferCardScreen" when user navigate to "/main" url', async () => {
-    const onCardMainHover = jest.fn();
+    const cardHoverHandler = jest.fn();
 
     render(
       <Provider store={store}>
@@ -40,7 +40,7 @@ describe('Component: OfferCardScreen', () => {
               <OfferCardScreen
                 offers={[mockOffer]}
                 isMainScreen
-                onCardMainHover={onCardMainHover}
+                cardHoverHandler={cardHoverHandler}
               />
             </Route>
             <Route exact path={`/offer/${mockOffer.id}`}>
@@ -53,13 +53,13 @@ describe('Component: OfferCardScreen', () => {
 
     expect(screen.getByText(new RegExp(mockOffer.title, 'i'))).toBeInTheDocument();
 
-    expect(onCardMainHover).not.toBeCalled();
+    expect(cardHoverHandler).not.toBeCalled();
     userEvent.hover(screen.getByTestId(/offer-article/i));
-    expect(onCardMainHover).toBeCalledTimes(1);
+    expect(cardHoverHandler).toBeCalledTimes(1);
     userEvent.unhover(screen.getByTestId(/offer-article/i));
-    expect(onCardMainHover).toBeCalledTimes(2);
+    expect(cardHoverHandler).toBeCalledTimes(2);
     userEvent.hover(screen.getByTestId(/offer-article/i));
-    expect(onCardMainHover).toBeCalledTimes(3);
+    expect(cardHoverHandler).toBeCalledTimes(3);
 
     expect(screen.queryByText(/This is place offer screen/i)).not.toBeInTheDocument();
     userEvent.click(screen.getByTestId('offer-link'));

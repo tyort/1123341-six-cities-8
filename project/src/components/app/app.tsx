@@ -45,11 +45,11 @@ function App(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const onCityChoose = (cityName: CityName) => {
+  const cityChangeHandler = (cityName: CityName) => {
     dispatch(changeCityAction(cityName));
   };
 
-  const onSortChoose = (sortName: SortName) => {
+  const sortNameChangeHandler = (sortName: SortName) => {
     dispatch(changeSortNameAction(sortName));
   };
 
@@ -70,11 +70,11 @@ function App(): JSX.Element {
           <CityScreen
             currentCity={city as City}
             cities={cities}
-            onCityChoose={onCityChoose}
+            cityChangeHandler={cityChangeHandler}
           />
           <SortingScreen
             currentSortName={currentSortName}
-            onSortChoose={onSortChoose}
+            sortNameChangeHandler={sortNameChangeHandler}
           />
           <HeaderUserScreen/>
         </MainScreenWrapped>

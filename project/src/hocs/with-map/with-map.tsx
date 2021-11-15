@@ -48,7 +48,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           // eslint-disable-next-line no-console
           console.log('renderCard');
 
-          const onCardMainHover = (hoveredOffer: Offer | undefined): void => {
+          const cardHoverHandler = (hoveredOffer: Offer | undefined): void => {
             isMainScreen && setHoveredCard(hoveredOffer);
           };
 
@@ -56,7 +56,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
             <OfferCard
               offers={offers}
               isMainScreen={isMainScreen}
-              onCardMainHover={onCardMainHover}
+              cardHoverHandler={cardHoverHandler}
             />
           );
         }}

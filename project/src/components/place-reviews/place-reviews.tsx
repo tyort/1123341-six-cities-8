@@ -29,7 +29,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
   const commentTable = useRef<HTMLTextAreaElement | null>(null);
   const [rating, setRating] = useState<number | null>(null);
 
-  const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
+  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
       setFormDisabled(true);
@@ -45,7 +45,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
     }
   };
 
-  const onRateChange = (evt: FormEvent<HTMLInputElement>) => {
+  const rateChangeHandler = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setRating(Number(evt.currentTarget.value));
 
@@ -54,7 +54,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
     }
   };
 
-  const onTextareaChange = (evt: FormEvent<HTMLTextAreaElement>) => {
+  const textChangeHandler = (evt: FormEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
 
     if (evt.currentTarget.validity.valid && isBtnDisabled && rating !== null) {
@@ -78,11 +78,11 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
         className="reviews__form form"
         action="#"
         method="post"
-        onSubmit={onSubmitHandle}
+        onSubmit={formSubmitHandler}
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <RatingScreen
-          onRateChange={onRateChange}
+          rateChangeHandler={rateChangeHandler}
           isDisabled={isFormDisabled}
           rating={rating}
         />
@@ -94,7 +94,7 @@ function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          onChange={onTextareaChange}
+          onChange={textChangeHandler}
           disabled={isFormDisabled}
         >
         </textarea>
