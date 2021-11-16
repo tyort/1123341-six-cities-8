@@ -10,14 +10,14 @@ import {AuthorizationStatus, AppRoute} from '../../const';
 
 type CardScreenProps = {
   offers: Offer[];
-  onCardMainHover: (hoveredOffer: Offer | undefined) => void;
+  cardHoverHandler: (hoveredOffer: Offer | undefined) => void;
   isMainScreen: boolean;
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('OfferCard');
-  const {offers, onCardMainHover, isMainScreen} = props;
+  const {offers, cardHoverHandler, isMainScreen} = props;
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
 
@@ -26,15 +26,15 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   return (
     <Fragment>
       {offers.map((offer) => {
-        const {price, rating, title, type, preview_image, is_favorite} = offer;
+        const {price, rating, title, type, preview_image, is_favorite, is_premium} = offer;
         const percentRating = rating * 20;
 
 
         const hoverHandler = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
           evt.type === 'mouseenter'
-            ? onCardMainHover(offer)
-            : onCardMainHover(undefined);
+            ? cardHoverHandler(offer)
+            : cardHoverHandler(undefined);
         };
 
         const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {
@@ -44,9 +44,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
             return;
           }
           evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
-          evt.currentTarget.classList.contains('place-card__bookmark-button--active')
-            ? dispatch(changeFavoriteAction({...offer, is_favorite: true}))
-            : dispatch(changeFavoriteAction({...offer, is_favorite: false}));
+          dispatch(changeFavoriteAction({...offer, is_favorite: !offer.is_favorite}));
         };
 
         return (
@@ -57,13 +55,18 @@ function OfferCard(props: CardScreenProps): JSX.Element {
             onMouseEnter={hoverHandler}
             onMouseLeave={hoverHandler}
           >
+            {is_premium
+            &&
+            <div className="place-card__mark">
+              <span>Premium</span>
+            </div>}
             <div className={`${isMainScreen
               ? 'cities__image-wrapper'
               : 'near-places__image-wrapper'} place-card__image-wrapper`}
             >
-              <a href="/">
+              <Link onClick={(evt) => evt.preventDefault()} to="/">
                 <img className="place-card__image" src={`${preview_image}`} width="260" height="200" alt="Interior view"/>
-              </a>
+              </Link>
             </div>
             <div className="place-card__info">
               <div className="place-card__price-wrapper">

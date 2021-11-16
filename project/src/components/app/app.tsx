@@ -7,6 +7,7 @@ import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
+import NotPlacesScreen from '../not-places/not-places';
 import PrivateRoute from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
@@ -44,11 +45,11 @@ function App(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const onCityChoose = (cityName: CityName) => {
+  const cityChangeHandler = (cityName: CityName) => {
     dispatch(changeCityAction(cityName));
   };
 
-  const onSortChoose = (sortName: SortName) => {
+  const sortNameChangeHandler = (sortName: SortName) => {
     dispatch(changeSortNameAction(sortName));
   };
 
@@ -69,11 +70,11 @@ function App(): JSX.Element {
           <CityScreen
             currentCity={city as City}
             cities={cities}
-            onCityChoose={onCityChoose}
+            cityChangeHandler={cityChangeHandler}
           />
           <SortingScreen
             currentSortName={currentSortName}
-            onSortChoose={onSortChoose}
+            sortNameChangeHandler={sortNameChangeHandler}
           />
           <HeaderUserScreen/>
         </MainScreenWrapped>
@@ -91,7 +92,7 @@ function App(): JSX.Element {
         <LoginScreen/>
       </Route>
       {allOffers.map((offer) => (
-        <Route key={nanoid(10)} exact path={`/offer/${offer.id}`}>
+        <Route key={nanoid(10)} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
           <PlaceOfferScreenWrapped
             currentOffer={offer}
             isMainScreen={false}
@@ -100,6 +101,11 @@ function App(): JSX.Element {
           </PlaceOfferScreenWrapped>
         </Route>
       ))}
+      <Route
+        path={AppRoute.OfferPostfix}
+      >
+        <NotPlacesScreen/>
+      </Route>
       <Route>
         <NotFoundScreen/>
       </Route>

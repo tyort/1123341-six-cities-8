@@ -8,6 +8,14 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
   const [currentMap, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
+    if (currentMap) {
+      currentMap.remove();
+      setMap(null);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [center]);
+
+  useEffect(() => {
     // 1-ая прорисовка компонента: при mapRef === null && currentMap === null
     // После прорисовки компонента mapRef !== null
     // Срабатывает useEffect, условие if выполняется, срабатывает setMap.
@@ -26,7 +34,6 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
         zoom: center.location.zoom,
       });
 
-      // Подключаем определенный слой карты
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
         {
@@ -36,10 +43,10 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, center: City): Map
       );
 
       mapInstance.addLayer(layer); // подключаем слой к объекту карты
-
       setMap(mapInstance);
     }
-  }, [mapRef, currentMap, center]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapRef, currentMap]);
 
   return currentMap;
 }

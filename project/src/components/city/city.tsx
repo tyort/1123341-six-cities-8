@@ -4,14 +4,14 @@ import {nanoid} from 'nanoid';
 
 type CityScreenProps = {
   cities: City[];
-  onCityChoose: (cityTitle: CityName) => void;
+  cityChangeHandler: (cityTitle: CityName) => void;
   currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('CityScreen');
-  const {cities, currentCity, onCityChoose} = props;
+  const {cities, currentCity, cityChangeHandler} = props;
 
   return (
     <ul className="locations__list tabs__list">
@@ -22,7 +22,7 @@ function CityScreen(props: CityScreenProps): JSX.Element {
           data-city={city.name}
           onClick={(evt) => {
             evt.preventDefault();
-            onCityChoose(evt.currentTarget.dataset.city as CityName);
+            cityChangeHandler(evt.currentTarget.dataset.city as CityName);
           }}
         >
           <a

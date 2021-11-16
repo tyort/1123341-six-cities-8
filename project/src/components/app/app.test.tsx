@@ -65,20 +65,10 @@ describe('Application Routing', () => {
       .toHaveLength(7);
   });
 
-  it('should render "LoginScreen" when user navigate to "/login"', () => {
+  it('should render "LoginScreen" when authorised user navigate to "/login" url', () => {
     history.push(AppRoute.SignIn);
     render(fakeApp);
-
-    expect(screen.getByText(/Amsterdam/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Sign in/i)).toHaveLength(2);
-    expect(screen.getAllByText(/Sign in/i)).toBeInstanceOf(Array);
-    expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();
-
-    userEvent.type(screen.getByTestId('email'), 'keks');
-    userEvent.type(screen.getByTestId('password'), '123456');
-
-    expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${mockOffers.length} places to stay in ${cities[2].name}`, 'i'))).toBeInTheDocument();
   });
 
   it('should render private "FavoritesScreen" when user navigate to "/favorites"', async () => {
@@ -104,13 +94,22 @@ describe('Application Routing', () => {
   });
 
   it('should render "PlaceOfferScreenWrapped" when user navigate to /offer/:offerId', async () => {
-    history.push(`/offer/${mockOffers[0].id}`);
+    history.push(`${AppRoute.OfferPostfix}${mockOffers[0].id}`);
     render(fakeApp);
 
     await waitFor(() => {
       expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
       expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
       expect(screen.getAllByText(new RegExp(mockOffers[0].title, 'i'))).toBeInstanceOf(Array);
+    });
+  });
+
+  it('should render "NotPlacesScreen" when user navigate to non-existent offer', async () => {
+    history.push('/offer/non-existent-offer');
+    render(fakeApp);
+
+    await waitFor(() => {
+      expect(screen.getByText(/No places to stay available/i)).toBeInTheDocument();
     });
   });
 });

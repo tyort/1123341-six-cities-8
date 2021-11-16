@@ -1,24 +1,39 @@
 import {useRef, FormEvent} from 'react';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {Redirect} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {loginAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
+import {toast} from 'react-toastify';
 import Logo from '../logo/logo';
 
+const passPattern = /^(?=.*[A-Za-z])(?=.*\d)/i;
+
 function LoginScreen(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
+  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null && passPattern.test(passwordRef.current.value)) {
       dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value,
       }));
+    } else {
+      toast.info('Пароль должен содержать хотя бы одну цифру и одну английскую букву');
     }
   };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return (
+      <Redirect to={AppRoute.Main} />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -37,7 +52,7 @@ function LoginScreen(): JSX.Element {
             <form
               className="login__form form"
               action=""
-              onSubmit={onSubmitHandle}
+              onSubmit={formSubmitHandler}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>

@@ -1,15 +1,22 @@
 /* eslint-disable camelcase */
-import {useEffect, Fragment} from 'react';
+import {useEffect, Fragment, MouseEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchFavoritesAction} from '../../store/api-actions';
+import {changeFavoriteAction, fetchFavoritesAction} from '../../store/api-actions';
 import {getAllOffers} from '../../store/offers-reducer/selectors';
 import HeaderUserScreen from '../header-user/header-user';
+import FavoritesEmptyScreen from '../favorites-empty/favorites-empty';
 import {nanoid} from 'nanoid';
+import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
+import { useHistory } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { Offer } from '../../types/offer';
 
 function FavoritesScreen(): JSX.Element {
   const offers = useSelector(getAllOffers);
   const favoriteOffers = offers.filter((offer) => offer.is_favorite === true);
   const cities = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -17,6 +24,20 @@ function FavoritesScreen(): JSX.Element {
     dispatch(fetchFavoritesAction());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const buttonClickHandler = (offer: Offer) => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      history.push(AppRoute.SignIn);
+      return;
+    }
+    dispatch(changeFavoriteAction({...offer, is_favorite: !offer.is_favorite}));
+  };
+
+  if (favoriteOffers.length === 0) {
+    return (
+      <FavoritesEmptyScreen/>
+    );
+  }
 
   return (
     <Fragment>
@@ -66,7 +87,15 @@ function FavoritesScreen(): JSX.Element {
                                   <b className="place-card__price-value">&euro;{price}</b>
                                   <span className="place-card__price-text">&#47;&nbsp;night</span>
                                 </div>
-                                <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+                                <button
+                                  className="place-card__bookmark-button place-card__bookmark-button--active button"
+                                  type="button"
+                                  onClick={(evt: MouseEvent<HTMLButtonElement>) => {
+                                    evt.preventDefault();
+                                    evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
+                                    buttonClickHandler(offer);
+                                  }}
+                                >
                                   <svg className="place-card__bookmark-icon" width="18" height="19">
                                     <use xlinkHref="#icon-bookmark"></use>
                                   </svg>

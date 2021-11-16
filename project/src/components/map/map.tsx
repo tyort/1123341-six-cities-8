@@ -25,12 +25,12 @@ function MapScreen(props: MapScreenProps): JSX.Element {
     if (currentMap) {
       // eslint-disable-next-line no-console
       console.log('Прорисовка маркеров');
+      // Странно, хоть offers меняется, но, добавив их в зависимости, возникнет ошибка.
       offers.forEach((offer) => {
-        const {location} = offer;
         leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           })
           .setIcon(
             currentOffer !== undefined && offer.id === currentOffer.id
@@ -40,8 +40,8 @@ function MapScreen(props: MapScreenProps): JSX.Element {
           .addTo(currentMap);
       });
     }
-
-  }, [currentMap, offers, currentOffer]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentMap, currentOffer]);
 
   return (
     <section

@@ -5,12 +5,12 @@ import SortingScreen from './sorting';
 import {SortName} from '../../const';
 describe('Component: SortingScreen', () => {
   it('should render "SortingScreen" when user navigate to "/main" url', () => {
-    const onSortChoose = jest.fn();
+    const sortNameChangeHandler = jest.fn();
     render(
       <BrowserRouter>
         <SortingScreen
           currentSortName={SortName.PriceAscending}
-          onSortChoose={onSortChoose}
+          sortNameChangeHandler={sortNameChangeHandler}
         />
       </BrowserRouter>,
     );
@@ -20,7 +20,7 @@ describe('Component: SortingScreen', () => {
     expect(screen.getAllByText(/Price: low to high/i)).toHaveLength(2);
 
     userEvent.click(screen.getByText(/Popular/i));
-    expect(onSortChoose).toBeCalled();
+    expect(sortNameChangeHandler).toBeCalled();
 
     userEvent.click(screen.getByTestId(/option-open/i));
     expect(screen.getByTestId(/sort-list/i)).toHaveClass('places__options--opened');
