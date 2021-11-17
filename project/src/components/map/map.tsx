@@ -4,12 +4,12 @@ import {useRef, useEffect} from 'react';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import useMap from '../../hooks/useMap';
-import {currentCustomIcon, defaultCustomIcon} from '../../const';
+import {currentCustomIcon, defaultCustomIcon, ScreenType} from '../../const';
 
 type MapScreenProps = {
   offers: Offer[];
   center: City;
-  isMainScreen: boolean;
+  screenType: ScreenType;
   currentOffer: Offer | undefined;
 }
 
@@ -17,7 +17,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MapScreen');
   // currentOffer - выбранная карточка на главной странице и представленная в place-offer
-  const {offers, center, isMainScreen, currentOffer} = props;
+  const {offers, center, screenType, currentOffer} = props;
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
   const currentMap = useMap(mapRef, center);
 
@@ -45,7 +45,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
 
   return (
     <section
-      className={`${isMainScreen ? 'cities__map' : 'property__map'} map`}
+      className={`${screenType===ScreenType.Main ? 'cities__map' : 'property__map'} map`}
       style={{height: '700px'}}
       ref={mapRef}
     >

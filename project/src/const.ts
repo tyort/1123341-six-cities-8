@@ -50,6 +50,12 @@ export const months = new Map([
   [11, 'December'],
 ]);
 
+export enum ScreenType {
+  Main = 'Main screen',
+  Offer = 'Offer screen',
+  Favorites = 'Favorites screen'
+}
+
 export enum SortName {
   Popular = 'Popular',
   PriceAscending = 'Price: low to high',

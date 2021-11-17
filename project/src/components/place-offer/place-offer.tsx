@@ -8,21 +8,21 @@ import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
 import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
+import {ScreenType} from '../../const';
 
 type OfferScreenProps = PropsWithChildren<{
   currentOffer: Offer;
-  isMainScreen: boolean;
-  renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
+  renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
   renderMap: (
     currentOffer: Offer,
-    isMainScreen: boolean,
+    screenType: ScreenType,
     offers: Offer[],
     center: City,
   ) => JSX.Element;
 }>
 
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
-  const {currentOffer, isMainScreen, renderMap, renderCard, children} = props;
+  const {currentOffer, renderMap, renderCard, children} = props;
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults} = currentOffer;
   const percentRating = rating * 20;
@@ -134,11 +134,10 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
               />
             </div>
           </div>
-          {renderMap(currentOffer, isMainScreen, [...nearbyOffers, currentOffer], currentOffer.city)}
+          {renderMap(currentOffer, ScreenType.Offer, [...nearbyOffers, currentOffer], currentOffer.city)}
         </section>
         <PlaceNearbyScreen
           offers={nearbyOffers}
-          isMainScreen={isMainScreen}
           renderCard={renderCard}
         />
       </main>

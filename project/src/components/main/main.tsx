@@ -2,15 +2,16 @@ import {PropsWithChildren, Children} from 'react';
 import Logo from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
+import {ScreenType} from '../../const';
+
 
 type MainScreenProps = PropsWithChildren<{
   offers: Offer[];
   city: City;
-  isMainScreen: boolean;
-  renderCard: (offers: Offer[], isMainScreen: boolean) => JSX.Element;
+  renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
   renderMap: (
     currentOffer: Offer | undefined,
-    isMainScreen: boolean,
+    screenType: ScreenType,
     offers: Offer[],
     center: City,
   ) => JSX.Element;
@@ -19,7 +20,7 @@ type MainScreenProps = PropsWithChildren<{
 function MainScreen(props: MainScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('MainScreen');
-  const {offers, city, isMainScreen, renderMap, renderCard, children} = props;
+  const {offers, city, renderMap, renderCard, children} = props;
 
   // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
@@ -62,11 +63,11 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 <b className="places__found">{offers.length} {offers.length === 1 ? 'place' : 'places'} to stay in {city.name}</b>
                 {mainChildren[1]}
                 <div className="cities__places-list places__list tabs__content">
-                  {renderCard(offers, isMainScreen)}
+                  {renderCard(offers, ScreenType.Main)}
                 </div>
               </section>
               <div className="cities__right-section">
-                {renderMap(undefined, isMainScreen, offers, city)}
+                {renderMap(undefined, ScreenType.Main, offers, city)}
               </div>
             </div>}
 

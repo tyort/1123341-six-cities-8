@@ -4,15 +4,16 @@ import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
+import {ScreenType} from '../../const';
 
 type HOCProps = {
   renderMap: (
     currentOffer: Offer | undefined,
-    isMainScreen: boolean,
+    screenType: ScreenType,
     offers: Offer[],
     center: City,
   ) => void
-  renderCard: (offers: Offer[], isMainScreen: boolean) => void
+  renderCard: (offers: Offer[], screenType: ScreenType) => void
 };
 
 function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HOCProps>> {
@@ -27,7 +28,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
 
         renderMap={(
           currentOffer: Offer | undefined, // при прорисовке main, передаем сначала undefined
-          isMainScreen: boolean,
+          screenType: ScreenType,
           offers: Offer[],
           center: City,
         ) => {
@@ -36,26 +37,26 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           return (
             <Map
               // на карте главной страницы будем перекрашивать актуальный маркер
-              currentOffer={isMainScreen ? hoveredCard : currentOffer}
-              isMainScreen={isMainScreen}
+              currentOffer={screenType === ScreenType.Main ? hoveredCard : currentOffer}
+              screenType={screenType}
               offers={offers}
               center={center}
             />
           );
         }}
 
-        renderCard={(offers: Offer[], isMainScreen: boolean) => {
+        renderCard={(offers: Offer[], screenType: ScreenType) => {
           // eslint-disable-next-line no-console
           console.log('renderCard');
 
           const cardHoverHandler = (hoveredOffer: Offer | undefined): void => {
-            isMainScreen && setHoveredCard(hoveredOffer);
+            screenType === ScreenType.Main && setHoveredCard(hoveredOffer);
           };
 
           return (
             <OfferCard
               offers={offers}
-              isMainScreen={isMainScreen}
+              screenType={screenType}
               cardHoverHandler={cardHoverHandler}
             />
           );

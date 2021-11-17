@@ -5,23 +5,33 @@ import {Offer} from '../../types/offer';
 import {Link, useHistory} from 'react-router-dom';
 import {changeFavoriteAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
-import {nanoid} from 'nanoid';
-import {AuthorizationStatus, AppRoute} from '../../const';
+import {AuthorizationStatus, AppRoute, ScreenType} from '../../const';
 
 type CardScreenProps = {
   offers: Offer[];
   cardHoverHandler: (hoveredOffer: Offer | undefined) => void;
-  isMainScreen: boolean;
+  screenType: ScreenType;
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('OfferCard');
-  const {offers, cardHoverHandler, isMainScreen} = props;
+  const {offers, cardHoverHandler, screenType} = props;
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
 
   const dispatch = useDispatch();
+
+  const getScreenClassList = (type: ScreenType) => {
+    switch (type) {
+      case ScreenType.Offer:
+        return ['near-places__card', 'near-places__image-wrapper', ''];
+      case ScreenType.Favorites:
+        return ['favorites__card', 'favorites__image-wrapper', 'favorites__card-info'];
+      default:
+        return ['cities__place-card', 'cities__image-wrapper', ''];
+    }
+  };
 
   return (
     <Fragment>
@@ -50,25 +60,18 @@ function OfferCard(props: CardScreenProps): JSX.Element {
         return (
           <article
             data-testid="offer-article"
-            key={nanoid(10)}
-            className={`${isMainScreen ? 'cities__place-card' : 'near-places__card'} place-card`}
+            key={offer.id}
+            className={`${getScreenClassList(screenType)[0]} place-card`}
             onMouseEnter={hoverHandler}
             onMouseLeave={hoverHandler}
           >
-            {is_premium
-            &&
-            <div className="place-card__mark">
-              <span>Premium</span>
-            </div>}
-            <div className={`${isMainScreen
-              ? 'cities__image-wrapper'
-              : 'near-places__image-wrapper'} place-card__image-wrapper`}
-            >
+            {is_premium && <div className="place-card__mark"><span>Premium</span></div>}
+            <div className={`${getScreenClassList(screenType)[1]} place-card__image-wrapper`}>
               <Link onClick={(evt) => evt.preventDefault()} to="/">
                 <img className="place-card__image" src={`${preview_image}`} width="260" height="200" alt="Interior view"/>
               </Link>
             </div>
-            <div className="place-card__info">
+            <div className={`${getScreenClassList(screenType)[2]} place-card__info`}>
               <div className="place-card__price-wrapper">
                 <div className="place-card__price">
                   <b className="place-card__price-value">&euro;{price}</b>

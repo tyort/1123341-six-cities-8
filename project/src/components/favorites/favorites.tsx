@@ -5,11 +5,16 @@ import {fetchFavoritesAction} from '../../store/api-actions';
 import {getAllOffers} from '../../store/offers-reducer/selectors';
 import HeaderUserScreen from '../header-user/header-user';
 import FavoritesEmptyScreen from '../favorites-empty/favorites-empty';
-import OfferCard from '../../components/offer-card/offer-card';
 import {nanoid} from 'nanoid';
 import {ScreenType } from '../../const';
+import { Offer } from '../../types/offer';
 
-function FavoritesScreen(): JSX.Element {
+type FavoritesScreenProps = {
+  renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
+};
+
+function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
+  const {renderCard} = props;
   const offers = useSelector(getAllOffers);
   const favoriteOffers = offers.filter((offer) => offer.is_favorite === true);
   const cities = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
@@ -56,10 +61,7 @@ function FavoritesScreen(): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    <OfferCard
-                      offers={favoriteOffers.filter((offer) => (offer.city.name === place))}
-                      screenType={ScreenType.Favorites}
-                    />
+                    {renderCard(favoriteOffers.filter((offer) => (offer.city.name === place)), ScreenType.Favorites)}
                   </div>
                 </li>
               ))}

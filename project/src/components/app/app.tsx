@@ -31,6 +31,7 @@ export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean
 
 const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
+const FavoritesScreenWrapped = withMap(FavoritesScreen);
 
 function App(): JSX.Element {
   // eslint-disable-next-line no-console
@@ -64,7 +65,6 @@ function App(): JSX.Element {
       <Route exact path={AppRoute.Main}>
         <MainScreenWrapped
           city={city as City}
-          isMainScreen
           offers={sortedOffers}
         >
           <CityScreen
@@ -83,7 +83,7 @@ function App(): JSX.Element {
         exact
         path={AppRoute.Favorites}
       >
-        <FavoritesScreen/>
+        <FavoritesScreenWrapped/>
       </PrivateRoute>
       <Route
         exact
@@ -95,7 +95,6 @@ function App(): JSX.Element {
         <Route key={nanoid(10)} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
           <PlaceOfferScreenWrapped
             currentOffer={offer}
-            isMainScreen={false}
           >
             <HeaderUserScreen/>
           </PlaceOfferScreenWrapped>
