@@ -1,4 +1,4 @@
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
@@ -31,18 +31,13 @@ describe('Component: FavoriteScreen', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <FavoriteScreen />
+          <FavoriteScreen
+            renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
+          />
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText(/Saved listing/i)).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
-        .toBeInstanceOf(Array);
-      expect(screen.getAllByText(/Brussels|Hamburg|Cologne|Amsterdam|Dusseldorf|Paris/i))
-        .toHaveLength(6);
-    });
+    expect(screen.getAllByText(/Fake Offer Card/i)).toBeInstanceOf(Array);
   });
 });

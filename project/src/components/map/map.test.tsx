@@ -1,6 +1,7 @@
 import {render, waitFor} from '@testing-library/react';
 import MapComponent from './map';
 import {makeFakeOffer, makeFakeOffers, cities} from '../../utils/mocks';
+import { ScreenType } from '../../const';
 
 const city = cities[2];
 const offers = makeFakeOffers();
@@ -12,7 +13,7 @@ describe('Component: MapComponent', () => {
       <MapComponent
         offers={offers}
         center={city}
-        isMainScreen
+        screenType={ScreenType.Main}
         currentOffer={currentOffer}
       />,
     );

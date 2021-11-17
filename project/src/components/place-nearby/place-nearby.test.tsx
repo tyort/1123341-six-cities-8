@@ -11,7 +11,6 @@ describe('Component: PlaceNearbyScreen', () => {
       <BrowserRouter>
         <PlaceNearbyScreen
           offers={mockOffers}
-          isMainScreen={false}
           renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
         />
       </BrowserRouter>,

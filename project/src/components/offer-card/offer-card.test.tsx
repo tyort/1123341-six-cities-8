@@ -8,7 +8,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import {createMemoryHistory} from 'history';
 import OfferCardScreen from './offer-card';
 import {makeFakeOffer} from '../../utils/mocks';
-import {AuthorizationStatus, AppRoute} from '../../const';
+import {AuthorizationStatus, AppRoute, ScreenType} from '../../const';
 import {createAPI} from '../../services/api';
 import {State} from '../../types/state';
 
@@ -39,7 +39,7 @@ describe('Component: OfferCardScreen', () => {
             <Route exact path={AppRoute.Main}>
               <OfferCardScreen
                 offers={[mockOffer]}
-                isMainScreen
+                screenType={ScreenType.Main}
                 cardHoverHandler={cardHoverHandler}
               />
             </Route>

@@ -38,7 +38,6 @@ describe('HOC: withMap', () => {
       <Router history={history}>
         <MainScreenWrapped
           city={cities[1]}
-          isMainScreen
           offers={mockOffers}
         >
           <p>This is Sorting component</p>

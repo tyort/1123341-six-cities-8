@@ -37,7 +37,6 @@ describe('Component: PlaceOfferScreen', () => {
       <Provider store={store}>
         <PlaceOfferScreen
           currentOffer={mockOffer}
-          isMainScreen={false}
           renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
           renderMap={jest.fn(() => <h1>Fake Map</h1>)}
         />
