@@ -1,22 +1,18 @@
 /* eslint-disable camelcase */
-import {useEffect, Fragment, MouseEvent} from 'react';
+import {useEffect, Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeFavoriteAction, fetchFavoritesAction} from '../../store/api-actions';
+import {fetchFavoritesAction} from '../../store/api-actions';
 import {getAllOffers} from '../../store/offers-reducer/selectors';
 import HeaderUserScreen from '../header-user/header-user';
 import FavoritesEmptyScreen from '../favorites-empty/favorites-empty';
+import OfferCard from '../../components/offer-card/offer-card';
 import {nanoid} from 'nanoid';
-import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
-import { useHistory } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { Offer } from '../../types/offer';
+import {ScreenType } from '../../const';
 
 function FavoritesScreen(): JSX.Element {
   const offers = useSelector(getAllOffers);
   const favoriteOffers = offers.filter((offer) => offer.is_favorite === true);
   const cities = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
-  const authorizationStatus = useSelector(getAuthorizationStatus);
-  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -24,14 +20,6 @@ function FavoritesScreen(): JSX.Element {
     dispatch(fetchFavoritesAction());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const buttonClickHandler = (offer: Offer) => {
-    if (authorizationStatus !== AuthorizationStatus.Auth) {
-      history.push(AppRoute.SignIn);
-      return;
-    }
-    dispatch(changeFavoriteAction({...offer, is_favorite: !offer.is_favorite}));
-  };
 
   if (favoriteOffers.length === 0) {
     return (
@@ -68,54 +56,10 @@ function FavoritesScreen(): JSX.Element {
                     </div>
                   </div>
                   <div className="favorites__places">
-                    {favoriteOffers
-                      .filter((offer) => (offer.city.name === place))
-                      .map((offer) => {
-                        const {price, rating, title, type, preview_image} = offer;
-                        const percentRating = rating * 20;
-
-                        return (
-                          <article key={offer.id} className="favorites__card place-card">
-                            <div className="favorites__image-wrapper place-card__image-wrapper">
-                              <a href="/">
-                                <img className="place-card__image" src={`${preview_image}`} width="150" height="110" alt="Place view"/>
-                              </a>
-                            </div>
-                            <div className="favorites__card-info place-card__info">
-                              <div className="place-card__price-wrapper">
-                                <div className="place-card__price">
-                                  <b className="place-card__price-value">&euro;{price}</b>
-                                  <span className="place-card__price-text">&#47;&nbsp;night</span>
-                                </div>
-                                <button
-                                  className="place-card__bookmark-button place-card__bookmark-button--active button"
-                                  type="button"
-                                  onClick={(evt: MouseEvent<HTMLButtonElement>) => {
-                                    evt.preventDefault();
-                                    evt.currentTarget.classList.toggle('place-card__bookmark-button--active');
-                                    buttonClickHandler(offer);
-                                  }}
-                                >
-                                  <svg className="place-card__bookmark-icon" width="18" height="19">
-                                    <use xlinkHref="#icon-bookmark"></use>
-                                  </svg>
-                                  <span className="visually-hidden">In bookmarks</span>
-                                </button>
-                              </div>
-                              <div className="place-card__rating rating">
-                                <div className="place-card__stars rating__stars">
-                                  <span style={{width: `${percentRating}%`}}></span>
-                                  <span className="visually-hidden">Rating</span>
-                                </div>
-                              </div>
-                              <h2 className="place-card__name">
-                                <a href="/">{title}</a>
-                              </h2>
-                              <p className="place-card__type">{type}</p>
-                            </div>
-                          </article>
-                        );
-                      })}
+                    <OfferCard
+                      offers={favoriteOffers.filter((offer) => (offer.city.name === place))}
+                      screenType={ScreenType.Favorites}
+                    />
                   </div>
                 </li>
               ))}
