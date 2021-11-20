@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
+import {Router} from 'react-router-dom';
 import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import PlaceOfferScreen from './place-offer';
@@ -8,6 +9,7 @@ import {makeFakeFavoriteOffers, makeFakeOffer, makeFakeComments} from '../../uti
 import {AuthorizationStatus} from '../../const';
 import {createAPI} from '../../services/api';
 import {State} from '../../types/state';
+import { createMemoryHistory } from 'history';
 
 const mockComments = makeFakeComments();
 const mockOffers = makeFakeFavoriteOffers();
@@ -31,15 +33,19 @@ const store = mockStore({
   },
 });
 
+const history = createMemoryHistory();
+
 describe('Component: PlaceOfferScreen', () => {
   it('should render "PlaceOfferScreen" when user navigate to "/offer/:offerId" url', async () => {
     render(
       <Provider store={store}>
-        <PlaceOfferScreen
-          currentOffer={mockOffer}
-          renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
-          renderMap={jest.fn(() => <h1>Fake Map</h1>)}
-        />
+        <Router history={history}>
+          <PlaceOfferScreen
+            currentOffer={mockOffer}
+            renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
+            renderMap={jest.fn(() => <h1>Fake Map</h1>)}
+          />
+        </Router>
       </Provider>,
     );
 

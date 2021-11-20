@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import LoginScreen from './login';
 import {AuthorizationStatus} from '../../const';
+import { cities } from '../../utils/mocks';
 
 const mockStore = configureMockStore();
 
@@ -16,6 +17,7 @@ describe('Component: LoginScreen', () => {
 
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.NoAuth},
+      OFFERS: {city: cities[2]},
     });
 
     render(
@@ -26,7 +28,7 @@ describe('Component: LoginScreen', () => {
       </Provider>,
     );
 
-    expect(screen.getByText(/Amsterdam/i)).toBeInTheDocument();
+    expect(screen.getByText(/Cologne/i)).toBeInTheDocument();
     expect(screen.getAllByText(/Sign in/i)).toHaveLength(2);
     expect(screen.getAllByText(/Sign in/i)).toBeInstanceOf(Array);
     expect(screen.getByAltText(/6 cities logo/i)).toBeInTheDocument();
@@ -44,6 +46,7 @@ describe('Component: LoginScreen', () => {
 
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.Auth},
+      OFFERS: {city: cities[2]},
     });
 
     render(

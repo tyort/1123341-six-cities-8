@@ -8,6 +8,7 @@ import {toast} from 'react-toastify';
 import Logo from '../logo/logo';
 import { changeCityAction } from '../../store/action';
 import { getCurrentCity } from '../../store/offers-reducer/selectors';
+import { City } from '../../types/city';
 
 function LoginScreen(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
@@ -96,7 +97,7 @@ function LoginScreen(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>{currentCity?.name}</span>
+                <span>{(currentCity as City).name }</span>
               </Link>
             </div>
           </section>
