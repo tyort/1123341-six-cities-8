@@ -91,7 +91,7 @@ function AppScreen(): JSX.Element {
       {allOffers.map((offer) => (
         <Route key={offer.id} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
           <PlaceOfferScreenWrapped
-            currentOffer={offer}
+            loadOfferId={offer.id}
           >
             <HeaderUserScreen/>
           </PlaceOfferScreenWrapped>

@@ -8,13 +8,14 @@ import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 import {changeFavoriteAction, fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyAction} from '../../store/api-actions';
-import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
+import {getCurrentOffer, getOfferNearbies} from '../../store/single-offer-reducer/selectors';
 import {AppRoute, AuthorizationStatus, ScreenType} from '../../const';
 import { useHistory } from 'react-router-dom';
 import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
+import LoadingScreen from '../loading/loading';
 
 type PlaceOfferScreenProps = PropsWithChildren<{
-  currentOffer: Offer;
+  loadOfferId: string | number;
   renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
   renderMap: (
     currentOffer: Offer,
@@ -25,21 +26,20 @@ type PlaceOfferScreenProps = PropsWithChildren<{
 }>
 
 function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
-  const {currentOffer, renderMap, renderCard, children} = props;
-  const {bedrooms, type, host, title, images, category,
-    rating, price, goods, description, max_adults, is_favorite} = currentOffer;
-  const percentRating = rating * 20;
-  const history = useHistory();
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const {loadOfferId, renderMap, renderCard, children} = props;
 
+  const history = useHistory();
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const nearbyOffers = useSelector(getOfferNearbies);
+  const currentOffer = useSelector(getCurrentOffer);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCommentsAction(currentOffer.id as number));
-    dispatch(fetchNearbyAction(currentOffer.id as number));
-    dispatch(fetchCurrentOfferAction(currentOffer.id as number));
+    dispatch(fetchCommentsAction(loadOfferId as number));
+    dispatch(fetchNearbyAction(loadOfferId as number));
+    dispatch(fetchCurrentOfferAction(loadOfferId as number));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -50,8 +50,18 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
       return;
     }
     evt.currentTarget.classList.toggle('property__bookmark-button--active');
-    dispatch(changeFavoriteAction({...currentOffer, is_favorite: !currentOffer.is_favorite}));
+    dispatch(changeFavoriteAction({...currentOffer as Offer, is_favorite: !(currentOffer as Offer).is_favorite}));
   };
+
+  if (currentOffer === null) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  const {bedrooms, type, host, title, images, category,
+    rating, price, goods, description, max_adults, is_favorite} = currentOffer as Offer;
+  const percentRating = rating * 20;
 
   return (
     <Fragment>
