@@ -13,7 +13,7 @@ import {AppRoute, AuthorizationStatus, ScreenType} from '../../const';
 import { useHistory } from 'react-router-dom';
 import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
 
-type OfferScreenProps = PropsWithChildren<{
+type PlaceOfferScreenProps = PropsWithChildren<{
   currentOffer: Offer;
   renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
   renderMap: (
@@ -24,7 +24,7 @@ type OfferScreenProps = PropsWithChildren<{
   ) => JSX.Element;
 }>
 
-function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
+function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
   const {currentOffer, renderMap, renderCard, children} = props;
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults, is_favorite} = currentOffer;

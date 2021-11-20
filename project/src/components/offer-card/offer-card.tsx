@@ -13,7 +13,7 @@ type CardScreenProps = {
   screenType: ScreenType;
 }
 
-function OfferCard(props: CardScreenProps): JSX.Element {
+function OfferCardScreen(props: CardScreenProps): JSX.Element {
   const {offers, cardHoverHandler, screenType} = props;
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
@@ -108,7 +108,7 @@ function OfferCard(props: CardScreenProps): JSX.Element {
   );
 }
 
-export default memo(OfferCard, (prevProps, nextProps) =>
+export default memo(OfferCardScreen, (prevProps, nextProps) =>
   prevProps.offers === nextProps.offers,
 );
 

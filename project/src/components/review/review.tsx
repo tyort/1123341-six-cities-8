@@ -6,7 +6,7 @@ type ReviewScreenProps = {
   comments: Comment[];
 }
 
-function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
+function ReviewScreen(props: ReviewScreenProps): JSX.Element {
   const {comments} = props;
 
   const visualDate = (commentDate: string) => {
@@ -50,6 +50,6 @@ function PlaceReviewsScreen(props: ReviewScreenProps): JSX.Element {
   );
 }
 
-export default memo(PlaceReviewsScreen, (prevProps, nextProps) =>
+export default memo(ReviewScreen, (prevProps, nextProps) =>
   prevProps.comments === nextProps.comments,
 );

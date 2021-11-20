@@ -8,11 +8,11 @@ import {setCommentAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getOfferComments} from '../../store/single-offer-reducer/selectors';
 
-type ReviewsScreenProps = {
+type PlaceReviewsScreenProps = {
   currentOffer: Offer;
 }
 
-function PlaceReviewsScreen(props: ReviewsScreenProps): JSX.Element {
+function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
   const {currentOffer} = props;
   const [isBtnDisabled, setBtnDisabled] = useState<boolean>(true);
   const [isFormDisabled, setFormDisabled] = useState<boolean>(false);

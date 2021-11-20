@@ -1,6 +1,5 @@
 import {Switch, Route} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {nanoid} from 'nanoid';
 // компоненты, хоки
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
@@ -8,10 +7,10 @@ import LoginScreen from '../login/login';
 import PlaceOfferScreen from '../place-offer/place-offer';
 import NotFoundScreen from '../not-found/not-found';
 import NotPlacesScreen from '../not-places/not-places';
-import PrivateRoute from '../private-route/private-route';
+import PrivateRouteScreen from '../private-route/private-route';
 import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
-import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loading/loading';
 import HeaderUserScreen from '../header-user/header-user';
 // Хок
 import withMap from '../../hocs/with-map/with-map';
@@ -33,7 +32,7 @@ const MainScreenWrapped = withMap(MainScreen);
 const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 const FavoritesScreenWrapped = withMap(FavoritesScreen);
 
-function App(): JSX.Element {
+function AppScreen(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getOffersLoadStatus);
   const city = useSelector(getCurrentCity);
@@ -77,12 +76,12 @@ function App(): JSX.Element {
           <HeaderUserScreen/>
         </MainScreenWrapped>
       </Route>
-      <PrivateRoute
+      <PrivateRouteScreen
         exact
         path={AppRoute.Favorites}
       >
         <FavoritesScreenWrapped/>
-      </PrivateRoute>
+      </PrivateRouteScreen>
       <Route
         exact
         path={AppRoute.SignIn}
@@ -90,7 +89,7 @@ function App(): JSX.Element {
         <LoginScreen/>
       </Route>
       {allOffers.map((offer) => (
-        <Route key={nanoid(10)} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
+        <Route key={offer.id} exact path={`${AppRoute.OfferPostfix}${offer.id}`}>
           <PlaceOfferScreenWrapped
             currentOffer={offer}
           >
@@ -110,4 +109,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default AppScreen;

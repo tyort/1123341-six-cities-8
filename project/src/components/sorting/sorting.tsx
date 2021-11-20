@@ -1,12 +1,12 @@
 import {nanoid} from 'nanoid';
 import {SortName} from '../../const';
 
-type SortingProps = {
+type SortingScreenProps = {
   currentSortName: SortName;
   sortNameChangeHandler: (sortName: SortName) => void;
 };
 
-function SortingScreen(props: SortingProps): JSX.Element {
+function SortingScreen(props: SortingScreenProps): JSX.Element {
   const {currentSortName, sortNameChangeHandler} = props;
   return (
     <form className="places__sorting" action="#" method="get">
