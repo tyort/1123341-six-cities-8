@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchFavoritesAction} from '../../store/api-actions';
 import {getAllOffers} from '../../store/offers-reducer/selectors';
 import HeaderUserScreen from '../header-user/header-user';
+import LogoScreen from '../logo/logo';
 import FavoritesEmptyScreen from '../favorites-empty/favorites-empty';
 import {nanoid} from 'nanoid';
 import {ScreenType } from '../../const';
@@ -37,11 +38,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
+            <LogoScreen/>
             <HeaderUserScreen/>
           </div>
         </div>
