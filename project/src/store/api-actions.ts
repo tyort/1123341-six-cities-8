@@ -2,7 +2,7 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
-import {loadOffersAction, loadNearbyAction, loadCommentsAction,
+import {loadOffersAction, loadNearbyAction, loadCommentsAction, loadCurrentOfferAction,
   requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction, setEmailAction} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
@@ -32,6 +32,12 @@ export const fetchFavoritesAction = (): ThunkActionResult =>
 
     const {data} = await api.get<Offer[]>(APIRoute.Favorite);
     dispatch(loadFavoritesAction(data));
+  };
+
+export const fetchCurrentOfferAction = (offerId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+    dispatch(loadCurrentOfferAction(data));
   };
 
 export const fetchCommentsAction = (offerId: number): ThunkActionResult =>

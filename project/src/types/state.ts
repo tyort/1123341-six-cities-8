@@ -16,7 +16,8 @@ export type OffersState = {
 
 export type SingleOfferState = {
   comments: Comment[],
-  nearbyOffers: Offer[]
+  nearbyOffers: Offer[],
+  currentOffer: Offer | null
 }
 
 export type AuthState = {

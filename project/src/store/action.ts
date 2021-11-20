@@ -23,6 +23,11 @@ export const loadFavoritesAction = createAction(
   (offers: Offer[]) => ({payload: offers}),
 );
 
+export const loadCurrentOfferAction = createAction(
+  ActionName.LoadCurrentOffer,
+  (offer: Offer) => ({payload: offer}),
+);
+
 export const loadCommentsAction = createAction(
   ActionName.LoadComments,
   (comments: Comment[]) => ({payload: comments}),

@@ -1,11 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {SingleOfferState} from '../../types/state';
-import {loadCommentsAction, loadNearbyAction} from '../action';
+import {loadCommentsAction, loadCurrentOfferAction, loadNearbyAction} from '../action';
 import {Comment} from '../../types/comment';
 
 export const initialState: SingleOfferState = {
   comments: [],
   nearbyOffers: [],
+  currentOffer: null,
 };
 
 const sortedComments = (comments: Comment[]): Comment[] => comments
@@ -20,6 +21,9 @@ const singleOfferReducer = createReducer(initialState, (build) => {
     })
     .addCase(loadNearbyAction, (state, action) => {
       state.nearbyOffers = action.payload;
+    })
+    .addCase(loadCurrentOfferAction, (state, action) => {
+      state.currentOffer = action.payload;
     });
 });
 

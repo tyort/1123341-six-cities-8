@@ -7,7 +7,7 @@ import LogoScreen from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
-import {changeFavoriteAction, fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+import {changeFavoriteAction, fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyAction} from '../../store/api-actions';
 import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
 import {AppRoute, AuthorizationStatus, ScreenType} from '../../const';
 import { useHistory } from 'react-router-dom';
@@ -39,6 +39,7 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
   useEffect(() => {
     dispatch(fetchCommentsAction(currentOffer.id as number));
     dispatch(fetchNearbyAction(currentOffer.id as number));
+    dispatch(fetchCurrentOfferAction(currentOffer.id as number));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
