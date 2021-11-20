@@ -1,14 +1,16 @@
 /* eslint-disable camelcase */
-import {useEffect, PropsWithChildren, Fragment} from 'react';
+import {useEffect, PropsWithChildren, Fragment, MouseEvent} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
-import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+import {changeFavoriteAction, fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
 import {getOfferNearbies} from '../../store/single-offer-reducer/selectors';
-import {ScreenType} from '../../const';
+import {AppRoute, AuthorizationStatus, ScreenType} from '../../const';
+import { useHistory } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
 
 type OfferScreenProps = PropsWithChildren<{
   currentOffer: Offer;
@@ -24,8 +26,10 @@ type OfferScreenProps = PropsWithChildren<{
 function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
   const {currentOffer, renderMap, renderCard, children} = props;
   const {bedrooms, type, host, title, images, category,
-    rating, price, goods, description, max_adults} = currentOffer;
+    rating, price, goods, description, max_adults, is_favorite} = currentOffer;
   const percentRating = rating * 20;
+  const history = useHistory();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const nearbyOffers = useSelector(getOfferNearbies);
 
@@ -36,6 +40,16 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
     dispatch(fetchNearbyAction(currentOffer.id as number));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      history.push(AppRoute.SignIn);
+      return;
+    }
+    evt.currentTarget.classList.toggle('property__bookmark-button--active');
+    dispatch(changeFavoriteAction({...currentOffer, is_favorite: !currentOffer.is_favorite}));
+  };
 
   return (
     <Fragment>
@@ -71,7 +85,11 @@ function PlaceOfferScreen(props: OfferScreenProps): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className={`${is_favorite && 'property__bookmark-button--active'} property__bookmark-button button`}
+                  type="button"
+                  onClick={buttonClickHandler}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

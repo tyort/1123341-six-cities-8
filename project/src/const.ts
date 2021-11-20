@@ -86,3 +86,6 @@ export enum ActionName {
   RedirectToRoute = 'app/redirectToRoute'
 }
 
+export const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
+export const passPattern = /^(?=.*[A-Za-z])(?=.*\d)/i;
+

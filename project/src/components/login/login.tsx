@@ -1,17 +1,24 @@
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {Link, Redirect} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, CityName, getRandomInt, passPattern} from '../../const';
 import {loginAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {toast} from 'react-toastify';
 import Logo from '../logo/logo';
-
-const passPattern = /^(?=.*[A-Za-z])(?=.*\d)/i;
+import { changeCityAction } from '../../store/action';
+import { getCurrentCity } from '../../store/offers-reducer/selectors';
 
 function LoginScreen(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const currentCity = useSelector(getCurrentCity);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const RANDOM_CITY = Object.values(CityName)[getRandomInt(6)];
+    dispatch(changeCityAction(RANDOM_CITY));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -88,9 +95,9 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main}>
+                <span>{currentCity?.name}</span>
+              </Link>
             </div>
           </section>
         </div>
