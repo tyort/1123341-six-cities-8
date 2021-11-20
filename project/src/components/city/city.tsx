@@ -9,8 +9,6 @@ type CityScreenProps = {
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('CityScreen');
   const {cities, currentCity, cityChangeHandler} = props;
 
   return (

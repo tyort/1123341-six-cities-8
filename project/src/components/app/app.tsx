@@ -34,8 +34,6 @@ const PlaceOfferScreenWrapped = withMap(PlaceOfferScreen);
 const FavoritesScreenWrapped = withMap(FavoritesScreen);
 
 function App(): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('AppScreen');
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getOffersLoadStatus);
   const city = useSelector(getCurrentCity);

@@ -4,7 +4,7 @@ import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction,
   requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction, setEmailAction} from './action';
-import {saveToken, dropToken, getToken} from '../services/token';
+import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
 import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
@@ -38,8 +38,6 @@ export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${offerId}`);
     dispatch(loadCommentsAction(data));
-    // eslint-disable-next-line no-console
-    console.log(getToken());
   };
 
 export const fetchNearbyAction = (offerId: number): ThunkActionResult =>

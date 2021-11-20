@@ -14,8 +14,6 @@ type MapScreenProps = {
 }
 
 function MapScreen(props: MapScreenProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('MapScreen');
   // currentOffer - выбранная карточка на главной странице и представленная в place-offer
   const {offers, center, screenType, currentOffer} = props;
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
@@ -23,8 +21,6 @@ function MapScreen(props: MapScreenProps): JSX.Element {
 
   useEffect(() => {
     if (currentMap) {
-      // eslint-disable-next-line no-console
-      console.log('Прорисовка маркеров');
       // Странно, хоть offers меняется, но, добавив их в зависимости, возникнет ошибка.
       offers.forEach((offer) => {
         leaflet

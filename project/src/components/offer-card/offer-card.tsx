@@ -14,8 +14,6 @@ type CardScreenProps = {
 }
 
 function OfferCard(props: CardScreenProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('OfferCard');
   const {offers, cardHoverHandler, screenType} = props;
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();

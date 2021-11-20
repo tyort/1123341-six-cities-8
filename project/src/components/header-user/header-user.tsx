@@ -6,8 +6,6 @@ import {getAuthorizationStatus, getEmail} from '../../store/auth-reducer/selecto
 import {logoutAction} from '../../store/api-actions';
 
 function HeaderScreen(): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('HeaderScreen');
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const email = useSelector(getEmail);
 

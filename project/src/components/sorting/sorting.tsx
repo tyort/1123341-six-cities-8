@@ -7,8 +7,6 @@ type SortingProps = {
 };
 
 function SortingScreen(props: SortingProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('SortingScreen');
   const {currentSortName, sortNameChangeHandler} = props;
   return (
     <form className="places__sorting" action="#" method="get">

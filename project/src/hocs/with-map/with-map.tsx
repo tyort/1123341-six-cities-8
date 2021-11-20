@@ -31,24 +31,17 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
           screenType: ScreenType,
           offers: Offer[],
           center: City,
-        ) => {
-          // eslint-disable-next-line no-console
-          console.log('renderMap');
-          return (
-            <Map
-              // на карте главной страницы будем перекрашивать актуальный маркер
-              currentOffer={screenType === ScreenType.Main ? hoveredCard : currentOffer}
-              screenType={screenType}
-              offers={offers}
-              center={center}
-            />
-          );
-        }}
+        ) => (
+          <Map
+            // на карте главной страницы будем перекрашивать актуальный маркер
+            currentOffer={screenType === ScreenType.Main ? hoveredCard : currentOffer}
+            screenType={screenType}
+            offers={offers}
+            center={center}
+          />
+        )}
 
         renderCard={(offers: Offer[], screenType: ScreenType) => {
-          // eslint-disable-next-line no-console
-          console.log('renderCard');
-
           const cardHoverHandler = (hoveredOffer: Offer | undefined): void => {
             screenType === ScreenType.Main && setHoveredCard(hoveredOffer);
           };
