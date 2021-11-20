@@ -3,6 +3,7 @@ import {useEffect, PropsWithChildren, Fragment, MouseEvent} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import PlaceNearbyScreen from '../place-nearby/place-nearby';
 import PlaceReviewsScreen from '../place-reviews/place-reviews';
+import PlaceImagesScreen from '../place-images/place-images';
 import LogoScreen from '../logo/logo';
 import {Offer} from '../../types/offer';
 import {City} from '../../types/city';
@@ -75,15 +76,9 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
       </header>
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              {images.map((image) => (
-                <div key={nanoid(10)} className="property__image-wrapper">
-                  <img className="property__image" src={`${image}`} alt="View studio"/>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PlaceImagesScreen
+            images={images}
+          />
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
