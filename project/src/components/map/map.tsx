@@ -18,6 +18,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
   const {offers, center, screenType, currentOffer} = props;
   const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
   const currentMap = useMap(mapRef, center);
+  const addDependence = screenType === ScreenType.Main ? currentOffer : undefined;
 
   useEffect(() => {
     if (currentMap) {
@@ -37,7 +38,7 @@ function MapScreen(props: MapScreenProps): JSX.Element {
       });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentMap, currentOffer]);
+  }, [currentMap, addDependence]);
 
   return (
     <section
