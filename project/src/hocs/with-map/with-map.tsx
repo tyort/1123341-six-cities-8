@@ -42,7 +42,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
         )}
 
         renderCard={(offers: Offer[], screenType: ScreenType) => {
-          const cardHoverHandler = (hoveredOffer: Offer | undefined): void => {
+          const onCardHover = (hoveredOffer: Offer | undefined): void => {
             screenType === ScreenType.Main && setHoveredCard(hoveredOffer);
           };
 
@@ -50,7 +50,7 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
             <OfferCard
               offers={offers}
               screenType={screenType}
-              cardHoverHandler={cardHoverHandler}
+              onCardHover={onCardHover}
             />
           );
         }}

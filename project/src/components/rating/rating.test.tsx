@@ -4,16 +4,16 @@ import userEvent from '@testing-library/user-event';
 import RatingScreen from './rating';
 describe('Component: RatingScreen', () => {
   it('should render "RatingScreen" when user navigate to specific offer url', () => {
-    const rateChangeHandler = jest.fn();
+    const onRateChange = jest.fn();
     render(
       <BrowserRouter>
         <RatingScreen
-          rateChangeHandler={rateChangeHandler}
+          onRateChange={onRateChange}
         />
       </BrowserRouter>,
     );
 
     userEvent.click(screen.getByTestId(/star-1/i));
-    expect(rateChangeHandler).toBeCalled();
+    expect(onRateChange).toBeCalled();
   });
 });

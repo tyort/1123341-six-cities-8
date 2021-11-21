@@ -42,11 +42,11 @@ function AppScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const cityChangeHandler = (cityName: CityName) => {
+  const onCityChange = (cityName: CityName) => {
     dispatch(changeCityAction(cityName));
   };
 
-  const sortNameChangeHandler = (sortName: SortName) => {
+  const onSortChange = (sortName: SortName) => {
     dispatch(changeSortNameAction(sortName));
   };
 
@@ -65,11 +65,11 @@ function AppScreen(): JSX.Element {
         >
           <CityScreen
             currentCity={city as City}
-            cityChangeHandler={cityChangeHandler}
+            onCityChange={onCityChange}
           />
           <SortingScreen
             currentSortName={currentSortName}
-            sortNameChangeHandler={sortNameChangeHandler}
+            onSortChange={onSortChange}
           />
           <HeaderUserScreen/>
         </MainScreenWrapped>

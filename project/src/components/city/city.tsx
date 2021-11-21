@@ -3,12 +3,12 @@ import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 
 type CityScreenProps = {
-  cityChangeHandler: (cityTitle: CityName) => void;
+  onCityChange: (cityTitle: CityName) => void;
   currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
-  const {currentCity, cityChangeHandler} = props;
+  const {currentCity, onCityChange} = props;
   const cities: string[] = Object.values(CityName);
 
   return (
@@ -20,7 +20,7 @@ function CityScreen(props: CityScreenProps): JSX.Element {
           data-city={city}
           onClick={(evt) => {
             evt.preventDefault();
-            cityChangeHandler(evt.currentTarget.dataset.city as CityName);
+            onCityChange(evt.currentTarget.dataset.city as CityName);
           }}
         >
           <a

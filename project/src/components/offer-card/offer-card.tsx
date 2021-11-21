@@ -12,12 +12,12 @@ const RATE_IN_PERCENT = 20;
 
 type CardScreenProps = {
   offers: Offer[];
-  cardHoverHandler: (hoveredOffer: Offer | undefined) => void;
+  onCardHover: (hoveredOffer: Offer | undefined) => void;
   screenType: ScreenType;
 }
 
 function OfferCardScreen(props: CardScreenProps): JSX.Element {
-  const {offers, cardHoverHandler, screenType} = props;
+  const {offers, onCardHover, screenType} = props;
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
@@ -45,8 +45,8 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
         const handleArticleHover = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
           evt.type === 'mouseenter'
-            ? cardHoverHandler(offer)
-            : cardHoverHandler(undefined);
+            ? onCardHover(offer)
+            : onCardHover(undefined);
         };
 
         const handleButtonClick = (evt: MouseEvent<HTMLElement>) => {

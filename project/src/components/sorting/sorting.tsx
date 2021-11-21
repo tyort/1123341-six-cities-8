@@ -3,11 +3,11 @@ import {SortName} from '../../const';
 
 type SortingScreenProps = {
   currentSortName: SortName;
-  sortNameChangeHandler: (sortName: SortName) => void;
+  onSortChange: (sortName: SortName) => void;
 };
 
 function SortingScreen(props: SortingScreenProps): JSX.Element {
-  const {currentSortName, sortNameChangeHandler} = props;
+  const {currentSortName, onSortChange} = props;
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -38,7 +38,7 @@ function SortingScreen(props: SortingScreenProps): JSX.Element {
             tabIndex={0}
             onClick={(evt) => {
               evt.preventDefault();
-              sortNameChangeHandler(evt.currentTarget.dataset.sortName as SortName);
+              onSortChange(evt.currentTarget.dataset.sortName as SortName);
               (evt.currentTarget.parentElement as HTMLElement).classList.toggle('places__options--opened', false);
             }}
           >{name}
