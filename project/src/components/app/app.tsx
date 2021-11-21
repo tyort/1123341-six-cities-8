@@ -1,6 +1,5 @@
 import {Switch, Route} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-// компоненты, хоки
 import MainScreen from '../main/main';
 import FavoritesScreen from '../favorites/favorites';
 import LoginScreen from '../login/login';
@@ -12,11 +11,8 @@ import CityScreen from '../city/city';
 import SortingScreen from '../sorting/sorting';
 import LoadingScreen from '../loading/loading';
 import HeaderUserScreen from '../header-user/header-user';
-// Хок
 import withMap from '../../hocs/with-map/with-map';
-// из store
 import {changeCityAction, changeSortNameAction} from '../../store/action';
-// селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getAllOffers, getCurrentCity, getCurrentSortName,
   getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';

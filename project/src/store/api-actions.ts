@@ -9,16 +9,9 @@ import {APIRoute, AuthorizationStatus, AppRoute, ResponseText} from '../const';
 import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
 
-// ThunkActionResult - расширенный нами ThunkAction(middleware) от redux-thunk, возвращающие промис
-// async (dispatch, _getState, api):...... - это экшн, только вместо объекта функция
 export const fetchOffersAction = (): ThunkActionResult =>
-  // dispatch -для отправки действий с хранилищем
-  // _getState - текущее состояние хранилища
   async (dispatch, _getState, api): Promise<void> => {
-
-    // После завершения асинхронного запроса...(brb)
-    const {data} = await api.get<Offer[]>(APIRoute.Offers); // к BACKEND_URL приписываем '/hotels'(APIRoute.Offers)
-    // (brb)...мы можем закинуть данные в хранилище
+    const {data} = await api.get<Offer[]>(APIRoute.Offers);
     dispatch(loadOffersAction(data));
   };
 
@@ -47,7 +40,6 @@ export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
     dispatch(loadNearbyAction(data));
   };
 
-// Обращение к определенного API в целях проверки статуса авторизации пользователя
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
@@ -59,7 +51,6 @@ export const checkAuthAction = (): ThunkActionResult =>
     }
   };
 
-// Авторизация пользователя
 export const loginAction = ({email, password}: AuthUserData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
@@ -75,8 +66,8 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    api.delete(APIRoute.Logout); // закрыть сессию на сервере
-    dropToken(); // удалит токен из браузера
+    api.delete(APIRoute.Logout);
+    dropToken();
     dispatch(requireLogout());
   };
 

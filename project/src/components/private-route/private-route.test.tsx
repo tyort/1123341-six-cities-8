@@ -26,7 +26,6 @@ describe('Component: PrivateRouter', () => {
           <PrivateRoute
             exact
             path="/private"
-            // render={() => (<h1>Private Route</h1>)} не прокатит при моей структуре
           >
             <h1>Private Route</h1>
           </PrivateRoute>

@@ -33,7 +33,6 @@ export const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-// Запросы на "бэкэнд"
 export enum APIRoute {
   Offers = '/hotels',
   Comments = '/comments',

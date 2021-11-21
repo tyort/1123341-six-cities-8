@@ -23,7 +23,6 @@ jest.mock('../../components/offer-card/offer-card', () => {
 
 describe('HOC: withMap', () => {
   it('base component should correct rendering when use with HOC', () => {
-    // "() => <h1>withMap</h1>" - тип ComponentType<T> (функциональный компонент)
     const MainScreenWrapped = withMap(() => <h1>withMap</h1>);
     render(<MainScreenWrapped />);
     expect(screen.getByText(/withMap/i)).toBeInTheDocument();

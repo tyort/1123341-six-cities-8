@@ -5,7 +5,6 @@ import {redirectToRoute} from '../action';
 import {AppRoute} from '../../const';
 import {State} from '../../types/state';
 
-// фековая аналогия browserHistory
 const fakeHistory = {
   location: {pathname: ''},
   push(path: string) {

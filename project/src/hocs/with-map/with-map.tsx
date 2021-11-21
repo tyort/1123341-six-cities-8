@@ -27,13 +27,12 @@ function withMap<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HO
         {...props as T}
 
         renderMap={(
-          currentOffer: Offer | undefined, // при прорисовке main, передаем сначала undefined
+          currentOffer: Offer | undefined,
           screenType: ScreenType,
           offers: Offer[],
           center: City,
         ) => (
           <Map
-            // на карте главной страницы будем перекрашивать актуальный маркер
             currentOffer={screenType === ScreenType.Main ? hoveredCard : currentOffer}
             screenType={screenType}
             offers={offers}

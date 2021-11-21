@@ -16,17 +16,15 @@ type MapScreenProps = {
 }
 
 function MapScreen(props: MapScreenProps): JSX.Element {
-  // currentOffer - выбранная карточка на главной странице и представленная в place-offer
   const {offers, center, screenType, currentOffer} = props;
 
-  const mapRef = useRef<HTMLElement | null>(null); // связываем React c DOM-элементом(куда отрендерить карту)
+  const mapRef = useRef<HTMLElement | null>(null);
   const currentMap = useMap(mapRef, center);
   const nearbyOffers = useSelector(getOfferNearbies);
   const setCurrentOffer = screenType === ScreenType.Main ? currentOffer : undefined;
 
   useEffect(() => {
     if (currentMap) {
-      // Странно, хоть offers и currentOffer меняется, но, добавив их в зависимости, возникнет ошибка.
       offers.forEach((offer) => {
         leaflet
           .marker({

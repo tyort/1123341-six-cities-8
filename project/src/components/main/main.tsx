@@ -19,8 +19,6 @@ type MainScreenProps = PropsWithChildren<{
 
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers, city, renderMap, renderCard, children} = props;
-
-  // У данного компонента несколько дочерних компонентов, если хочу ими манипулировать:
   const mainChildren = Children.toArray(children);
 
   return (

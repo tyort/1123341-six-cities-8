@@ -16,7 +16,6 @@ const getSortedOffers = (offers: Offer[], sortName: SortName, city: City): Offer
     case SortName.RateDescending:
       return offers.slice().sort((a, b) => b.rating - a.rating);
     default:
-      // Выдать порядок какой был на сервере
       return offers.slice().filter((item) => item.city.name === city.name);
   }
 };
