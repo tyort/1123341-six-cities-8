@@ -23,6 +23,11 @@ export const loadFavoritesAction = createAction(
   (offers: Offer[]) => ({payload: offers}),
 );
 
+export const setFailedPostAction = createAction(
+  ActionName.SetPostFailed,
+  (isFailed: boolean) => ({payload: isFailed}),
+);
+
 export const loadCurrentOfferAction = createAction(
   ActionName.LoadCurrentOffer,
   (offer: Offer) => ({payload: offer}),

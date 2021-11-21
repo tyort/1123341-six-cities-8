@@ -2,7 +2,7 @@
 import {ThunkActionResult} from '../types/action';
 import {Offer} from '../types/offer';
 import {Comment, NewComment} from '../types/comment';
-import {loadOffersAction, loadNearbyAction, loadCommentsAction, loadCurrentOfferAction,
+import {loadOffersAction, loadNearbyAction, loadCommentsAction, loadCurrentOfferAction, setFailedPostAction,
   requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction, setEmailAction} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
@@ -91,6 +91,7 @@ export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkA
       const {data} = await api.post<Comment[]>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
       dispatch(loadCommentsAction(data));
     } catch {
+      dispatch(setFailedPostAction(true));
       toast.info(POST_DATA_FAIL_MESSAGE);
     }
   };

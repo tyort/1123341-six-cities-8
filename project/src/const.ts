@@ -78,6 +78,7 @@ export enum ActionName {
   LoadOffers = 'offers/loadOffers',
   LoadCurrentOffer = 'offers/loadCurrentOffer',
   LoadFavorites = 'offers/loadFavorites',
+  SetPostFailed = 'offer/isPostCommentFailed',
   LoadComments = 'offer/loadComments',
   LoadNearby = 'offer/loadNearbyOffers',
   ChangeFavorite = 'offer/isFavorite',

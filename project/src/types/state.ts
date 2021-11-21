@@ -15,6 +15,7 @@ export type OffersState = {
 };
 
 export type SingleOfferState = {
+  isPostFailed: boolean,
   comments: Comment[],
   nearbyOffers: Offer[],
   currentOffer: Offer | null
