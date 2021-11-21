@@ -9,7 +9,7 @@ type ReviewScreenProps = {
 function ReviewScreen(props: ReviewScreenProps): JSX.Element {
   const {comments} = props;
 
-  const visualDate = (commentDate: string) => {
+  const getVisualizedDate = (commentDate: string) => {
     const date = new Date(commentDate);
     const monthName = months.get(date.getMonth());
     const year = date.getFullYear();
@@ -43,7 +43,7 @@ function ReviewScreen(props: ReviewScreenProps): JSX.Element {
                 <p className="reviews__text">
                   {review.comment}
                 </p>
-                <time className="reviews__time" dateTime={`${review.date}`}>{visualDate(review.date)}</time>
+                <time className="reviews__time" dateTime={`${review.date}`}>{getVisualizedDate(review.date)}</time>
               </div>
             </li>
           );
