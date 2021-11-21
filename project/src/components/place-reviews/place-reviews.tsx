@@ -6,7 +6,8 @@ import {useRef, FormEvent, useState, useEffect} from 'react';
 import {Offer} from '../../types/offer';
 import {setCommentAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
-import {getOfferComments} from '../../store/single-offer-reducer/selectors';
+import {getOfferComments, getPostStatus} from '../../store/single-offer-reducer/selectors';
+import { setFailedPostAction } from '../../store/action';
 
 type PlaceReviewsScreenProps = {
   currentOffer: Offer;
@@ -19,17 +20,29 @@ function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const comments = useSelector(getOfferComments);
+  const isPostFailed = useSelector(getPostStatus);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isPostFailed) {
+      setFormDisabled(false);
+      dispatch(setFailedPostAction(false));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPostFailed]);
 
   useEffect(() => {
     setFormDisabled(false);
+    document.querySelector('form')?.reset();
+    setBtnDisabled(true);
+    setRating(null);
   }, [comments]);
-
-  const dispatch = useDispatch();
 
   const commentTable = useRef<HTMLTextAreaElement | null>(null);
   const [rating, setRating] = useState<number | null>(null);
 
-  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (commentTable.current !== null && rating !== null) {
       setFormDisabled(true);
@@ -38,14 +51,10 @@ function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
         comment: commentTable.current.value,
         rating,
       }));
-
-      evt.currentTarget.reset();
-      setBtnDisabled(true);
-      setRating(null);
     }
   };
 
-  const rateChangeHandler = (evt: FormEvent<HTMLInputElement>) => {
+  const onRateChange = (evt: FormEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setRating(Number(evt.currentTarget.value));
 
@@ -54,7 +63,7 @@ function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
     }
   };
 
-  const textChangeHandler = (evt: FormEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = (evt: FormEvent<HTMLTextAreaElement>) => {
     evt.preventDefault();
 
     if (evt.currentTarget.validity.valid && isBtnDisabled && rating !== null) {
@@ -78,11 +87,11 @@ function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
         className="reviews__form form"
         action="#"
         method="post"
-        onSubmit={formSubmitHandler}
+        onSubmit={handleFormSubmit}
       >
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <RatingScreen
-          rateChangeHandler={rateChangeHandler}
+          onRateChange={onRateChange}
           isDisabled={isFormDisabled}
           rating={rating}
         />
@@ -94,7 +103,7 @@ function PlaceReviewsScreen(props: PlaceReviewsScreenProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          onChange={textChangeHandler}
+          onChange={handleTextareaChange}
           disabled={isFormDisabled}
         >
         </textarea>
