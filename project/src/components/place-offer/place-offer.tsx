@@ -45,7 +45,7 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {
+  const handleButtonClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       history.push(AppRoute.SignIn);
@@ -94,7 +94,7 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
                 <button
                   className={`${is_favorite && 'property__bookmark-button--active'} property__bookmark-button button`}
                   type="button"
-                  onClick={buttonClickHandler}
+                  onClick={handleButtonClick}
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>

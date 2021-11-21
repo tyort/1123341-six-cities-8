@@ -40,14 +40,14 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
         const percentRating = getRoundedRate(rating) * 20;
 
 
-        const hoverHandler = (evt: MouseEvent<HTMLElement>) => {
+        const handleArticleHover = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
           evt.type === 'mouseenter'
             ? cardHoverHandler(offer)
             : cardHoverHandler(undefined);
         };
 
-        const buttonClickHandler = (evt: MouseEvent<HTMLElement>) => {
+        const handleButtonClick = (evt: MouseEvent<HTMLElement>) => {
           evt.preventDefault();
           if (authorizationStatus !== AuthorizationStatus.Auth) {
             history.push(AppRoute.SignIn);
@@ -62,8 +62,8 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
             data-testid="offer-article"
             key={offer.id}
             className={`${getScreenClassList(screenType)[0]} place-card`}
-            onMouseEnter={hoverHandler}
-            onMouseLeave={hoverHandler}
+            onMouseEnter={handleArticleHover}
+            onMouseLeave={handleArticleHover}
           >
             {is_premium && <div className="place-card__mark"><span>Premium</span></div>}
             <div className={`${getScreenClassList(screenType)[1]} place-card__image-wrapper`}>
@@ -80,7 +80,7 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
                 <button
                   className={`${is_favorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}
                   type="button"
-                  onClick={buttonClickHandler}
+                  onClick={handleButtonClick}
                 >
                   <svg className="place-card__bookmark-icon" width="18" height="19">
                     <use xlinkHref="#icon-bookmark"></use>

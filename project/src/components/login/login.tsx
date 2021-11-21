@@ -24,7 +24,7 @@ function LoginScreen(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (emailRef.current !== null && passwordRef.current !== null && passPattern.test(passwordRef.current.value)) {
@@ -60,7 +60,7 @@ function LoginScreen(): JSX.Element {
             <form
               className="login__form form"
               action=""
-              onSubmit={formSubmitHandler}
+              onSubmit={handleFormSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
