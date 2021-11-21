@@ -19,7 +19,7 @@ import {changeCityAction, changeSortNameAction} from '../../store/action';
 // селекторы
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {getAllOffers, getCurrentCity, getCurrentSortName,
-  getAllCities, getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';
+  getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 import {City} from '../../types/city';
 import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
@@ -37,7 +37,6 @@ function AppScreen(): JSX.Element {
   const isDataLoaded = useSelector(getOffersLoadStatus);
   const city = useSelector(getCurrentCity);
   const currentSortName = useSelector(getCurrentSortName);
-  const cities = useSelector(getAllCities);
   const allOffers = useSelector(getAllOffers);
   const sortedOffers = useSelector(getSortedOffersInCity);
 
@@ -66,7 +65,6 @@ function AppScreen(): JSX.Element {
         >
           <CityScreen
             currentCity={city as City}
-            cities={cities}
             cityChangeHandler={cityChangeHandler}
           />
           <SortingScreen
