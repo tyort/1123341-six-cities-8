@@ -1,7 +1,7 @@
 import HeaderUserScreen from '../header-user/header-user';
 import LogoScreen from '../logo/logo';
 
-function FavoritesScreen(): JSX.Element {
+function FavoritesEmptyScreen(): JSX.Element {
   return (
     <div className="page page--favorites-empty">
       <header className="header">
@@ -33,4 +33,4 @@ function FavoritesScreen(): JSX.Element {
   );
 }
 
-export default FavoritesScreen;
+export default FavoritesEmptyScreen;

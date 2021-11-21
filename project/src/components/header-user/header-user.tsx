@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getAuthorizationStatus, getEmail} from '../../store/auth-reducer/selectors';
 import {logoutAction} from '../../store/api-actions';
 
-function HeaderScreen(): JSX.Element {
+function HeaderUserScreen(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const email = useSelector(getEmail);
 
@@ -55,4 +55,4 @@ function HeaderScreen(): JSX.Element {
   );
 }
 
-export default HeaderScreen;
+export default HeaderUserScreen;

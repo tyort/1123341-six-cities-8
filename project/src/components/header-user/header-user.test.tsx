@@ -3,15 +3,15 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import {Router, Switch, Route, BrowserRouter} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import HeaderScreen from './header-user';
+import HeaderUserScreen from './header-user';
 import {AuthorizationStatus, AppRoute} from '../../const';
 import userEvent from '@testing-library/user-event';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
 
-describe('Component: HeaderScreen', () => {
-  it('should render "HeaderScreen" correctly when user authorised', () => {
+describe('Component: HeaderUserScreen', () => {
+  it('should render "HeaderUserScreen" correctly when user authorised', () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.Auth,
@@ -22,7 +22,7 @@ describe('Component: HeaderScreen', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
-          <HeaderScreen/>
+          <HeaderUserScreen/>
         </BrowserRouter>
       </Provider>,
     );
@@ -30,7 +30,7 @@ describe('Component: HeaderScreen', () => {
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
   });
 
-  it('should render "HeaderScreen" correctly when user non-authorised', async () => {
+  it('should render "HeaderUserScreen" correctly when user non-authorised', async () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.NoAuth,
@@ -43,7 +43,7 @@ describe('Component: HeaderScreen', () => {
         <Router history={history}>
           <Switch>
             <Route path={AppRoute.Main} exact>
-              <HeaderScreen/>
+              <HeaderUserScreen/>
             </Route>
             <Route path={AppRoute.SignIn} exact>
               <h1>You have to be authorised</h1>
