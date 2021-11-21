@@ -5,14 +5,9 @@ import {Comment, NewComment} from '../types/comment';
 import {loadOffersAction, loadNearbyAction, loadCommentsAction, loadCurrentOfferAction, setFailedPostAction,
   requireAuthorization, requireLogout, redirectToRoute, setFavoriteAction, loadFavoritesAction, setEmailAction} from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus,  AppRoute} from '../const';
+import {APIRoute, AuthorizationStatus, AppRoute, ResponseText} from '../const';
 import {AuthUserData, AuthInfo} from '../types/auth-user-data';
 import {toast} from 'react-toastify';
-
-const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
-const EMAIL_FAIL_MESSAGE = 'Введите корректный email';
-const POST_DATA_FAIL_MESSAGE = 'Произошла ошибка при отправке данных';
-const NEARBY_AS_POSTFIX = 'nearby';
 
 // ThunkActionResult - расширенный нами ThunkAction(middleware) от redux-thunk, возвращающие промис
 // async (dispatch, _getState, api):...... - это экшн, только вместо объекта функция
@@ -48,7 +43,7 @@ export const fetchCommentsAction = (offerId: number): ThunkActionResult =>
 
 export const fetchNearbyAction = (offerId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/${NEARBY_AS_POSTFIX}`);
+    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}${AppRoute.NearbyPostfix}`);
     dispatch(loadNearbyAction(data));
   };
 
@@ -60,7 +55,7 @@ export const checkAuthAction = (): ThunkActionResult =>
       dispatch(setEmailAction(data.email));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
-      toast.info(AUTH_FAIL_MESSAGE);
+      toast.info(ResponseText.AuthFail);
     }
   };
 
@@ -74,7 +69,7 @@ export const loginAction = ({email, password}: AuthUserData): ThunkActionResult 
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
-      toast.info(EMAIL_FAIL_MESSAGE);
+      toast.info(ResponseText.EmailFail);
     }
   };
 
@@ -92,7 +87,7 @@ export const setCommentAction = ({offerId, comment, rating}: NewComment): ThunkA
       dispatch(loadCommentsAction(data));
     } catch {
       dispatch(setFailedPostAction(true));
-      toast.info(POST_DATA_FAIL_MESSAGE);
+      toast.info(ResponseText.Postfail);
     }
   };
 

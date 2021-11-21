@@ -5,7 +5,14 @@ export enum AppRoute {
   Main = '/',
   Favorites = '/favorites',
   Room = '/offer/:id',
-  OfferPostfix = '/offer/'
+  OfferPostfix = '/offer/',
+  NearbyPostfix = '/nearby'
+}
+
+export enum ResponseText {
+  AuthFail = 'Не забудьте авторизоваться',
+  EmailFail = 'Введите корректный email',
+  Postfail = 'Произошла ошибка при отправке данных'
 }
 
 export enum AuthorizationStatus {
