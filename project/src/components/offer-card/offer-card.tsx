@@ -6,6 +6,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {changeFavoriteAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {AuthorizationStatus, AppRoute, ScreenType} from '../../const';
+import { getRoundedRate } from '../../utils/formulas';
 
 type CardScreenProps = {
   offers: Offer[];
@@ -15,6 +16,7 @@ type CardScreenProps = {
 
 function OfferCardScreen(props: CardScreenProps): JSX.Element {
   const {offers, cardHoverHandler, screenType} = props;
+
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
 
@@ -35,7 +37,7 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
     <Fragment>
       {offers.map((offer) => {
         const {price, rating, title, type, preview_image, is_favorite, is_premium} = offer;
-        const percentRating = rating * 20;
+        const percentRating = getRoundedRate(rating) * 20;
 
 
         const hoverHandler = (evt: MouseEvent<HTMLElement>) => {

@@ -14,6 +14,7 @@ import {AppRoute, AuthorizationStatus, ScreenType} from '../../const';
 import { useHistory } from 'react-router-dom';
 import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
 import LoadingScreen from '../loading/loading';
+import { getRoundedRate } from '../../utils/formulas';
 
 type PlaceOfferScreenProps = PropsWithChildren<{
   loadOfferId: string | number;
@@ -62,7 +63,9 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
 
   const {bedrooms, type, host, title, images, category,
     rating, price, goods, description, max_adults, is_favorite} = currentOffer as Offer;
-  const percentRating = rating * 20;
+
+  const roundedRating = getRoundedRate(rating);
+  const percentRating = roundedRating * 20;
 
   return (
     <Fragment>
@@ -104,7 +107,7 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
                   <span style={{width: `${percentRating}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{rating}</span>
+                <span className="property__rating-value rating__value">{roundedRating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
