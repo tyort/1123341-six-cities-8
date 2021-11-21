@@ -11,8 +11,7 @@ export const initialState: SingleOfferState = {
 
 const sortedComments = (comments: Comment[]): Comment[] => comments
   .slice()
-  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-  .slice(0, 10);
+  .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
 const singleOfferReducer = createReducer(initialState, (build) => {
   build
