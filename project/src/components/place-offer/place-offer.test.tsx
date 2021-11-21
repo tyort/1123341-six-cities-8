@@ -30,6 +30,7 @@ const store = mockStore({
   OFFER: {
     comments: mockComments,
     nearbyOffers: mockOffers,
+    currentOffer: mockOffer,
   },
 });
 
@@ -41,7 +42,7 @@ describe('Component: PlaceOfferScreen', () => {
       <Provider store={store}>
         <Router history={history}>
           <PlaceOfferScreen
-            currentOffer={mockOffer}
+            loadOfferId={mockOffer.id}
             renderCard={jest.fn(() => <h1>Fake Offer Card</h1>)}
             renderMap={jest.fn(() => <h1>Fake Map</h1>)}
           />

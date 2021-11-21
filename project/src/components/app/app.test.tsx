@@ -30,7 +30,7 @@ const store = mockStore({
     cities,
     isDataLoaded: true,
   },
-  OFFER: {comments: mockComments, nearbyOffers: mockOffers},
+  OFFER: {comments: mockComments, nearbyOffers: mockOffers, currentOffer: mockOffers[0]},
 });
 
 const history = createMemoryHistory();
