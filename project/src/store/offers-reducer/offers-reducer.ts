@@ -7,17 +7,17 @@ import {OffersState} from '../../types/state';
 
 const CITY_NAME_DEFAULT = 'Paris';
 
-const sortOffers = (proffer: Offer[], sortName: SortName, city: City): Offer[] => {
+const getSortedOffers = (offers: Offer[], sortName: SortName, city: City): Offer[] => {
   switch (sortName) {
     case SortName.PriceAscending:
-      return proffer.slice().sort((a, b) => a.price - b.price);
+      return offers.slice().sort((a, b) => a.price - b.price);
     case SortName.PriceDescending:
-      return proffer.slice().sort((a, b) => b.price - a.price);
+      return offers.slice().sort((a, b) => b.price - a.price);
     case SortName.RateDescending:
-      return proffer.slice().sort((a, b) => b.rating - a.rating);
+      return offers.slice().sort((a, b) => b.rating - a.rating);
     default:
       // Выдать порядок какой был на сервере
-      return proffer.slice().filter((item) => item.city.name === city.name);
+      return offers.slice().filter((item) => item.city.name === city.name);
   }
 };
 
@@ -40,8 +40,8 @@ const offersReducer = createReducer(initialState, (builder) => {
     .addCase(changeSortNameAction, (state, action) => {
       state.sortName = action.payload;
       state.currentOffers = state.sortName !== SortName.Popular
-        ? sortOffers(state.currentOffers, action.payload, state.city as City)
-        : sortOffers(state.allOffers, action.payload, state.city as City);
+        ? getSortedOffers(state.currentOffers, action.payload, state.city as City)
+        : getSortedOffers(state.allOffers, action.payload, state.city as City);
     })
     .addCase(loadOffersAction, (state, action) => {
       state.allOffers = action.payload;
