@@ -16,6 +16,8 @@ import { getAuthorizationStatus } from '../../store/auth-reducer/selectors';
 import LoadingScreen from '../loading/loading';
 import { getRoundedRate } from '../../utils/formulas';
 
+const RATE_IN_PERCENT = 20;
+
 type PlaceOfferScreenProps = PropsWithChildren<{
   loadOfferId: string | number;
   renderCard: (offers: Offer[], screenType: ScreenType) => JSX.Element;
@@ -65,7 +67,7 @@ function PlaceOfferScreen(props: PlaceOfferScreenProps): JSX.Element {
     rating, price, goods, description, max_adults, is_favorite} = currentOffer as Offer;
 
   const roundedRating = getRoundedRate(rating);
-  const percentRating = roundedRating * 20;
+  const percentRating = roundedRating * RATE_IN_PERCENT;
 
   return (
     <Fragment>

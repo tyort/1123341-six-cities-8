@@ -8,6 +8,8 @@ import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {AuthorizationStatus, AppRoute, ScreenType} from '../../const';
 import { getRoundedRate } from '../../utils/formulas';
 
+const RATE_IN_PERCENT = 20;
+
 type CardScreenProps = {
   offers: Offer[];
   cardHoverHandler: (hoveredOffer: Offer | undefined) => void;
@@ -37,7 +39,7 @@ function OfferCardScreen(props: CardScreenProps): JSX.Element {
     <Fragment>
       {offers.map((offer) => {
         const {price, rating, title, type, preview_image, is_favorite, is_premium} = offer;
-        const percentRating = getRoundedRate(rating) * 20;
+        const percentRating = getRoundedRate(rating) * RATE_IN_PERCENT;
 
 
         const handleArticleHover = (evt: MouseEvent<HTMLElement>) => {

@@ -2,6 +2,9 @@ import { Fragment, memo } from 'react';
 import { months } from '../../const';
 import {Comment} from '../../types/comment';
 
+const VISUALILZED_COMMENTS_COUNT = 10;
+const RATE_IN_PERCENT = 20;
+
 type ReviewScreenProps = {
   comments: Comment[];
 }
@@ -19,9 +22,9 @@ function ReviewScreen(props: ReviewScreenProps): JSX.Element {
   return (
     <Fragment>
       {comments
-        .slice(0, 10)
+        .slice(0, VISUALILZED_COMMENTS_COUNT)
         .map((review) => {
-          const percentRating = review.rating * 20;
+          const percentRating = review.rating * RATE_IN_PERCENT;
 
           return (
             <li key={review.id} className="reviews__item">
