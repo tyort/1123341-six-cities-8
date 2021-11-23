@@ -1,15 +1,14 @@
-import {CityName} from '../../const';
+import {cities} from '../../const';
 import {City} from '../../types/city';
 import {nanoid} from 'nanoid';
 
 type CityScreenProps = {
-  onCityChange: (cityTitle: CityName) => void;
+  onCityChange: (cityTitle: string) => void;
   currentCity: City;
 }
 
 function CityScreen(props: CityScreenProps): JSX.Element {
   const {currentCity, onCityChange} = props;
-  const cities: string[] = Object.values(CityName);
 
   return (
     <ul className="locations__list tabs__list">
@@ -20,7 +19,7 @@ function CityScreen(props: CityScreenProps): JSX.Element {
           data-city={city}
           onClick={(evt) => {
             evt.preventDefault();
-            onCityChange(evt.currentTarget.dataset.city as CityName);
+            onCityChange(evt.currentTarget.dataset.city as string);
           }}
         >
           <a

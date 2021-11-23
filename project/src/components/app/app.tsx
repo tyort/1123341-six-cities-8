@@ -18,7 +18,7 @@ import {getAllOffers, getCurrentCity, getCurrentSortName,
   getOffersLoadStatus, getSortedOffersInCity} from '../../store/offers-reducer/selectors';
 
 import {City} from '../../types/city';
-import {AppRoute, AuthorizationStatus, CityName, SortName} from '../../const';
+import {AppRoute, AuthorizationStatus, SortName} from '../../const';
 
 
 export const authIsUnknown = (authorizationStatus: AuthorizationStatus): boolean =>
@@ -38,7 +38,7 @@ function AppScreen(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const onCityChange = (cityName: CityName) => {
+  const onCityChange = (cityName: string) => {
     dispatch(changeCityAction(cityName));
   };
 

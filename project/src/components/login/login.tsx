@@ -1,7 +1,7 @@
 import {useRef, FormEvent, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus, CityName, getRandomInt, passPattern} from '../../const';
+import {AppRoute, AuthorizationStatus, cities, getRandomInt, passPattern} from '../../const';
 import {loginAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/auth-reducer/selectors';
 import {toast} from 'react-toastify';
@@ -16,7 +16,7 @@ function LoginScreen(): JSX.Element {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const RANDOM_CITY = Object.values(CityName)[getRandomInt(6)];
+    const RANDOM_CITY = cities[getRandomInt(6)];
     dispatch(changeCityAction(RANDOM_CITY));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

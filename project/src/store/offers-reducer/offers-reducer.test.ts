@@ -2,8 +2,8 @@
 import {offersReducer, initialState} from './offers-reducer';
 import {changeCityAction, changeSortNameAction, loadOffersAction, loadFavoritesAction, setFavoriteAction} from '../action';
 import {OffersState} from '../../types/state';
-import {cities, makeFakeOffers} from '../../utils/mocks';
-import {CityName, SortName} from '../../const';
+import {cities as mockCities, makeFakeOffers} from '../../utils/mocks';
+import {cities, SortName} from '../../const';
 import {Offer} from '../../types/offer';
 
 const mockFakeOffers = makeFakeOffers();
@@ -13,8 +13,8 @@ describe('Reducer: offersReducer', () => {
       .toEqual(initialState);
   });
   it('should change city`s feature by a given value', () => {
-    const state: OffersState = {...initialState, cities};
-    expect(offersReducer(state, changeCityAction(CityName.Brussels)))
+    const state: OffersState = {...initialState, cities: mockCities};
+    expect(offersReducer(state, changeCityAction(cities[2])))
       .toEqual({...state, city: cities[0]});
   });
   it('should change sorting name by a given value', () => {

@@ -56,6 +56,15 @@ export const months = new Map([
   [11, 'December'],
 ]);
 
+export const cities: readonly string[] = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export enum ScreenType {
   Main = 'Main screen',
   Offer = 'Offer screen',
@@ -67,15 +76,6 @@ export enum SortName {
   PriceAscending = 'Price: low to high',
   PriceDescending = 'Price: high to low',
   RateDescending = 'Top rated first'
-}
-
-export enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf',
 }
 
 export enum ActionName {

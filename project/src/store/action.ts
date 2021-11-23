@@ -1,11 +1,11 @@
 import {Offer} from '../types/offer';
 import {Comment} from '../types/comment';
-import {AppRoute, AuthorizationStatus, ActionName, CityName, SortName} from '../const';
+import {AppRoute, AuthorizationStatus, ActionName, SortName} from '../const';
 import {createAction} from '@reduxjs/toolkit';
 
 export const changeCityAction = createAction(
   ActionName.ChangeCity,
-  (cityName: CityName) => ({payload: cityName}),
+  (cityName: string) => ({payload: cityName}),
 );
 
 export const changeSortNameAction = createAction(
