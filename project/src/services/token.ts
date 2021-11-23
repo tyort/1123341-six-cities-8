@@ -2,10 +2,8 @@ const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 export type Token = string;
 
-// считываем токен из хранилища
 export const getToken = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);
-  // ?? отличается от || тем, что для него ложные значения только null и undefined
   return token ?? '';
 };
 
