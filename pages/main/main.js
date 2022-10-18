@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Header from '../../components/Header';
+import Link from 'next/link';
 
 const MainScreen = () => {
   return (
@@ -12,34 +13,46 @@ const MainScreen = () => {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item">
+                    <span>Paris</span>
+                  </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item">
+                    <span>Cologne</span>
+                  </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item">
+                    <span>Brussels</span>
+                  </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item tabs__item--active">
+                    <span>Amsterdam</span>
+                  </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item">
+                    <span>Hamburg</span>
+                  </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
+                <Link href="#" passRef>
+                  <a className="locations__item-link tabs__item">
+                    <span>Dusseldorf</span>
+                  </a>
+                </Link>
               </li>
             </ul>
           </section>
@@ -70,9 +83,11 @@ const MainScreen = () => {
                     <span>Premium</span>
                   </div>
                   <div className="cities__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <Image className="place-card__image" src="/img/apartment-01.jpg" width={260} height={200} alt="Place image"/>
-                    </a>
+                    <Link href="#" passRef>
+                      <a>
+                        <Image className="place-card__image" src="/img/apartment-01.jpg" width={260} height={200} alt="Place image"/>
+                      </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -94,7 +109,9 @@ const MainScreen = () => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+                      <Link href="#" passRef>
+                        <a>Beautiful &amp; luxurious apartment at great location</a>
+                      </Link>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -102,9 +119,11 @@ const MainScreen = () => {
 
                 <article className="cities__place-card place-card">
                   <div className="cities__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <Image className="place-card__image" src="/img/room.jpg" width={260} height={200} alt="Place image"/>
-                    </a>
+                    <Link href="#" passRef>
+                      <a>
+                        <Image className="place-card__image" src="/img/room.jpg" width={260} height={200} alt="Place image"/>
+                      </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -126,7 +145,9 @@ const MainScreen = () => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Wood and stone place</a>
+                      <Link href="#" passRef>
+                        <a>Wood and stone place</a>
+                      </Link>
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
@@ -134,9 +155,11 @@ const MainScreen = () => {
 
                 <article className="cities__place-card place-card">
                   <div className="cities__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <Image className="place-card__image" src="/img/apartment-02.jpg" width={260} height={200} alt="Place image"/>
-                    </a>
+                    <Link href="#" passRef>
+                      <a href="#">
+                        <Image className="place-card__image" src="/img/apartment-02.jpg" width={260} height={200} alt="Place image"/>
+                      </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -158,7 +181,9 @@ const MainScreen = () => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Canal View Prinsengracht</a>
+                      <Link href="#" passRef>
+                        <a>Canal View Prinsengracht</a>
+                      </Link>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -169,9 +194,11 @@ const MainScreen = () => {
                     <span>Premium</span>
                   </div>
                   <div className="cities__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <Image className="place-card__image" src="/img/apartment-03.jpg" width={260} height={200} alt="Place image"/>
-                    </a>
+                    <Link href="#" passRef>
+                      <a>
+                        <Image className="place-card__image" src="/img/apartment-03.jpg" width={260} height={200} alt="Place image"/>
+                      </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -193,7 +220,9 @@ const MainScreen = () => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Nice, cozy, warm big bed apartment</a>
+                      <Link href="#" passRef>
+                        <a>Nice, cozy, warm big bed apartment</a>
+                      </Link>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -201,9 +230,11 @@ const MainScreen = () => {
 
                 <article className="cities__place-card place-card">
                   <div className="cities__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <Image className="place-card__image" src="/img/room.jpg" width={260} height={200} alt="Place image"/>
-                    </a>
+                    <Link href="#" passRef>
+                      <a>
+                        <Image className="place-card__image" src="/img/room.jpg" width={260} height={200} alt="Place image"/>
+                      </a>
+                    </Link>
                   </div>
                   <div className="place-card__info">
                     <div className="place-card__price-wrapper">
@@ -225,7 +256,9 @@ const MainScreen = () => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">Wood and stone place</a>
+                      <Link href="#" passRef>
+                        <a>Wood and stone place</a>
+                      </Link>
                     </h2>
                     <p className="place-card__type">Private room</p>
                   </div>
