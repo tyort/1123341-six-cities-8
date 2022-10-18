@@ -35,4 +35,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## <Image src="/...
 
-Все пути к картинкам указываются относительно папки public
+В файлах pages все абсолютные пути к картинкам указываются относительно папки public
+В globals.css все абсолютные пути(url) указываются относительно папки public
