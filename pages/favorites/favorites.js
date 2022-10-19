@@ -2,8 +2,17 @@ import Image from 'next/image';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const FavoritesScreen = () => {
+  const router = useRouter();
+  const authorizationStatus = 'NO_AUTH';
+
+  useEffect(() => {
+    authorizationStatus !== 'AUTH' && router.push('/login/login');
+  }, []); // Пустой массив говорит о том, что хук сработает один раз после рендера компонента, даже при изменении состояний;
+
   return (
     <div className="page">
       <Header/>
