@@ -8,6 +8,7 @@ const Header = () => {
         <div className="header__wrapper">
           <div className="header__left">
             <Link href="#" passRef>
+              {/* при иребовании Sign in убираем header__logo-link--active*/}
               <a className="header__logo-link header__logo-link--active">
                 <Image className="header__logo" src="/img/logo.svg" alt="6 cities logo" width={81} height={41}/>
               </a>
@@ -20,6 +21,7 @@ const Header = () => {
                   <a className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
+                    {/* <span class="header__login">Sign in</span> */}
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
                   </a>
                 </Link>
