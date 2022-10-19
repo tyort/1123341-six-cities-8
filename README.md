@@ -37,3 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 В файлах pages все абсолютные пути к картинкам указываются относительно папки public
 В globals.css все абсолютные пути(url) указываются относительно папки public
+
+## next.config.js
+
+"react/react-in-jsx-scope": "off" -- разрешить отсутствие React при использовании JSX
