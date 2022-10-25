@@ -4,6 +4,62 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("NEXT_PUBLIC_DATABASE_URL")
 }
 
+model offer {
+  id                 Int           @id @default(autoincrement())
+  bedrooms           Int
+  city               city          @relation(fields: [cityId], references: [id])
+  cityId             Int
+  host               host          @relation(fields: [hostId], references: [id])
+  hostId             Int
+  description        String
+  goods              String[]
+  images             String[]
+  is_favorite        Boolean
+  is_premium         Boolean
+  offerLocation      offerLocation @relation(fields: [offerLocationId], references: [id])
+  offerLocationId    Int           @unique
+  max_adults         Int
+  preview_image      String
+  price              Int
+  rating             Decimal       @db.Decimal(15, 1)
+  title              String
+  type               String
+}
+
+model offerLocation {
+  id        Int     @id @default(autoincrement())
+  latitude  String
+  longitude String
+  zoom      Int
+  offer     offer?
+
+  @@unique([latitude, longitude])
+}
+
+model city {
+  id       Int       @id @default(autoincrement())
+  location location? // нет в таблице этой колонки. Через createMany корректно не создадим
+  name     String    @unique
+  offer    offer[] // нет в таблице такой колонки
+}
+
+model location {
+  latitude  String
+  longitude String
+  zoom      Int
+  city      city    @relation(fields: [cityId], references: [id])
+  cityId    Int     @unique
+
+  @@id([latitude, longitude])
+}
+
+model host {
+  id         Int     @id @default(autoincrement())
+  avatar_url String
+  is_pro     Boolean
+  name       String  @unique
+  offer      offer[]
+}
