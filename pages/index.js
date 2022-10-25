@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../components/Header';
 import PlaceCardComponent from '../components/PlaceCard';
-import offers from '../mocks/offers';
+import adverts from '../lib/offers';
 
 function MainScreen({ offers }) {
   return (
@@ -109,7 +108,7 @@ function MainScreen({ offers }) {
 export async function getServerSideProps() {
   return {
     props: {
-      offers,
+      offers: adverts,
     },
   };
 }
