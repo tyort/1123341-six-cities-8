@@ -1,19 +1,45 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-function PlaceCard({ offer, screen }) {
+function PlaceCard({ offer, screen, handleCardHover }) {
   const { preview_image, price, rating, title, type, is_premium } = offer;
-  const articleClasses =
-    screen === 'MainScreen' ? 'cities__place-card' : 'favorites__card';
-  const imgClasses =
-    screen === 'MainScreen'
-      ? 'cities__image-wrapper'
-      : 'favorites__image-wrapper';
-  const infoClasses = screen === 'MainScreen' ? '' : 'favorites__card-info';
+
+  let articleClasses;
+  let imgClasses;
+  let infoClasses;
+
+  switch (screen) {
+    case 'MainScreen':
+      articleClasses = 'cities__place-card';
+      imgClasses = 'cities__image-wrapper';
+      infoClasses = '';
+      break;
+    case 'OfferScreen':
+      articleClasses = 'near-places__card';
+      imgClasses = 'near-places__image-wrapper';
+      infoClasses = '';
+      break;
+    default:
+      articleClasses = 'favorites__card';
+      imgClasses = 'favorites__image-wrapper';
+      infoClasses = 'favorites__card-info';
+  }
+
   const isShowPremium = is_premium && screen === 'MainScreen';
 
   return (
-    <article className={`${articleClasses} place-card`}>
+    <article
+      className={`${articleClasses} place-card`}
+      onMouseOver={() => {
+        handleCardHover(offer);
+      }}
+      onFocus={() => {
+        handleCardHover(offer);
+      }}
+      onMouseLeave={() => {
+        handleCardHover(null);
+      }}
+    >
       {isShowPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>
@@ -25,8 +51,8 @@ function PlaceCard({ offer, screen }) {
             <Image
               className='place-card__image'
               src={`/${preview_image}`}
-              width={screen === 'MainScreen' ? 260 : 150}
-              height={screen === 'MainScreen' ? 200 : 110}
+              width={screen !== 'FavoritesScreen' ? 260 : 150}
+              height={screen !== 'FavoritesScreen' ? 200 : 110}
               alt='Place image'
             />
           </a>
