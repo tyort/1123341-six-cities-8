@@ -947,6 +947,7 @@ img {
   background-size: 34px 452px;
 }
 .property__image-wrapper {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

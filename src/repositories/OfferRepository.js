@@ -18,6 +18,15 @@ export default class OfferRepository {
     return allOffers;
   }
 
+  async getOffer({ offerId }) {
+    const offer = await this.prisma.offer.findUnique({
+      where: {
+        id: offerId,
+      },
+    });
+    return offer;
+  }
+
   async createOffer(offer) {
     const {
       location,
