@@ -1,29 +1,39 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-function PlaceCard({ offer }) {
+function PlaceCard({ offer, screen }) {
   const { preview_image, price, rating, title, type, is_premium } = offer;
+  const articleClasses =
+    screen === 'MainScreen' ? 'cities__place-card' : 'favorites__card';
+  const imgClasses =
+    screen === 'MainScreen'
+      ? 'cities__image-wrapper'
+      : 'favorites__image-wrapper';
+  const infoClasses = screen === 'MainScreen' ? '' : 'favorites__card-info';
+  const isShowPremium = is_premium && screen === 'MainScreen';
+
   return (
-    <article className='cities__place-card place-card'>
-      {is_premium && (
+    <article className={`${articleClasses} place-card`}>
+      {isShowPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>
         </div>
       )}
-      <div className='cities__image-wrapper place-card__image-wrapper'>
+      <div className={`${imgClasses} place-card__image-wrapper`}>
         <Link href='#' passRef>
           <a>
             <Image
               className='place-card__image'
               src={`/${preview_image}`}
-              width={260}
-              height={200}
+              width={screen === 'MainScreen' ? 260 : 150}
+              height={screen === 'MainScreen' ? 200 : 110}
               alt='Place image'
             />
           </a>
         </Link>
       </div>
-      <div className='place-card__info'>
+
+      <div className={`${infoClasses} place-card__info`}>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
             <b className='place-card__price-value'>&euro;{price}</b>

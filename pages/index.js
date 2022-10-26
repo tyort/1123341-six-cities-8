@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Header from '../components/Header';
-import PlaceCardComponent from '../components/PlaceCard';
+import PlacesList from '../components/PlacesList';
 import adverts from '../lib/offers';
 
 import OfferRepository from '../src/repositories/OfferRepository';
@@ -91,12 +91,7 @@ function MainScreen({ offers }) {
                   </li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
-                {offers !== null &&
-                  offers.map((offer) => (
-                    <PlaceCardComponent key={offer.id} offer={offer} />
-                  ))}
-              </div>
+              <PlacesList offers={offers} screen='MainScreen' />
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map' />
