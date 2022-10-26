@@ -3,6 +3,8 @@ import Header from '../components/Header';
 import PlaceCardComponent from '../components/PlaceCard';
 import adverts from '../lib/offers';
 
+import OfferRepository from '../src/repositories/OfferRepository';
+
 function MainScreen({ offers }) {
   return (
     <div className='page page--gray page--main'>
@@ -90,9 +92,10 @@ function MainScreen({ offers }) {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {offers.map((offer) => (
-                  <PlaceCardComponent key={offer.id} offer={offer} />
-                ))}
+                {offers !== null &&
+                  offers.map((offer) => (
+                    <PlaceCardComponent key={offer.id} offer={offer} />
+                  ))}
               </div>
             </section>
             <div className='cities__right-section'>
@@ -106,9 +109,14 @@ function MainScreen({ offers }) {
 }
 
 export async function getServerSideProps() {
+  const offerRepository = new OfferRepository();
+  await offerRepository.createOffers(adverts);
+  let offers = await offerRepository.getAllOffers();
+  offers = JSON.parse(JSON.stringify(offers));
+
   return {
     props: {
-      offers: adverts,
+      offers,
     },
   };
 }

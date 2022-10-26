@@ -9,61 +9,80 @@ export default class OfferRepository {
     items.forEach(async (offer) => {
       await this.createCities(offer.city);
       await this.createHosts(offer.host);
-      await this.createOfferLocation(offer.location);
+      await this.createOffer(offer);
     });
   }
 
-  // async createOffer(offer) {
-  //   const {
-  //     location,
-  //     is_premium,
-  //     bedrooms,
-  //     city,
-  //     host,
-  //     description,
-  //     goods,
-  //     images,
-  //     is_favorite,
-  //     max_adults,
-  //     preview_image,
-  //     price,
-  //     rating,
-  //     title,
-  //     type,
-  //   } = offer;
+  async getAllOffers() {
+    const allOffers = await this.prisma.offer.findMany({});
+    return allOffers;
+  }
 
-  //   const data = {
-  //     latitude: location.latitude,
-  //     longitude: location.longitude,
-  //     zoom: location.zoom,
-  //     offer: {
-  //       create: {
-  //         bedrooms,
-  //         city: {
-  //           connect: {
-  //             name: city.name,
-  //           },
-  //         },
-  //         host: {
-  //           connect: {
-  //             name: host.name,
-  //           },
-  //         },
-  //         description,
-  //         goods,
-  //         images,
-  //         is_favorite,
-  //         is_premium,
-  //         max_adults,
-  //         preview_image,
-  //         price,
-  //         rating,
-  //         title,
-  //         type,
-  //       },
-  //     },
-  //   };
-  // }
+  async createOffer(offer) {
+    const {
+      location,
+      is_premium,
+      bedrooms,
+      city,
+      host,
+      description,
+      goods,
+      images,
+      is_favorite,
+      max_adults,
+      preview_image,
+      price,
+      rating,
+      title,
+      type,
+    } = offer;
+
+    const data = {
+      bedrooms,
+      city: {
+        connect: {
+          name: city.name,
+        },
+      },
+      host: {
+        connect: {
+          name: host.name,
+        },
+      },
+      offerLocation: {
+        connectOrCreate: {
+          create: {
+            ...location,
+          },
+          where: {
+            latitude_longitude: {
+              latitude: location.latitude,
+              longitude: location.longitude,
+            },
+          },
+        },
+      },
+      description,
+      goods,
+      images,
+      is_favorite,
+      is_premium,
+      max_adults,
+      preview_image,
+      price,
+      rating,
+      title,
+      type,
+    };
+
+    await this.prisma.offer.upsert({
+      where: {
+        title,
+      },
+      update: data,
+      create: data,
+    });
+  }
 
   async createOfferLocation(location) {
     const { latitude, longitude } = location;

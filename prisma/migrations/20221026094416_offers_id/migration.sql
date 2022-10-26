@@ -9,7 +9,6 @@ CREATE TABLE "offer" (
     "images" TEXT[],
     "is_favorite" BOOLEAN NOT NULL,
     "is_premium" BOOLEAN NOT NULL,
-    "offerLocationId" INTEGER NOT NULL,
     "max_adults" INTEGER NOT NULL,
     "preview_image" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
@@ -26,6 +25,7 @@ CREATE TABLE "offerLocation" (
     "latitude" TEXT NOT NULL,
     "longitude" TEXT NOT NULL,
     "zoom" INTEGER NOT NULL,
+    "offerId" INTEGER NOT NULL,
 
     CONSTRAINT "offerLocation_pkey" PRIMARY KEY ("id")
 );
@@ -59,7 +59,10 @@ CREATE TABLE "host" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "offer_offerLocationId_key" ON "offer"("offerLocationId");
+CREATE UNIQUE INDEX "offer_title_key" ON "offer"("title");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "offerLocation_offerId_key" ON "offerLocation"("offerId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "offerLocation_latitude_longitude_key" ON "offerLocation"("latitude", "longitude");
@@ -80,7 +83,7 @@ ALTER TABLE "offer" ADD CONSTRAINT "offer_cityId_fkey" FOREIGN KEY ("cityId") RE
 ALTER TABLE "offer" ADD CONSTRAINT "offer_hostId_fkey" FOREIGN KEY ("hostId") REFERENCES "host"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "offer" ADD CONSTRAINT "offer_offerLocationId_fkey" FOREIGN KEY ("offerLocationId") REFERENCES "offerLocation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "offerLocation" ADD CONSTRAINT "offerLocation_offerId_fkey" FOREIGN KEY ("offerId") REFERENCES "offer"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "location" ADD CONSTRAINT "location_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

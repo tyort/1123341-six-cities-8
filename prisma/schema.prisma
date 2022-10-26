@@ -19,13 +19,12 @@ model offer {
   images             String[]
   is_favorite        Boolean
   is_premium         Boolean
-  offerLocation      offerLocation @relation(fields: [offerLocationId], references: [id])
-  offerLocationId    Int           @unique
+  offerLocation      offerLocation?
   max_adults         Int
   preview_image      String
   price              Int
   rating             Decimal       @db.Decimal(15, 1)
-  title              String
+  title              String        @unique
   type               String
 }
 
@@ -34,7 +33,8 @@ model offerLocation {
   latitude  String
   longitude String
   zoom      Int
-  offer     offer?
+  offer     offer   @relation(fields: [offerId], references: [id])
+  offerId   Int     @unique
 
   @@unique([latitude, longitude])
 }
