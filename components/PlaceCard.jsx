@@ -82,7 +82,7 @@ function PlaceCard({ offer, screen, handleCardHover }) {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link href='#' passRef>
+          <Link href={`/offer/${offer.id}`} passRef>
             <a>{title}</a>
           </Link>
         </h2>
