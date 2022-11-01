@@ -18,6 +18,11 @@ export default class OfferRepository {
     return allOffers;
   }
 
+  async getAllOffersLocation() {
+    const allOffersLocation = await this.prisma.offerLocation.findMany({});
+    return allOffersLocation;
+  }
+
   async getOffer({ offerId }) {
     const offer = await this.prisma.offer.findUnique({
       where: {
