@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 function Header() {
+  const { data: session } = useSession();
   return (
     <header className='header'>
       <div className='container'>
@@ -20,28 +22,50 @@ function Header() {
               </a>
             </Link>
           </div>
-          <nav className='header__nav'>
-            <ul className='header__nav-list'>
-              <li className='header__nav-item user'>
-                <Link href='#' passRef>
-                  <a className='header__nav-link header__nav-link--profile'>
-                    <div className='header__avatar-wrapper user__avatar-wrapper' />
-                    {/* <span class="header__login">Sign in</span> */}
-                    <span className='header__user-name user__name'>
-                      Oliver.conner@gmail.com
-                    </span>
-                  </a>
-                </Link>
-              </li>
-              <li className='header__nav-item'>
-                <Link href='#' passRef>
-                  <a className='header__nav-link'>
+
+          {session ? (
+            <nav className='header__nav'>
+              <ul className='header__nav-list'>
+                <li className='header__nav-item user'>
+                  <Link href='#' passRef>
+                    <a className='header__nav-link header__nav-link--profile'>
+                      <div className='header__avatar-wrapper user__avatar-wrapper' />
+                      {/* <span class="header__login">Sign in</span> */}
+                      <span className='header__user-name user__name'>
+                        Oliver.conner@gmail.com
+                      </span>
+                    </a>
+                  </Link>
+                </li>
+                <li className='header__nav-item'>
+                  <Link
+                    legacyBehavior={false}
+                    href='#'
+                    onClick={() => signOut()}
+                    className='header__nav-link'
+                  >
                     <span className='header__signout'>Sign out</span>
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          ) : (
+            <nav className='header__nav'>
+              <ul className='header__nav-list'>
+                <li className='header__nav-item user'>
+                  <Link
+                    legacyBehavior={false}
+                    href='#'
+                    className='header__nav-link header__nav-link--profile'
+                    onClick={() => signIn()}
+                  >
+                    <div className='header__avatar-wrapper user__avatar-wrapper' />
+                    <span className='header__login'>Sign in</span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          )}
         </div>
       </div>
     </header>
