@@ -161,7 +161,7 @@ function MainScreen({ offers, offersLocation, session }) {
 export async function getServerSideProps({ req, res }) {
   const session = await unstable_getServerSession(req, res, authOptions);
   const offerRepository = new OfferRepository();
-  await offerRepository.createOffers(adverts);
+  // await offerRepository.createOffers(adverts);
   let offers = await offerRepository.getAllOffers();
   let offersLocation = await offerRepository.getAllOffersLocation();
   offers = JSON.parse(JSON.stringify(offers));

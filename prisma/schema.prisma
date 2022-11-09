@@ -62,4 +62,6 @@ model host {
   is_pro     Boolean
   name       String  @unique
   offer      offer[]
+  email      String @unique
+  password   String
 }
