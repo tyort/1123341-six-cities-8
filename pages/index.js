@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import Script from 'next/script';
+import { unstable_getServerSession } from 'next-auth/next';
 import Header from '../components/Header';
 import PlacesList from '../components/PlacesList';
 import adverts from '../lib/offers';
+import { authOptions } from './api/auth/[...nextauth]';
 
 import OfferRepository from '../src/repositories/OfferRepository';
 
-function MainScreen({ offers, offersLocation }) {
+function MainScreen({ offers, offersLocation, session }) {
+  console.log(session);
   return (
     <>
       <div className='page page--gray page--main'>
@@ -155,7 +158,8 @@ function MainScreen({ offers, offersLocation }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
   const offerRepository = new OfferRepository();
   await offerRepository.createOffers(adverts);
   let offers = await offerRepository.getAllOffers();
@@ -167,6 +171,7 @@ export async function getServerSideProps() {
     props: {
       offers,
       offersLocation,
+      session,
     },
   };
 }

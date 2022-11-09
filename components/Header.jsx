@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  console.log(session);
   return (
     <header className='header'>
       <div className='container'>
@@ -23,7 +24,7 @@ function Header() {
             </Link>
           </div>
 
-          {session ? (
+          {status === 'authenticated' ? (
             <nav className='header__nav'>
               <ul className='header__nav-list'>
                 <li className='header__nav-item user'>
