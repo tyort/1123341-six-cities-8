@@ -1,7 +1,18 @@
 import Link from 'next/link';
+import { createRef } from 'react';
 import Header from '../../components/Header';
 
 function LoginScreen() {
+  const formRef = createRef(); // связываем JSX DOM-элементом;
+
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    // FormData - получить данные из формы;
+    // formRef.current - DOM-элемент;
+    // ... .get('name у Input')
+    console.log(`Данные формы`, new FormData(formRef.current).get(`email`));
+  };
+
   return (
     <div className='page page--gray page--login'>
       <Header />
@@ -10,7 +21,13 @@ function LoginScreen() {
         <div className='page__login-container container'>
           <section className='login'>
             <h1 className='login__title'>Sign in</h1>
-            <form className='login__form form' action='#' method='post'>
+            <form
+              ref={formRef}
+              className='login__form form'
+              action='#'
+              method='post'
+              onSubmit={handleFormSubmit}
+            >
               <div className='login__input-wrapper form__input-wrapper'>
                 <label className='visually-hidden'>E-mail</label>
                 <input
@@ -19,6 +36,7 @@ function LoginScreen() {
                   name='email'
                   placeholder='Email'
                   required=''
+                  defaultValue='вставляй данные не пользовательский через интерфейс'
                 />
               </div>
               <div className='login__input-wrapper form__input-wrapper'>
@@ -29,6 +47,7 @@ function LoginScreen() {
                   name='password'
                   placeholder='Password'
                   required=''
+                  defaultValue='вставляй данные не пользовательский через интерфейс'
                 />
               </div>
               <button
