@@ -7,8 +7,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 
 import OfferRepository from '../src/repositories/OfferRepository';
 
-function MainScreen({ offers, offersLocation, session }) {
-  console.log(session);
+function MainScreen({ offers, offersLocation }) {
   return (
     <>
       <div className='page page--gray page--main'>
@@ -150,18 +149,22 @@ function MainScreen({ offers, offersLocation, session }) {
 
 export async function getServerSideProps({ req, res }) {
   const session = await unstable_getServerSession(req, res, authOptions);
+
   const offerRepository = new OfferRepository();
   // await offerRepository.createOffers(adverts);
   let offers = await offerRepository.getAllOffers();
+  offers = JSON.parse(offers);
   let offersLocation = await offerRepository.getAllOffersLocation();
-  offers = JSON.parse(JSON.stringify(offers));
-  offersLocation = JSON.parse(JSON.stringify(offersLocation));
+  offersLocation = JSON.parse(offersLocation);
 
   return {
     props: {
       offers,
       offersLocation,
-      session,
+      session: {
+        ...session,
+        user: session?.user || null,
+      },
     },
   };
 }

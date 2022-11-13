@@ -2,20 +2,22 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import OfferRepository from '../../../src/repositories/OfferRepository';
 
+let host;
+
 export const authOptions = {
   session: {
     strategy: 'jwt',
   },
 
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: 'credentials',
       async authorize(formNames) {
         const { email, password } = formNames;
         const offerRepository = new OfferRepository();
-        const host = await offerRepository.getHost({ email });
+        offerRepository.getHost({ email }).then((response) => {
+          host = JSON.parse(response);
+        });
 
         if (!host || password !== host.password) {
           return null;
@@ -25,6 +27,12 @@ export const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session }) {
+      console.log('писька');
+      return { ...session, user: host };
+    },
+  },
   pages: {
     signIn: '/login/login',
   },
