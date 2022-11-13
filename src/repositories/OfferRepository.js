@@ -11,7 +11,7 @@ export default class OfferRepository {
         email,
       },
     });
-    return host;
+    return JSON.stringify(host);
   }
 
   async createOffers(items) {
@@ -24,12 +24,12 @@ export default class OfferRepository {
 
   async getAllOffers() {
     const allOffers = await this.prisma.offer.findMany({});
-    return allOffers;
+    return JSON.stringify(allOffers);
   }
 
   async getAllOffersLocation() {
     const allOffersLocation = await this.prisma.offerLocation.findMany({});
-    return allOffersLocation;
+    return JSON.stringify(allOffersLocation);
   }
 
   async getOffer({ offerId }) {
