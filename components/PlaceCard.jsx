@@ -46,16 +46,14 @@ function PlaceCard({ offer, screen, handleCardHover }) {
         </div>
       )}
       <div className={`${imgClasses} place-card__image-wrapper`}>
-        <Link href='#' passRef>
-          <a>
-            <Image
-              className='place-card__image'
-              src={`/${preview_image}`}
-              width={screen !== 'FavoritesScreen' ? 260 : 150}
-              height={screen !== 'FavoritesScreen' ? 200 : 110}
-              alt='Place image'
-            />
-          </a>
+        <Link href='#'>
+          <Image
+            className='place-card__image'
+            src={`/${preview_image}`}
+            width={screen !== 'FavoritesScreen' ? 260 : 150}
+            height={screen !== 'FavoritesScreen' ? 200 : 110}
+            alt='Place image'
+          />
         </Link>
       </div>
 
@@ -82,9 +80,7 @@ function PlaceCard({ offer, screen, handleCardHover }) {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link href={`/offer/${offer.id}`} passRef>
-            <a>{title}</a>
-          </Link>
+          <Link href={`/offer/${offer.id}`}>{title}</Link>
         </h2>
         <p className='place-card__type'>{type}</p>
       </div>

@@ -60,10 +60,8 @@ function LoginScreen() {
           </section>
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
-              <Link href='#' passRef>
-                <a className='locations__item-link'>
-                  <span>Amsterdam</span>
-                </a>
+              <Link href='#' className='locations__item-link'>
+                <span>Amsterdam</span>
               </Link>
             </div>
           </section>

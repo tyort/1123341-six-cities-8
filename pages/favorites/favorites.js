@@ -37,10 +37,8 @@ function FavoritesScreen({ offers }) {
               <li className='favorites__locations-items'>
                 <div className='favorites__locations locations locations--current'>
                   <div className='locations__item'>
-                    <Link href='#' passRef>
-                      <a className='locations__item-link'>
-                        <span>Cologne</span>
-                      </a>
+                    <Link href='#' className='locations__item-link'>
+                      <span>Cologne</span>
                     </Link>
                   </div>
                 </div>

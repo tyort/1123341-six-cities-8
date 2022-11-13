@@ -21,45 +21,36 @@ function MainScreen({ offers, offersLocation, session }) {
             <section className='locations container'>
               <ul className='locations__list tabs__list'>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item'>
-                      <span>Paris</span>
-                    </a>
+                  <Link href='#' className='locations__item-link tabs__item'>
+                    <span>Paris</span>
                   </Link>
                 </li>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item'>
-                      <span>Cologne</span>
-                    </a>
+                  <Link href='#' className='locations__item-link tabs__item'>
+                    <span>Cologne</span>
                   </Link>
                 </li>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item'>
-                      <span>Brussels</span>
-                    </a>
+                  <Link href='#' className='locations__item-link tabs__item'>
+                    <span>Brussels</span>
                   </Link>
                 </li>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item tabs__item--active'>
-                      <span>Amsterdam</span>
-                    </a>
+                  <Link
+                    href='#'
+                    className='locations__item-link tabs__item tabs__item--active'
+                  >
+                    <span>Amsterdam</span>
                   </Link>
                 </li>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item'>
-                      <span>Hamburg</span>
-                    </a>
+                  <Link href='#' className='locations__item-link tabs__item'>
+                    <span>Hamburg</span>
                   </Link>
                 </li>
                 <li className='locations__item'>
-                  <Link href='#' passRef>
-                    <a className='locations__item-link tabs__item'>
-                      <span>Dusseldorf</span>
-                    </a>
+                  <Link href='#' className='locations__item-link tabs__item'>
+                    <span>Dusseldorf</span>
                   </Link>
                 </li>
               </ul>
