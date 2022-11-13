@@ -46,7 +46,7 @@ function PlaceCard({ offer, screen, handleCardHover }) {
         </div>
       )}
       <div className={`${imgClasses} place-card__image-wrapper`}>
-        <Link href='#'>
+        <Link href={`/offer/${offer.id}`}>
           <Image
             className='place-card__image'
             src={`/${preview_image}`}
