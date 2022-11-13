@@ -3,7 +3,7 @@ import PlaceCardComponent from './PlaceCard';
 
 function PlacesList({ offers, screen }) {
   const [hoveredOffer, setHoveredOffer] = useState(null);
-  console.log(hoveredOffer);
+  // console.log(hoveredOffer);
 
   let currentClasses;
   switch (screen) {
