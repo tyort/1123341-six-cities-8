@@ -12,12 +12,11 @@ function LoginScreen() {
     // formRef.current - DOM-элемент;
     // ... .get('name у Input')
     const dlflfl = new FormData(formRef.current);
-    const jfjdk = await signIn('credentials', {
+    await signIn('credentials', {
       email: dlflfl.get(`email`),
       password: dlflfl.get(`password`),
       redirect: false,
     });
-    console.log(jfjdk);
   };
 
   return (
@@ -43,7 +42,7 @@ function LoginScreen() {
                   name='email'
                   placeholder='Email'
                   required=''
-                  defaultValue='вставляй данные не пользовательский через интерфейс'
+                  defaultValue='666@hail.sru'
                 />
               </div>
               <div className='login__input-wrapper form__input-wrapper'>
@@ -54,7 +53,7 @@ function LoginScreen() {
                   name='password'
                   placeholder='Password'
                   required=''
-                  defaultValue='вставляй данные не пользовательский через интерфейс'
+                  defaultValue='atlanta666'
                 />
               </div>
               <button
