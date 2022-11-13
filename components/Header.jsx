@@ -1,6 +1,6 @@
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
 
 function Header() {
   const { data: session, status } = useSession();
@@ -12,7 +12,7 @@ function Header() {
           <div className='header__left'>
             {/* при иребовании Sign in убираем header__logo-link--active */}
             <Link
-              href='#'
+              href='/'
               className='header__logo-link header__logo-link--active'
             >
               <Image
@@ -30,7 +30,7 @@ function Header() {
               <ul className='header__nav-list'>
                 <li className='header__nav-item user'>
                   <Link
-                    href='#'
+                    href='/'
                     className='header__nav-link header__nav-link--profile'
                   >
                     <div className='header__avatar-wrapper user__avatar-wrapper' />
@@ -42,7 +42,7 @@ function Header() {
                 </li>
                 <li className='header__nav-item'>
                   <Link
-                    href='#'
+                    href='/'
                     onClick={() => signOut()}
                     className='header__nav-link'
                   >
@@ -56,9 +56,12 @@ function Header() {
               <ul className='header__nav-list'>
                 <li className='header__nav-item user'>
                   <Link
-                    href='#'
+                    href='/login/login'
                     className='header__nav-link header__nav-link--profile'
-                    onClick={() => signIn()}
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      signIn();
+                    }}
                   >
                     <div className='header__avatar-wrapper user__avatar-wrapper' />
                     <span className='header__login'>Sign in</span>

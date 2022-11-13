@@ -1,14 +1,32 @@
 import NextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import OfferRepository from '../../../src/repositories/OfferRepository';
 
 export const authOptions = {
+  session: {
+    strategy: 'jwt',
+  },
+
   // Configure one or more authentication providers
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. 'Sign in with...')
+      name: 'credentials',
+      async authorize(formNames) {
+        const { email, password } = formNames;
+        const offerRepository = new OfferRepository();
+        const host = await offerRepository.getHost({ email });
+
+        if (!host || password !== host.password) {
+          return null;
+        }
+
+        return host;
+      },
     }),
-    // ...add more providers here
   ],
+  pages: {
+    signIn: '/login/login',
+  },
 };
 export default NextAuth(authOptions);

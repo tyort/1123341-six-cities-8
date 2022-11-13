@@ -1,16 +1,23 @@
 import Link from 'next/link';
 import { createRef } from 'react';
+import { signIn } from 'next-auth/react';
 import Header from '../../components/Header';
 
 function LoginScreen() {
   const formRef = createRef(); // связываем JSX DOM-элементом;
 
-  const handleFormSubmit = (evt) => {
+  const handleFormSubmit = async (evt) => {
     evt.preventDefault();
     // FormData - получить данные из формы;
     // formRef.current - DOM-элемент;
     // ... .get('name у Input')
-    console.log(`Данные формы`, new FormData(formRef.current).get(`email`));
+    const dlflfl = new FormData(formRef.current);
+    const jfjdk = await signIn('credentials', {
+      email: dlflfl.get(`email`),
+      password: dlflfl.get(`password`),
+      redirect: false,
+    });
+    console.log(jfjdk);
   };
 
   return (
@@ -60,7 +67,7 @@ function LoginScreen() {
           </section>
           <section className='locations locations--login locations--current'>
             <div className='locations__item'>
-              <Link href='#' className='locations__item-link'>
+              <Link href='/' className='locations__item-link'>
                 <span>Amsterdam</span>
               </Link>
             </div>

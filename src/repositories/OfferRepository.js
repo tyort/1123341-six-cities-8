@@ -5,6 +5,15 @@ export default class OfferRepository {
     this.prisma = prisma;
   }
 
+  async getHost({ email }) {
+    const host = await this.prisma.host.findUnique({
+      where: {
+        email,
+      },
+    });
+    return host;
+  }
+
   async createOffers(items) {
     items.forEach(async (offer) => {
       await this.createCities(offer.city);
