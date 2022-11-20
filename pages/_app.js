@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <>
+    <SessionProvider session={session}>
       <Head>
         <meta charSet='utf-8' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -13,17 +13,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <title>6 cities: authorization</title>
       </Head>
       <Layout>
-        <SessionProvider
-          session={session}
-          // Re-fetch session every 5 minutes
-          refetchInterval={5 * 60}
-          // Re-fetches session when window is focused
-          refetchOnWindowFocus
-        >
-          <Component {...pageProps} />
-        </SessionProvider>
+        <Component {...pageProps} />
       </Layout>
-    </>
+    </SessionProvider>
   );
 }
 
