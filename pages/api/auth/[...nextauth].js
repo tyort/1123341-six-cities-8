@@ -27,12 +27,6 @@ export const authOptions = {
       },
     }),
   ],
-  callbacks: {
-    async session({ session }) {
-      console.log('писька');
-      return { ...session, user: host };
-    },
-  },
   pages: {
     signIn: '/login/login',
   },

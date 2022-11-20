@@ -1,9 +1,7 @@
-import { unstable_getServerSession } from 'next-auth/next';
 import Link from 'next/link';
 import Script from 'next/script';
 import Header from '../components/Header';
 import PlacesList from '../components/PlacesList';
-import { authOptions } from './api/auth/[...nextauth]';
 
 import OfferRepository from '../src/repositories/OfferRepository';
 
@@ -147,9 +145,7 @@ function MainScreen({ offers, offersLocation }) {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  const session = await unstable_getServerSession(req, res, authOptions);
-
+export async function getServerSideProps() {
   const offerRepository = new OfferRepository();
   // await offerRepository.createOffers(adverts);
   let offers = await offerRepository.getAllOffers();
@@ -161,10 +157,6 @@ export async function getServerSideProps({ req, res }) {
     props: {
       offers,
       offersLocation,
-      session: {
-        ...session,
-        user: session?.user || null,
-      },
     },
   };
 }
