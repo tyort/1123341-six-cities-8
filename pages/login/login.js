@@ -1,22 +1,27 @@
 import Link from 'next/link';
 import { createRef } from 'react';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Header from '../../components/Header';
 
 function LoginScreen() {
   const formRef = createRef(); // связываем JSX DOM-элементом;
+  const router = useRouter();
 
   const handleFormSubmit = async (evt) => {
     evt.preventDefault();
     // FormData - получить данные из формы;
     // formRef.current - DOM-элемент;
     // ... .get('name у Input')
-    const dlflfl = new FormData(formRef.current);
-    await signIn('credentials', {
-      email: dlflfl.get(`email`),
-      password: dlflfl.get(`password`),
+    const formData = new FormData(formRef.current);
+    const credentialsSignIn = await signIn('credentials', {
+      email: formData.get(`email`),
+      password: formData.get(`password`),
       redirect: false,
+      callbackUrl: '/',
     });
+
+    credentialsSignIn.error === null && router.push(credentialsSignIn.url);
   };
 
   return (
