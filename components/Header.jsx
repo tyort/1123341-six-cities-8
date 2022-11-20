@@ -2,8 +2,10 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 function Header() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [currentStatus, setCurrentStatus] = useState(status);
   useEffect(() => {
@@ -48,9 +50,14 @@ function Header() {
                 <li className='header__nav-item'>
                   <Link
                     href='/'
-                    onClick={(evt) => {
+                    onClick={async (evt) => {
                       evt.preventDefault();
-                      signOut({ callbackUrl: '/' });
+                      const data = await signOut({
+                        redirect: false,
+                        callbackUrl: '/login/login',
+                      });
+
+                      router.push(data.url);
                     }}
                     className='header__nav-link'
                   >
@@ -66,9 +73,14 @@ function Header() {
                   <Link
                     href='/login/login'
                     className='header__nav-link header__nav-link--profile'
-                    onClick={(evt) => {
+                    onClick={async (evt) => {
                       evt.preventDefault();
-                      signIn({ callbackUrl: '/' });
+                      const data = await signIn({
+                        redirect: false,
+                        callbackUrl: '/',
+                      });
+
+                      router.push(data.url);
                     }}
                   >
                     <div className='header__avatar-wrapper user__avatar-wrapper' />
