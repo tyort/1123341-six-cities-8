@@ -33,7 +33,7 @@ model comment {
   id      Int        @id @default(autoincrement())
   date    DateTime   @default(now())
   comment String
-  rating  Int
+  rating  Decimal    @db.Decimal(15, 1)
   user    host       @relation(fields: [userId], references: [id])
   userId  Int
   offer   offer      @relation(fields: [offerId], references: [id])

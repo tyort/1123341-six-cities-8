@@ -1,4 +1,5 @@
 import prisma from '../../lib/prisma';
+import comments from '../../lib/comments';
 
 export default class OfferRepository {
   constructor() {
@@ -25,6 +26,12 @@ export default class OfferRepository {
   async getAllOffers() {
     const allOffers = await this.prisma.offer.findMany({});
     return JSON.stringify(allOffers);
+  }
+
+  async createComments() {
+    await this.prisma.comment.createMany({
+      data: comments,
+    });
   }
 
   async getAllOffersLocation() {

@@ -147,7 +147,6 @@ function MainScreen({ offers, offersLocation }) {
 
 export async function getServerSideProps() {
   const offerRepository = new OfferRepository();
-  // await offerRepository.createOffers(adverts);
   let offers = await offerRepository.getAllOffers();
   offers = JSON.parse(offers);
   let offersLocation = await offerRepository.getAllOffersLocation();
