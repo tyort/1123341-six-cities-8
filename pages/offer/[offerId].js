@@ -7,7 +7,7 @@ const offerRepository = new OfferRepository();
 
 export async function getStaticPaths() {
   let offers = await offerRepository.getAllOffers();
-  offers = JSON.parse(JSON.stringify(offers));
+  offers = JSON.parse(offers);
   const paths = offers.map((offer) => ({
     params: { offerId: offer.id.toString() },
   }));
@@ -20,11 +20,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   let offers = await offerRepository.getAllOffers();
-  offers = JSON.parse(JSON.stringify(offers));
+  offers = JSON.parse(offers);
 
   const { offerId } = context.params;
   let offer = await offerRepository.getOffer({ offerId: Number(offerId) });
-  offer = JSON.parse(JSON.stringify(offer));
+  offer = JSON.parse(offer);
   return {
     props: { offer, offers },
   };

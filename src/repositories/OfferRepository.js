@@ -38,7 +38,7 @@ export default class OfferRepository {
         id: offerId,
       },
     });
-    return offer;
+    return JSON.stringify(offer);
   }
 
   async createOffer(offer) {

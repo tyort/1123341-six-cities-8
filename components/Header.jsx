@@ -1,4 +1,4 @@
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -73,15 +73,6 @@ function Header() {
                   <Link
                     href='/login/login'
                     className='header__nav-link header__nav-link--profile'
-                    onClick={async (evt) => {
-                      evt.preventDefault();
-                      const data = await signIn({
-                        redirect: false,
-                        callbackUrl: '/',
-                      });
-
-                      router.push(data.url);
-                    }}
                   >
                     <div className='header__avatar-wrapper user__avatar-wrapper' />
                     <span className='header__login'>Sign in</span>
