@@ -1,35 +1,36 @@
 import Image from 'next/image';
+import { format } from 'date-fns';
 
 function ReviewsItemScreen({ comment }) {
-  console.log(comment);
-  const {} = comment;
+  const { comment: text, user, rating, date } = comment;
+  const { avatar_url, name } = user;
   return (
     <li className='reviews__item'>
       <div className='reviews__user user'>
         <div className='reviews__avatar-wrapper user__avatar-wrapper'>
           <Image
             className='reviews__avatar user__avatar'
-            src='/img/avatar-max.jpg'
+            src={`/${avatar_url}`}
             width='54'
             height='54'
             alt='Reviews avatar'
           />
         </div>
-        <span className='reviews__user-name'>Max</span>
+        <span className='reviews__user-name'>{name}</span>
       </div>
       <div className='reviews__info'>
         <div className='reviews__rating rating'>
           <div className='reviews__stars rating__stars'>
-            <span style={{ width: '80%' }} />
+            <span style={{ width: `${(Number(rating) * 100) / 5}%` }} />
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
-        <p className='reviews__text'>
-          A quiet cozy and picturesque that hides behind a a river by the unique
-          lightness of Amsterdam. The building is green and from 18th century.
-        </p>
-        <time className='reviews__time' dateTime='2019-04-24'>
-          April 2019
+        <p className='reviews__text'>{text}</p>
+        <time
+          className='reviews__time'
+          dateTime={format(new Date(date), 'yyyy-MM-dd')}
+        >
+          {format(new Date(date), 'PPP')}
         </time>
       </div>
     </li>
