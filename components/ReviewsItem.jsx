@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
-function ReviewsItemScreen() {
+function ReviewsItemScreen({ comment }) {
+  console.log(comment);
+  const {} = comment;
   return (
     <li className='reviews__item'>
       <div className='reviews__user user'>

@@ -1,9 +1,12 @@
 import ReviewItemScreen from './ReviewsItem';
 
-function ReviewsListScreen() {
+function ReviewsListScreen({ comments }) {
+  console.log(comments);
   return (
     <ul className='reviews__list'>
-      <ReviewItemScreen />
+      {comments.map((comment) => (
+        <ReviewItemScreen key={comment.id} comment={comment} />
+      ))}
     </ul>
   );
 }
