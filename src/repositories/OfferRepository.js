@@ -54,6 +54,9 @@ export default class OfferRepository {
       where: {
         id: offerId,
       },
+      include: {
+        offerLocation: true,
+      },
     });
     return JSON.stringify(offer);
   }
