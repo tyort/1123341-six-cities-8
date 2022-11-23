@@ -44,13 +44,6 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
   const mapElement = useRef(null);
   const [rate, setRating] = useState(0);
   const [userComment, setUserComment] = useState('');
-  const { offerLocation } = offer;
-
-  const kdkvkfk = (offerLoc) => {
-    mapElement.current.dataset.latitude = offerLoc.latitude;
-    mapElement.current.dataset.longitude = offerLoc.longitude;
-    mapElement.current.click();
-  };
 
   const {
     images,
@@ -63,6 +56,8 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
     description,
     price,
     goods,
+    offerLocation,
+    host,
   } = offer;
 
   const handleInputChange = (evt) => {
@@ -210,14 +205,14 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
                   <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
                     <Image
                       className='property__avatar user__avatar'
-                      src='/img/avatar-angelina.jpg'
+                      src={`/${host.avatar_url}`}
                       width='74'
                       height='74'
                       alt='Host avatar'
                     />
                   </div>
-                  <span className='property__user-name'>Angelina</span>
-                  <span className='property__user-status'>Pro</span>
+                  <span className='property__user-name'>{host.name}</span>
+                  {/* <span className='property__user-status'>Pro</span> */}
                 </div>
                 <div className='property__description'>
                   <p className='property__text'>{description}</p>

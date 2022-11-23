@@ -60,6 +60,7 @@ export default class OfferRepository {
       },
       include: {
         offerLocation: true,
+        host: true,
       },
     });
     return JSON.stringify(offer);
