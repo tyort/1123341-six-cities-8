@@ -2,7 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 function PlaceCard({ offer, screen, handleCardHover }) {
-  const { preview_image, price, rating, title, type, is_premium } = offer;
+  const {
+    preview_image,
+    price,
+    rating,
+    title,
+    type,
+    is_premium,
+    offerLocation,
+  } = offer;
 
   let articleClasses;
   let imgClasses;
@@ -48,11 +56,13 @@ function PlaceCard({ offer, screen, handleCardHover }) {
       <div className={`${imgClasses} place-card__image-wrapper`}>
         <Link href={`/offer/${offer.id}`}>
           <Image
-            className='place-card__image'
+            className='place-card__image mark-for-getting-coordinates'
             src={`/${preview_image}`}
             width={screen !== 'FavoritesScreen' ? 260 : 150}
             height={screen !== 'FavoritesScreen' ? 200 : 110}
             alt='Place image'
+            data-latitude={offerLocation.latitude}
+            data-longitude={offerLocation.longitude}
           />
         </Link>
       </div>
@@ -80,7 +90,14 @@ function PlaceCard({ offer, screen, handleCardHover }) {
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link href={`/offer/${offer.id}`}>{title}</Link>
+          <Link
+            href={`/offer/${offer.id}`}
+            data-latitude={offerLocation.latitude}
+            data-longitude={offerLocation.longitude}
+            className='mark-for-getting-coordinates'
+          >
+            {title}
+          </Link>
         </h2>
         <p className='place-card__type'>{type}</p>
       </div>

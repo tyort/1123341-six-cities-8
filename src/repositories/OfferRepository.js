@@ -23,7 +23,11 @@ export default class OfferRepository {
   }
 
   async getAllOffers() {
-    const allOffers = await this.prisma.offer.findMany({});
+    const allOffers = await this.prisma.offer.findMany({
+      include: {
+        offerLocation: true,
+      },
+    });
     return JSON.stringify(allOffers);
   }
 

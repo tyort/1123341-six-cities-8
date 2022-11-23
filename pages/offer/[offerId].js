@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import PlacesList from '../../components/PlacesList';
@@ -41,9 +41,16 @@ export async function getStaticProps(context) {
 }
 
 function OfferScreen({ offer, offers, comments, offersLocation }) {
+  const mapElement = useRef(null);
   const [rate, setRating] = useState(0);
   const [userComment, setUserComment] = useState('');
   const { offerLocation } = offer;
+
+  const kdkvkfk = (offerLoc) => {
+    mapElement.current.dataset.latitude = offerLoc.latitude;
+    mapElement.current.dataset.longitude = offerLoc.longitude;
+    mapElement.current.click();
+  };
 
   const {
     images,
@@ -65,6 +72,60 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
   const handleTextareaChange = (evt) => {
     const { value } = evt.target;
     setUserComment(value);
+  };
+
+  const init = () => {
+    // Создание карты.
+    const myMap = new ymaps.Map(
+      'property-map',
+      {
+        center: [offerLocation.latitude, offerLocation.longitude],
+        zoom: 17,
+      },
+      { searchControlProvider: 'yandex#search' }
+    );
+
+    document.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('mark-for-getting-coordinates')) {
+        myMap.setCenter([
+          evt.target.dataset.latitude,
+          evt.target.dataset.longitude,
+        ]);
+      }
+    });
+
+    const myGeoObjects = offersLocation.map(
+      ({ latitude, longitude, offerId }) =>
+        new ymaps.Placemark(
+          [latitude, longitude],
+          {
+            balloonContent: '<strong>серобуромалиновый</strong> цвет',
+            offerId,
+          },
+          {
+            preset: 'islands#greenDotIconWithCaption',
+            iconColor: 'yellow',
+          }
+        )
+    );
+
+    myGeoObjects.forEach((geoObject) => {
+      myMap.geoObjects.add(geoObject);
+
+      geoObject.events.add('mouseenter', (evt) => {
+        evt
+          .get('target')
+          .options.set('preset', 'islands#greenDotIconWithCaption');
+        evt.get('target').options.set('iconColor', 'blue');
+        // console.log(evt.target);
+      });
+      geoObject.events.add('mouseleave', (evt) => {
+        evt
+          .get('target')
+          .options.set('preset', 'islands#greenDotIconWithCaption');
+        evt.get('target').options.set('iconColor', 'yellow');
+      });
+    });
   };
 
   return (
@@ -233,7 +294,11 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
               </section>
             </div>
           </div>
-          <section id='property-map' className='property__map map' />
+          <section
+            id='property-map'
+            ref={mapElement}
+            className='property__map map'
+          />
         </section>
         <div className='container'>
           <section className='near-places places'>
@@ -248,53 +313,7 @@ function OfferScreen({ offer, offers, comments, offersLocation }) {
         src='https://api-maps.yandex.ru/2.1/?apikey=19d2c763-adea-4e63-892d-2e9a662f7873&lang=ru_RU'
         type='text/javascript'
         strategy='lazyOnload'
-        onReady={() => {
-          function init() {
-            // Создание карты.
-            const myMap = new ymaps.Map(
-              'property-map',
-              {
-                center: [offerLocation.latitude, offerLocation.longitude],
-                zoom: 17,
-              },
-              { searchControlProvider: 'yandex#search' }
-            );
-
-            const myGeoObjects = offersLocation.map((label) => {
-              const { latitude, longitude, offerId } = label;
-              return new ymaps.Placemark(
-                [latitude, longitude],
-                {
-                  balloonContent: '<strong>серобуромалиновый</strong> цвет',
-                  offerId,
-                },
-                {
-                  preset: 'islands#greenDotIconWithCaption',
-                  iconColor: 'yellow',
-                }
-              );
-            });
-
-            myGeoObjects.forEach((geoObject) => {
-              myMap.geoObjects.add(geoObject);
-
-              geoObject.events.add('mouseenter', (evt) => {
-                evt
-                  .get('target')
-                  .options.set('preset', 'islands#greenDotIconWithCaption');
-                evt.get('target').options.set('iconColor', 'blue');
-              });
-              geoObject.events.add('mouseleave', (evt) => {
-                evt
-                  .get('target')
-                  .options.set('preset', 'islands#greenDotIconWithCaption');
-                evt.get('target').options.set('iconColor', 'yellow');
-              });
-            });
-          }
-
-          ymaps.ready(init);
-        }}
+        onReady={() => ymaps.ready(init)}
       />
     </>
   );
