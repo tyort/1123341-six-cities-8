@@ -149,6 +149,7 @@ export async function getServerSideProps() {
   const offerRepository = new OfferRepository();
   let offers = await offerRepository.getAllOffers();
   offers = JSON.parse(offers);
+  console.log(offers);
   let offersLocation = await offerRepository.getAllOffersLocation();
   offersLocation = JSON.parse(offersLocation);
 
