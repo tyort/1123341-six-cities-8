@@ -10,13 +10,26 @@ import { changeCity } from '../src/store/action';
 
 import OfferRepository from '../src/repositories/OfferRepository';
 
+const letSortOffers = (sortName) => {
+  switch (sortName) {
+    case 'Top rated first':
+      return (a, b) => Number(b.rating) - Number(a.rating);
+    case 'Price: low to high':
+      return (a, b) => a.price - b.price;
+    case 'Price: high to low':
+      return (a, b) => b.price - a.price;
+    default:
+      return () => 0;
+  }
+};
+
 function MainScreen({ offers, offersLocation, cities }) {
   const dispatch = useDispatch();
-  const { currentCity } = useSelector((state) => state);
+  const { currentCity, sortName } = useSelector((state) => state);
   const currentCityDB = cities.find((city) => city.name === currentCity);
-  const offersForVisual = offers.filter(
-    (offer) => offer.city.name === currentCity
-  );
+  const offersForVisual = offers
+    .filter((offer) => offer.city.name === currentCity)
+    .sort(letSortOffers(sortName));
 
   const handleLinkClick = (evt) => {
     dispatch(changeCity({ currentCity: evt.target.innerText }));
