@@ -26,6 +26,7 @@ export default class OfferRepository {
     const allOffers = await this.prisma.offer.findMany({
       include: {
         offerLocation: true,
+        city: true,
       },
     });
     return JSON.stringify(allOffers);
@@ -35,6 +36,15 @@ export default class OfferRepository {
     await this.prisma.comment.createMany({
       data,
     });
+  }
+
+  async getAllCities() {
+    const cities = await this.prisma.city.findMany({
+      include: {
+        location: true,
+      },
+    });
+    return JSON.stringify(cities);
   }
 
   async getComments({ offerId }) {
