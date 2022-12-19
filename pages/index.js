@@ -24,6 +24,8 @@ const letSortOffers = (sortName) => {
 };
 
 function MainScreen({ offers, offersLocation, cities }) {
+  const [hoveredOffer, setHoveredOffer] = useState(null);
+  console.log(hoveredOffer?.id);
   const dispatch = useDispatch();
   const { currentCity, sortName } = useSelector((state) => state);
   const currentCityDB = cities.find((city) => city.name === currentCity);
@@ -33,6 +35,10 @@ function MainScreen({ offers, offersLocation, cities }) {
 
   const handleLinkClick = (evt) => {
     dispatch(changeCity({ currentCity: evt.target.innerText }));
+  };
+
+  const handleCardHover = (offer) => {
+    setHoveredOffer(offer);
   };
 
   const init = () => {
@@ -134,7 +140,11 @@ function MainScreen({ offers, offersLocation, cities }) {
                   {currentCity}
                 </b>
                 <Sorting />
-                <PlacesList offers={offersForVisual} screen='MainScreen' />
+                <PlacesList
+                  handleCardHover={handleCardHover}
+                  offers={offersForVisual}
+                  screen='MainScreen'
+                />
               </section>
               <div className='cities__right-section'>
                 <section id='cities-map' className='cities__map map' />

@@ -1,10 +1,6 @@
-import { useState } from 'react';
 import PlaceCardComponent from './PlaceCard';
 
-function PlacesList({ offers, screen }) {
-  const [hoveredOffer, setHoveredOffer] = useState(null);
-  // console.log(hoveredOffer);
-
+function PlacesList({ offers, screen, handleCardHover }) {
   let currentClasses;
   switch (screen) {
     case 'MainScreen':
@@ -16,10 +12,6 @@ function PlacesList({ offers, screen }) {
     default:
       currentClasses = 'favorites__places';
   }
-
-  const handleCardHover = (offer) => {
-    setHoveredOffer(offer);
-  };
 
   return (
     <div className={currentClasses}>
