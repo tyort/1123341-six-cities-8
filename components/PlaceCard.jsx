@@ -37,6 +37,7 @@ function PlaceCard({ offer, screen, handleCardHover }) {
 
   return (
     <article
+      data-offer-id={offer.id}
       className={`${articleClasses} place-card`}
       onMouseOver={() => {
         handleCardHover(offer);

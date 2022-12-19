@@ -25,7 +25,6 @@ const letSortOffers = (sortName) => {
 
 function MainScreen({ offers, offersLocation, cities }) {
   const [hoveredOffer, setHoveredOffer] = useState(null);
-  console.log(hoveredOffer?.id);
   const dispatch = useDispatch();
   const { currentCity, sortName } = useSelector((state) => state);
   const currentCityDB = cities.find((city) => city.name === currentCity);
@@ -78,6 +77,34 @@ function MainScreen({ offers, offersLocation, cities }) {
           iconColor: 'yellow',
         }
       );
+    });
+
+    document.addEventListener('mouseover', (evt) => {
+      document.querySelectorAll('.place-card').forEach((placeCard) => {
+        if (placeCard.contains(evt.target)) {
+          const currentGeoObject = myGeoObjects.find(
+            (geoObject) =>
+              // eslint-disable-next-line no-underscore-dangle
+              geoObject.properties._data.offerId ===
+              Number(placeCard.dataset.offerId)
+          );
+          currentGeoObject.options.set('iconColor', 'blue');
+        }
+      });
+    });
+
+    document.addEventListener('mouseout', (evt) => {
+      document.querySelectorAll('.place-card').forEach((placeCard) => {
+        if (placeCard.contains(evt.target)) {
+          const currentGeoObject = myGeoObjects.find(
+            (geoObject) =>
+              // eslint-disable-next-line no-underscore-dangle
+              geoObject.properties._data.offerId ===
+              Number(placeCard.dataset.offerId)
+          );
+          currentGeoObject.options.set('iconColor', 'yellow');
+        }
+      });
     });
 
     myGeoObjects.forEach((geoObject) => {
