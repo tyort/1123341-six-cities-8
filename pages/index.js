@@ -42,7 +42,7 @@ function MainScreen({ offers, offersLocation, cities }) {
 
   const init = () => {
     // Создание карты.
-    const myMap = new ymaps.Map(
+    const myMap = new window.ymaps.Map(
       'cities-map',
       {
         center: [
@@ -66,7 +66,7 @@ function MainScreen({ offers, offersLocation, cities }) {
 
     const myGeoObjects = offersLocation.map((label) => {
       const { latitude, longitude, offerId } = label;
-      return new ymaps.Placemark(
+      return new window.ymaps.Placemark(
         [latitude, longitude],
         {
           balloonContent: '<strong>серобуромалиновый</strong> цвет',
@@ -184,7 +184,7 @@ function MainScreen({ offers, offersLocation, cities }) {
         src='https://api-maps.yandex.ru/2.1/?apikey=19d2c763-adea-4e63-892d-2e9a662f7873&lang=ru_RU'
         type='text/javascript'
         strategy='lazyOnload'
-        onReady={() => ymaps.ready(init)}
+        onReady={() => window.ymaps.ready(init)}
       />
     </>
   );
