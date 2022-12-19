@@ -1,6 +1,6 @@
 import PlaceCardComponent from './PlaceCard';
 
-function PlacesList({ offers, screen, handleCardHover }) {
+function PlacesList({ offers, screen }) {
   let currentClasses;
   switch (screen) {
     case 'MainScreen':
@@ -17,12 +17,7 @@ function PlacesList({ offers, screen, handleCardHover }) {
     <div className={currentClasses}>
       {offers !== null &&
         offers.map((offer) => (
-          <PlaceCardComponent
-            handleCardHover={handleCardHover}
-            screen={screen}
-            key={offer.id}
-            offer={offer}
-          />
+          <PlaceCardComponent screen={screen} key={offer.id} offer={offer} />
         ))}
     </div>
   );

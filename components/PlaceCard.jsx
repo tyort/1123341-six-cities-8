@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-function PlaceCard({ offer, screen, handleCardHover }) {
+function PlaceCard({ offer, screen }) {
   const {
     preview_image,
     price,
@@ -39,15 +39,6 @@ function PlaceCard({ offer, screen, handleCardHover }) {
     <article
       data-offer-id={offer.id}
       className={`${articleClasses} place-card`}
-      onMouseOver={() => {
-        handleCardHover(offer);
-      }}
-      onFocus={() => {
-        handleCardHover(offer);
-      }}
-      onMouseLeave={() => {
-        handleCardHover(null);
-      }}
     >
       {isShowPremium && (
         <div className='place-card__mark'>
